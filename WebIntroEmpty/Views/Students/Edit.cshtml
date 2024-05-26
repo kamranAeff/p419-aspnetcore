@@ -1,0 +1,25 @@
+﻿@model Student
+
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input class="form-control" asp-for="Name" aria-describedby="nameHelp">
+                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Surname" class="form-label">Surname</label>
+                <input class="form-control" asp-for="Surname" aria-describedby="surnameHelp">
+                <div id="surnameHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GroupNo" class="form-label">GroupNo</label>
+                <input class="form-control" asp-for="GroupNo" aria-describedby="groupNoHelp">
+                <div id="groupNoHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <input asp-for="Id" hidden />
+            <button type="submit" class="btn btn-primary">Yadda saxla</button>
+        </form>
+    </div>
+</div>

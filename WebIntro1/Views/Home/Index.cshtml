@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Salamlar</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<!-- bu bir Html serhdir-->
+@* bu bir Razor serhdir*@
+
+<pre>
+int a = 10;
+int b = 11;
+
+a+b
+</pre>
+
+@{
+    int a = 10;
+    int b = -11;
+    int cavab = a + b;
+}
+
+<h2>@cavab</h2>
+
+@if(cavab>=0){
+    <span style="color:teal">@cavab</span>
+}
+else{
+<span style="color:crimson">@cavab</span>
+}
+
+@{
+    int i = 0;
+    string[] fruits = { "Alma","Armud","Heyva"};
+}
+
+<ol type="I">
+    @foreach (var @foreach in fruits)
+    {
+        <li>@(@foreach)</li>
+    }
+</ol>
+
+
