@@ -14,15 +14,13 @@ namespace WebIntroEmpty2.Models.Contexts.Configurations
             builder.Property(m => m.GroupId).HasColumnType("int").IsRequired();
 
             builder.HasKey(m => m.Id);
-            builder.ToTable("Student");
+            builder.ToTable("Students");
 
-            /*
             builder.HasOne<Group>()
                 .WithMany()
-                .HasPrincipalKey(m=>m.Id)
-                .HasForeignKey(m=>m.GroupId)
+                .HasPrincipalKey(m => m.Id)
+                .HasForeignKey(m => m.GroupId)
                 .OnDelete(DeleteBehavior.NoAction);
-            */
         }
     }
 }

@@ -10,8 +10,6 @@ namespace WebIntroEmpty2
 
             var builder = WebApplication.CreateBuilder(args);
 
-            Console.WriteLine(builder.Configuration.GetConnectionString("cString"));
-
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<DataContext>(cfg =>
             {
