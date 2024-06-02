@@ -8,5 +8,16 @@ namespace Ogani.WebUI.Controllers
         {
             return View();
         }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string x)
+        {
+            return View();
+        }
     }
 }
