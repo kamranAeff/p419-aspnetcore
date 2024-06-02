@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Ogani.WebUI.Models.Entities;
 
 namespace Ogani.WebUI.Models.Contexts
 {
@@ -9,6 +10,8 @@ namespace Ogani.WebUI.Models.Contexts
         {
                 
         }
+
+        public DbSet<ContactPost> ContactPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

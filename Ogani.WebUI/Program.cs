@@ -15,7 +15,10 @@ namespace Ogani.WebUI
             builder.Services.AddDbContext<DataContext>(cfg =>
             {
 
-                cfg.UseSqlServer(builder.Configuration.GetConnectionString("cString"));
+                cfg.UseSqlServer(builder.Configuration.GetConnectionString("cString"), opt =>
+                {
+                    opt.MigrationsHistoryTable("MigrationsHistory");
+                });
 
             });
 
