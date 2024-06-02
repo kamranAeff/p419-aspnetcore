@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="Models\Contexts\Configurations\" />
     <Folder Include="Models\Entities\" />
-    <Folder Include="Views\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
