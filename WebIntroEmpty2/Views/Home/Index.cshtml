@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+
+<fieldset>
+    <legend>ViewBag</legend>
+
+    <h1>@(ViewBag.GroupName + 10)</h1>
+
+
+    <ul>
+        @foreach (var item in ViewBag.Fruits)
+        {
+            <li>@item</li>
+        }
+    </ul>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>ViewData</legend>
+
+    <h1>@(((int)ViewData["GroupName"]) + 10)</h1>
+
+    <ul>
+
+        @if (ViewData["Groups"] is string[] groups)
+        {
+            foreach (var item in groups)
+            {
+                <li>@item</li>
+            }
+        }
+    </ul>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>TempData</legend>
+
+    <ol>
+
+        @if (TempData["Months"] is string[] months)
+        {
+            foreach (var item in months)
+            {
+                <li>@item</li>
+            }
+        }
+    </ol>
+</fieldset>

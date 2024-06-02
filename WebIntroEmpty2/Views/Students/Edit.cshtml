@@ -1,0 +1,28 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input class="form-control" asp-for="Name" aria-describedby="nameHelp">
+                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Surname" class="form-label">Surname</label>
+                <input class="form-control" asp-for="Surname" aria-describedby="surnameHelp">
+                <div id="surnameHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GroupId" class="form-label">GroupNo</label>
+                <select class="form-control" asp-for="GroupId" asp-items="@ViewBag.Groups" aria-describedby="groupNoHelp"></select>
+                <div id="groupNoHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <input type="hidden" asp-for="Id"/>
+            <button type="submit" class="btn btn-primary">Yadda saxla</button>
+        </form>
+    </div>
+</div>

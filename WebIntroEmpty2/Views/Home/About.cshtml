@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<h1>About</h1>
+
+<fieldset>
+    <legend>ViewBag</legend>
+
+    @if (ViewBag.GroupName is not null)
+    {
+        <h1>@(ViewBag.GroupName + 10)</h1>
+    }
+
+
+    @if (ViewBag.Fruits is not null)
+    {
+        <ul>
+            @foreach (var item in ViewBag.Fruits)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    }
+</fieldset>
+
+
+
+<fieldset>
+    <legend>ViewData</legend>
+
+    @if (ViewData["GroupName"] is int)
+    {
+        <h1>@(((int)ViewData["GroupName"]) + 10)</h1>
+    }
+
+
+    <ul>
+
+        @if (ViewData["Groups"] is string[] groups)
+        {
+            foreach (var item in groups)
+            {
+                <li>@item</li>
+            }
+        }
+    </ul>
+</fieldset>
+
+<fieldset>
+    <legend>TempData</legend>
+
+    <ol>
+        @if (TempData.Peek("Months") is string[] months)
+        {
+            foreach (var item in months)
+            {
+                <li>@item</li>
+            }
+        }
+    </ol>
+</fieldset>

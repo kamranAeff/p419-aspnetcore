@@ -1,27 +1,60 @@
-﻿@model IEnumerable<Student>
+﻿@model IEnumerable<StudentViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="row">
+    <div class="alert alert-success">@ViewBag.Instance</div>
+    
+    <ul>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+        <li>@await Component.InvokeAsync("ExchangeStatistic")</li>
+    </ul>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>GroupId</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th>@item.Name</th>
-                <th>@item.Surname</th>
-                <th>@item.GroupId</th>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="col-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Surname
+                    </th>
+                    <th>
+                        GroupNo
+                    </th>
+                    <th>
+                        <a asp-controller="Students" asp-action="Create">Create new</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Surname
+                        </td>
+                        <td>
+                            @item.GroupName
+                        </td>
+                        <td>
+                            <a asp-controller="Students" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="Students" asp-action="edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-controller="Students" asp-action="remove" asp-route-id="@item.Id">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
