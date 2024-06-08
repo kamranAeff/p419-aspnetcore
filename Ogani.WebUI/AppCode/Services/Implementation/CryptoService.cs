@@ -10,7 +10,7 @@ namespace Ogani.WebUI.AppCode.Services.Implementation
     {
         private readonly CryptoServiceConfiguration options;
         private readonly HashAlgorithm ha;
-        private readonly TripleDES csp;
+        private readonly SymmetricAlgorithm csp;
         private bool disposed = false;
 
         public CryptoService(IOptions<CryptoServiceConfiguration> options)
