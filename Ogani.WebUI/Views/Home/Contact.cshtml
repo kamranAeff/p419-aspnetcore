@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Contact";
 }
 
@@ -132,19 +131,70 @@
                 </div>
             </div>
         </div>
-        <form action="#">
+        <form method="post" id="frm">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <input type="text" placeholder="Your name">
+                    <input type="text" name="fullName" placeholder="Your name">
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <input type="text" placeholder="Your Email">
+                    <input type="text" name="email" placeholder="Your Email">
                 </div>
                 <div class="col-lg-12 text-center">
-<textarea placeholder="Your message"></textarea>
+                    <textarea name="message" placeholder="Your message"></textarea>
                     <button type="submit" class="site-btn">SEND MESSAGE</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+
+
+@section addjs {
+
+    <script>
+
+        const form = document.querySelector('#frm');
+
+        form.addEventListener('submit', function (e) {
+
+            let element = e.currentTarget;
+
+            e.preventDefault();
+
+            const fd = new FormData(element);
+
+            fetch(`${location.href}`, {
+                method: 'POST',
+                body: fd,
+                headers: {
+
+                }
+            })
+                .then(response => response.json())
+                .then(response => {
+
+                    if (response.error == false) {
+                        toastr.success(response.message, "Success");
+                        element.reset();
+                        return;
+                    }
+
+
+                    console.log(response);
+                })
+                .catch(e => {
+                    console.error(e);
+                });
+
+        });
+
+    </script>
+
+}
+
+@section addcss {
+    <style>
+
+    </style>
+}

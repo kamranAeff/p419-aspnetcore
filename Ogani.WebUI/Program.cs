@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Ogani.WebUI.AppCode.Services;
+using Ogani.WebUI.AppCode.Services.Implementation;
+using Ogani.WebUI.Models.Configurations;
 using Ogani.WebUI.Models.Contexts;
 
 namespace Ogani.WebUI
@@ -21,6 +25,13 @@ namespace Ogani.WebUI
                 });
 
             });
+
+
+            builder.Services.Configure<EmailConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
+            builder.Services.Configure<CryptoServiceConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
+
+            builder.Services.AddSingleton<IEmailService, EmailService>();
+            builder.Services.AddSingleton<ICryptoService, CryptoService>();
 
             var app = builder.Build();
             app.UseStaticFiles();
