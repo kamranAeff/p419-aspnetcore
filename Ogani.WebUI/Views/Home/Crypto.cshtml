@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Crypto";
+}
+
+<form method="post" asp-action="Encrypt">
+    <fieldset>
+        <legend>Encryption</legend>
+        <label>Text: </label>
+        <br />
+        <input name="text" value="@ViewBag.Text" />
+        <br />
+        <p>
+            <b>CipherText:</b>
+            @ViewBag.CipherText
+        </p>
+        <button>Encrypt</button>
+    </fieldset>
+</form>
+<hr />
+<form method="post" asp-action="Decrypt">
+    <fieldset>
+        <legend>Decryption</legend>
+        <label>CipherText: </label>
+        <br />
+        <input name="text" value="@ViewBag.CipherText1" />
+        <br />
+        <p>
+            <b>Text:</b>
+            @ViewBag.Text1
+        </p>
+        <button>Decrypt</button>
+    </fieldset>
+</form>

@@ -1,90 +1,72 @@
 ﻿using Microsoft.Extensions.Options;
 using Ogani.WebUI.Models.Configurations;
-using static System.Net.Mime.MediaTypeNames;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using Newtonsoft.Json.Linq;
 
 namespace Ogani.WebUI.AppCode.Services.Implementation
 {
-    public class CryptoService : ICryptoService
+    public class CryptoService : ICryptoService, IDisposable
     {
         private readonly CryptoServiceConfiguration options;
+        private readonly HashAlgorithm ha;
+        private readonly TripleDES csp;
+        private bool disposed = false;
 
         public CryptoService(IOptions<CryptoServiceConfiguration> options)
         {
             this.options = options.Value;
+            ha = MD5.Create();
+            csp = TripleDES.Create();
+
+            var keyBytes = ha.ComputeHash(Encoding.UTF8.GetBytes($"{this.options.Key}202$"));
+            var newKeyBytes = new byte[24]; // TripleDES: 192 bit = 24 byte
+            Array.Copy(keyBytes, newKeyBytes, Math.Min(keyBytes.Length, newKeyBytes.Length));
+            csp.Key = newKeyBytes;
+
+            csp.Mode = CipherMode.ECB;
+            csp.Padding = PaddingMode.PKCS7;
         }
 
-        public string Encrypt(string value, bool appliedUrlEncode = false)
+        public string Encrypt(string value, bool applyUrlEncode = false)
         {
-            using (var symProvider = new TripleDESCryptoServiceProvider())
-            using (var md5 = MD5.Create())
-            {
-                byte[] valueBuffer = Encoding.UTF8.GetBytes(value);
+            var valueBytes = Encoding.UTF8.GetBytes(value);
+            var cipherBytes = csp.CreateEncryptor()
+                                 .TransformFinalBlock(valueBytes, 0, valueBytes.Length);
+            var cipherText = Convert.ToBase64String(cipherBytes);
 
-                byte[] keyBuffer = md5.ComputeHash(Encoding.UTF8.GetBytes($"{options.Key}202$"));
-                byte[] iVBuffer = md5.ComputeHash(Encoding.UTF8.GetBytes($"202$_#$@{options.Key}"));
+            if (applyUrlEncode)
+                cipherText = HttpUtility.UrlEncode(cipherText);
 
-                var transformer = symProvider.CreateEncryptor(keyBuffer, iVBuffer);
-
-                using (var ms = new MemoryStream())
-                using (var cs = new CryptoStream(ms, transformer, CryptoStreamMode.Write))
-                {
-                    cs.Write(valueBuffer, 0, valueBuffer.Length);
-                    cs.FlushFinalBlock();
-
-                    ms.Position = 0;
-                    ms.Seek(0, SeekOrigin.Begin);
-
-                    byte[] bytes = new byte[ms.Length];
-
-                    ms.Read(bytes, 0, bytes.Length);
-
-                    string chiperText = Convert.ToBase64String(bytes);
-
-
-                    if (appliedUrlEncode)
-                    {
-                        chiperText = HttpUtility.UrlEncode(chiperText);
-                    }
-
-                    return chiperText;
-                }
-            }
+            return cipherText;
         }
 
-        public string Decrypt(string chiperText)
+        public string Decrypt(string cipherText)
         {
-            using (var symProvider = new TripleDESCryptoServiceProvider())
-            using (var md5 = MD5.Create())
+            var cipherBytes = Convert.FromBase64String(cipherText);
+            var decryptedBytes = csp.CreateDecryptor()
+                                    .TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
+            return Encoding.UTF8.GetString(decryptedBytes);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
             {
-                byte[] valueBuffer = Convert.FromBase64String(chiperText);
-
-                byte[] keyBuffer = md5.ComputeHash(Encoding.UTF8.GetBytes($"{options.Key}202$"));
-                byte[] iVBuffer = md5.ComputeHash(Encoding.UTF8.GetBytes($"202$_#$@{options.Key}"));
-
-                var transformer = symProvider.CreateDecryptor(keyBuffer, iVBuffer);
-
-                using (var ms = new MemoryStream())
-                using (var cs = new CryptoStream(ms, transformer, CryptoStreamMode.Write))
-                {
-                    cs.Write(valueBuffer, 0, valueBuffer.Length);
-                    cs.FlushFinalBlock();
-
-                    ms.Position = 0;
-                    ms.Seek(0, SeekOrigin.Begin);
-
-                    byte[] bytes = new byte[ms.Length];
-
-                    ms.Read(bytes, 0, bytes.Length);
-
-                    string pureText = Encoding.UTF8.GetString(bytes);
-
-                    return pureText;
-                }
+                ha.Dispose();
+                csp.Dispose();
             }
+
+            disposed = true;
         }
     }
 }

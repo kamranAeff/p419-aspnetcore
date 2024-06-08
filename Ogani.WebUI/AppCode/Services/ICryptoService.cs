@@ -3,6 +3,6 @@
     public interface ICryptoService
     {
         string Encrypt(string value, bool appliedUrlEncode = false);
-        string Decrypt(string chiperText);
+        string Decrypt(string cipherText);
     }
 }

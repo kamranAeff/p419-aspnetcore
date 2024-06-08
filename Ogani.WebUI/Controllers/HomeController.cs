@@ -104,5 +104,20 @@ namespace Ogani.WebUI.Controllers
             token = cryptoService.Decrypt(token);
             return Content(token);
         }
+
+
+        public IActionResult Encrypt(string text)
+        {
+            ViewBag.Text = text;
+            ViewBag.CipherText = cryptoService.Encrypt(text);
+            return View("Crypto");
+        }
+
+        public IActionResult Decrypt(string text)
+        {
+            ViewBag.CipherText1 = text;
+            ViewBag.Text1 = cryptoService.Decrypt(text);
+            return View("Crypto");
+        }
     }
 }
