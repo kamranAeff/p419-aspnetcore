@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Ogani.WebUI.AppCode.Services;
 using Ogani.WebUI.Models.Contexts;
 using Ogani.WebUI.Models.Entities;
-using System.Web;
-using static System.Net.Mime.MediaTypeNames;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Ogani.WebUI.Controllers
 {
@@ -14,7 +14,9 @@ namespace Ogani.WebUI.Controllers
         private readonly IEmailService emailService;
         private readonly ICryptoService cryptoService;
 
-        public HomeController(DataContext db, IEmailService emailService, ICryptoService cryptoService)
+        public HomeController(DataContext db, 
+            IEmailService emailService, 
+            ICryptoService cryptoService)
         {
             this.db = db;
             this.emailService = emailService;
@@ -78,46 +80,69 @@ namespace Ogani.WebUI.Controllers
             await db.Subscribers.AddAsync(entity);
             await db.SaveChangesAsync();
 
-#warning email-e tesdiq ucun link gondermeliydik
-            string token = $"id={entity.Email}+expire={DateTime.Now.AddHours(1):yyyy.MM.dd HH:mm:ss}";
+            var token = $"id={entity.Email}|expire={DateTime.Now.AddHours(1):yyyy.MM.dd HH:mm:ss}";
 
             token = cryptoService.Encrypt(token, true);
 
+            string redirectUrl = $"{Request.Scheme}://{Request.Host}/subscribe-approve?token={token}";
 
-            string redirectUrl = $"http://localhost:5178/subscribe-approve?token={token}";
-
-            string msg = $"Salam <b>Aqil Abbasov</b>,<br/>Abuneliyinizi <a href=\"{redirectUrl}\">link</a>`lə tamamlayin";
+            var msg = $"Salam,<br/>Abuneliyinizi <a href=\"{redirectUrl}\">link</a>`lə tamamlayin";
 
             await emailService.SendEmail(entity.Email, "Ogani Subscription", msg);
-
 
             return Json(new
             {
                 error = false,
-                message = $"{email} sorgunu aldiq"
+                message = "E-poçt ünvanınıza təsdiq linki göndərildi.1 saat ərzidə abunəliyinizi tamamlamağı unutmayın!"
             });
         }
 
         [Route("/subscribe-approve")]
-        public IActionResult S(string token)
+        public async Task<IActionResult> SubscribeApprove(string token)
         {
             token = cryptoService.Decrypt(token);
-            return Content(token);
-        }
 
+            string patterns = @"id=(?<email>[^|]*)\|expire=(?<date>\d{4}\.\d{2}\.\d{2}\s\d{2}:\d{2}:\d{2})";
 
-        public IActionResult Encrypt(string text)
-        {
-            ViewBag.Text = text;
-            ViewBag.CipherText = cryptoService.Encrypt(text);
-            return View("Crypto");
-        }
+            var match = Regex.Match(token, patterns);
 
-        public IActionResult Decrypt(string text)
-        {
-            ViewBag.CipherText1 = text;
-            ViewBag.Text1 = cryptoService.Decrypt(text);
-            return View("Crypto");
+            if (!match.Success)
+                goto l1;
+
+            var email = match.Groups["email"].Value;
+            var date = match.Groups["date"].Value;
+
+            if (string.IsNullOrWhiteSpace(email))
+                goto l1;
+
+            if (string.IsNullOrWhiteSpace(date) || !DateTime.TryParseExact(date, "yyyy.MM.dd HH:mm:ss", null, DateTimeStyles.None, out DateTime expireDate))
+                goto l1;
+
+            if (expireDate < DateTime.Now)
+            {
+                ViewBag.ErrorMessage = "Sorğunun istifadə müddəti bitmişdir";
+                return View();
+            }
+
+            var entity = await db.Subscribers.FirstOrDefaultAsync(m => m.Email.Equals(email));
+
+            if (entity is null)
+                goto l1;
+
+            if (entity.ApprovedAt is not null)
+            {
+                ViewBag.ErrorMessage = "Artıq abunə olmusunuz";
+                return View();
+            }
+
+            entity.ApprovedAt = DateTime.Now;
+            await db.SaveChangesAsync();
+            TempData["Message"] = "Abunəliyiniz təsdiq olundu";
+            return RedirectToAction(nameof(Index));
+
+        l1:
+            ViewBag.ErrorMessage = "Qadağan edilmiş sorğu!";
+            return View();
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string? message = TempData["Message"] as string;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -132,7 +136,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                   <partial name="_Navbar"/>
+                    <partial name="_Navbar" />
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
@@ -150,6 +154,12 @@
         </div>
     </header>
 
+    @if (!string.IsNullOrWhiteSpace(message))
+    {
+        <div class="alert alert-info">
+            @message
+        </div>
+    }
 
     @RenderBody()
 
@@ -266,6 +276,6 @@
 
     </script>
 
-    @await RenderSectionAsync("addjs",required: false)
+    @await RenderSectionAsync("addjs", required: false)
 </body>
 </html>

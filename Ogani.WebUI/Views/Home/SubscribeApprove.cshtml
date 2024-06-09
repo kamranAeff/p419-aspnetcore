@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "SubscribeApprove";
+    string message = ViewBag.ErrorMessage;
+}
+
+<h1>SubscribeApprove</h1>
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+    <div class="alert alert-danger">
+        @message
+    </div>
+}
