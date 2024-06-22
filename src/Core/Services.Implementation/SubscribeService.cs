@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Services.Implementation
 {
-    public class SubscribeService : ISubscribeService
+    class SubscribeService : ISubscribeService
     {
         private readonly ISubscriberRepository subscriberRepository;
         private readonly IEmailService emailService;

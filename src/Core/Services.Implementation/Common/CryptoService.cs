@@ -1,13 +1,15 @@
 ﻿using Domain.Configurations;
 using Microsoft.Extensions.Options;
 using Services.Common;
+using Services.Implementation.Registration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
 namespace Services.Implementation.Common
 {
-    public class CryptoService : ICryptoService, IDisposable
+    [SingletonLifeTime]
+    class CryptoService : ICryptoService, IDisposable
     {
         private readonly CryptoServiceConfiguration options;
         private readonly HashAlgorithm ha;

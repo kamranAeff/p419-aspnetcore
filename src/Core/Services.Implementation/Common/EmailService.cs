@@ -1,12 +1,14 @@
 ﻿using Domain.Configurations;
 using Microsoft.Extensions.Options;
 using Services.Common;
+using Services.Implementation.Registration;
 using System.Net;
 using System.Net.Mail;
 
 namespace Services.Implementation.Common
 {
-    public class EmailService : SmtpClient, IEmailService
+    [SingletonLifeTime]
+    class EmailService : SmtpClient, IEmailService
     {
         private readonly EmailConfiguration options;
 

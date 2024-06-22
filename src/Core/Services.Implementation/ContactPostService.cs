@@ -3,7 +3,7 @@ using Repositories;
 
 namespace Services.Implementation
 {
-    public class ContactPostService(IContactPostRepository contactPostRepository) : IContactPostService
+    class ContactPostService(IContactPostRepository contactPostRepository) : IContactPostService
     {
 
         public async Task<string> Add(string fullName, string email, string message)

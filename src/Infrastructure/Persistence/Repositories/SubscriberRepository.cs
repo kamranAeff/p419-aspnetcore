@@ -5,7 +5,7 @@ using Repositories.Common;
 
 namespace Persistence.Repositories
 {
-    public class SubscriberRepository : AsyncRepository<Subscribe>, ISubscriberRepository
+    class SubscriberRepository : AsyncRepository<Subscribe>, ISubscriberRepository
     {
         public SubscriberRepository(DbContext db) : base(db)
         {
