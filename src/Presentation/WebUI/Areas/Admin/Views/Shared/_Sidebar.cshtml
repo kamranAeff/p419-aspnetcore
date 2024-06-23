@@ -1,52 +1,86 @@
 ﻿<nav class="pcoded-navbar">
     <div class="pcoded-inner-navbar main-menu">
-        <div class="pcoded-navigatio-lavel">Navigation</div>
+        <div class="pcoded-navigatio-lavel">Əməliyyat</div>
         <ul class="pcoded-item pcoded-left-item">
+            <li>
+                <a asp-controller="Dashboard" asp-action="Index">
+                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                    <span class="pcoded-mtext">Ana səhifə</span>
+                </a>
+            </li>
             <li class="pcoded-hasmenu active pcoded-trigger">
                 <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                    <span class="pcoded-mtext">Dashboard</span>
+                    <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+                    <span class="pcoded-mtext">Məhsullar</span>
                 </a>
                 <ul class="pcoded-submenu">
-                    <li class="active">
-                        <a href="default/index.html">
-                            <span class="pcoded-mtext">Default</span>
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">Məhsullar</span>
                         </a>
                     </li>
-                    <li class="">
-                        <a href="default/dashboard-crm.html">
-                            <span class="pcoded-mtext">CRM</span>
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">Kompaniyalar</span>
+                            <span class="pcoded-badge label label-info">NEW</span>
                         </a>
                     </li>
-                    <li class=" ">
-                        <a href="default/dashboard-analytics.html">
-                            <span class="pcoded-mtext">Analytics</span>
-                            <span class="pcoded-badge label label-info ">NEW</span>
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">Tükənən məhsullar</span>
+                            <span class="pcoded-badge label label-danger">5</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="">
-                <a href="default/navbar-light.html">
+            <li>
+                <a asp-controller="Categories" asp-action="Index">
                     <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                    <span class="pcoded-mtext">Navigation</span>
+                    <span class="pcoded-mtext">Kateqoriyalar</span>
                 </a>
-            </li>            
+            </li>
         </ul>
-        <div class="pcoded-navigatio-lavel">UI Element</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu active pcoded-trigger">
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="feather icon-feather"></i></span>
+                    <span class="pcoded-mtext">Paylaşımlar</span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">Dərc edilmişlər</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">Gözləmədə</span>
+                            <span class="pcoded-badge label label-info">2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="pcoded-mtext">İmtina edilib</span>
+                            <span class="pcoded-badge label label-danger">5</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="pcoded-navigatio-lavel">Tənzimləmələr</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                     <span class="pcoded-mtext">Dashboard</span>
                 </a>
                 <ul class="pcoded-submenu">
-                    <li class="active">
+                    <li>
                         <a href="default/index.html">
                             <span class="pcoded-mtext">Default</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="default/dashboard-crm.html">
                             <span class="pcoded-mtext">CRM</span>
                         </a>
@@ -59,7 +93,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="">
+            <li>
                 <a href="default/navbar-light.html">
                     <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
                     <span class="pcoded-mtext">Navigation</span>

@@ -40,7 +40,8 @@ namespace Repositories.Common
 
             var entry = await query.FirstOrDefaultAsync(cancellationToken);
 
-#warning check entity is null or not
+            if (entry is null)
+                throw new ArgumentNullException();
 
             return entry!;
         }

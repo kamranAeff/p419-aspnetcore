@@ -1,6 +1,6 @@
-﻿namespace Domain.Entities
+﻿namespace Services.Categories
 {
-    public class Category
+    public class EditCategortDto
     {
         public int Id { get; set; }
         public required string Name { get; set; }

@@ -7,11 +7,8 @@ namespace WebUI
 {
     public class IoCFactory : AutofacServiceProviderFactory
     {
-        public IoCFactory()
-            :base(Register)
-        {
-                
-        }
+        public IoCFactory() : base(Register) { }
+
 
         private static void Register(ContainerBuilder builder)
         {
