@@ -1,4 +1,4 @@
-﻿@model AddCategoryRequestDto
+﻿@model AddTagRequestDto
 @{
     ViewData["Title"] = "Create";
 }
@@ -40,10 +40,11 @@
             <h4 class="sub-title">Yeni kateqoriya əlavə etmək</h4>
             <div class="row">
                 <div class="form-group col-12">
-                    <label asp-for="Name" class="control-label">
+                    <label asp-for="Text" class="control-label">
                         Name
                     </label>
-                    <input asp-for="Name" type="text" class="form-control" />
+                    <input asp-for="Text" type="text" class="form-control" />
+                    <span asp-validation-for="Text" class="text text-danger"></span>
                 </div>
             </div>
             <div class="row">

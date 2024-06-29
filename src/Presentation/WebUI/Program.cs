@@ -1,10 +1,10 @@
 using Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Contexts;
+using FluentValidation;
 using Services;
-using Services.Common;
-using Services.Implementation;
-using Services.Implementation.Common;
+using Microsoft.CodeAnalysis.FlowAnalysis;
+using FluentValidation.AspNetCore;
+using WebUI.Filters;
 
 namespace WebUI
 {
@@ -16,7 +16,14 @@ namespace WebUI
 
             builder.Host.UseServiceProviderFactory(new IoCFactory());
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg =>
+            {
+                cfg.Filters.Add(new TestResultFilter());
+                cfg.Filters.Add(new ValidationActionFilter());
+                cfg.Filters.Add(new TestActionFilter());
+                cfg.Filters.Add(new TestAuthFilter());
+                cfg.Filters.Add(new TesExceptionFilter());
+            });
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
 
@@ -36,6 +43,12 @@ namespace WebUI
 
             //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddFluentValidationAutoValidation(cfg =>
+            {
+                cfg.DisableDataAnnotationsValidation = true;
+            });
+            builder.Services.AddValidatorsFromAssemblyContaining<IServiceReference>(includeInternalTypes: true);
 
             var app = builder.Build();
             app.UseStaticFiles();

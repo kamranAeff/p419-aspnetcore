@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Persistence.Contexts;
 using Services;
-using Services.Common;
+using WebUI.Filters;
 
 namespace WebUI.Controllers
 {
@@ -16,8 +15,11 @@ namespace WebUI.Controllers
             this.contactPostService = contactPostService;
             this.subscribeService = subscribeService;
         }
-        public IActionResult Index()
+
+        
+        public async Task<IActionResult> Index()
         {
+            throw new Exception("bura xetalidir");
             return View();
         }
 

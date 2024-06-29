@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CategoryGetAllDto>
+<div class="sidebar__item">
+    <h4>Categories</h4>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li><a href="#">@item.Name</a></li>
+        }
+    </ul>
+</div>
