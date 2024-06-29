@@ -18,11 +18,8 @@ namespace WebUI
 
             builder.Services.AddControllersWithViews(cfg =>
             {
-                cfg.Filters.Add(new TestResultFilter());
+                cfg.Filters.Add(new GlobalExceptionFilter());
                 cfg.Filters.Add(new ValidationActionFilter());
-                cfg.Filters.Add(new TestActionFilter());
-                cfg.Filters.Add(new TestAuthFilter());
-                cfg.Filters.Add(new TesExceptionFilter());
             });
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
