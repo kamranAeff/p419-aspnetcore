@@ -9,7 +9,6 @@ namespace WebUI.ViewComponents
         {
             var response = await categoryService.GetAllAsync();
 
-
             if (!string.IsNullOrWhiteSpace(view))
                 return View(view, response);
 

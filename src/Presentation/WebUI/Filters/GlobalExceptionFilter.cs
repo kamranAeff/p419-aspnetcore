@@ -19,10 +19,6 @@ namespace WebUI.Filters
                         ContentType = "text/html",
                         StatusCode = 200
                     };
-                    //context.Result = new NotFoundResult();
-                    //Console.WriteLine($"{aEx.ParamName}: {aEx.Message}");
-                    //context.Result = new NotFoundObjectResult(new { error = 404 });
-                    //context.Result = new StatusCodeResult(StatusCodes.Status404NotFound);
                     break;
                 default:
                     context.Result = new ContentResult

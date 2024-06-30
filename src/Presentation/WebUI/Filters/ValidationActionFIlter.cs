@@ -13,13 +13,11 @@ namespace WebUI.Filters
             if ("POST".Equals(context.HttpContext.Request.Method,StringComparison.OrdinalIgnoreCase) 
                 && !context.ModelState.IsValid)
             {
-                var result = new ViewResult
+                context.Result = new ViewResult
                 {
                     ViewName = context.RouteData.Values["action"]?.ToString(),
                     ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), context.ModelState),
                 };
-
-                context.Result = result;
             }
         }
     }

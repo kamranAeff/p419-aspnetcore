@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services;
-using WebUI.Filters;
 
 namespace WebUI.Controllers
 {
@@ -19,7 +18,6 @@ namespace WebUI.Controllers
         
         public async Task<IActionResult> Index()
         {
-            throw new Exception("bura xetalidir");
             return View();
         }
 

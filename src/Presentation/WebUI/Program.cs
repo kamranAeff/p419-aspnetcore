@@ -1,9 +1,8 @@
 using Domain.Configurations;
-using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using Services;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Services;
 using WebUI.Filters;
 
 namespace WebUI

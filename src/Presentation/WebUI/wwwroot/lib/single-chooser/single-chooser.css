@@ -1,0 +1,33 @@
+﻿.single-chooser {
+            width: 170px;
+            height: 170px;
+            border: 1px solid #cdcdcd;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+            .single-chooser::before {
+                content: 'Sekil secin';
+                display: inline-block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%)
+            }
+
+            .single-chooser.loaded:not(:hover)::before {
+                display: none;
+            }
+
+            .single-chooser:hover::before {
+                color: teal;
+                font-size: 1.2em;
+            }
+
+            .single-chooser input[type=file] {
+                display: none;
+            }
