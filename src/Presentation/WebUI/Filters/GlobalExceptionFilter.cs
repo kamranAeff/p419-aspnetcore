@@ -8,13 +8,31 @@ namespace WebUI.Filters
         public void OnException(ExceptionContext context)
         {
             context.ExceptionHandled = true;
-            context.Result = new ContentResult()
+
+            switch (context.Exception)
             {
-                Content = "biraz sonra yeniden yoxlayin",
-                ContentType = "text/plain",
-                StatusCode = 200
-            };
-            Console.WriteLine($"TesExceptionFilter {DateTime.Now:HH:mm:ss.ffffff}\n{context.Exception.Message}");
+                case NullReferenceException:
+                case ArgumentNullException:
+                    context.Result = new ContentResult
+                    {
+                        Content = File.ReadAllText("wwwroot/error-pages/404.html"),
+                        ContentType = "text/html",
+                        StatusCode = 200
+                    };
+                    //context.Result = new NotFoundResult();
+                    //Console.WriteLine($"{aEx.ParamName}: {aEx.Message}");
+                    //context.Result = new NotFoundObjectResult(new { error = 404 });
+                    //context.Result = new StatusCodeResult(StatusCodes.Status404NotFound);
+                    break;
+                default:
+                    context.Result = new ContentResult
+                    {
+                        Content = File.ReadAllText("wwwroot/error-pages/500.html"),
+                        ContentType = "text/html",
+                        StatusCode = 200
+                    };
+                    break;
+            }
         }
     }
 }

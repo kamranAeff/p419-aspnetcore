@@ -19,6 +19,12 @@ namespace WebUI.Areas.Admin.Controllers
             return View(response);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var response = await tagService.GetById(id);
+            return View(response);
+        }
+
         public IActionResult Create()
         {
             return View();

@@ -37,5 +37,31 @@ namespace Services.Implementation
                 })
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<TagGetAll> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            var entity = await tagRepository.GetAsync(m => m.Id == id, cancellationToken);
+
+            var response = new TagGetAll
+            {
+                Id = entity.Id,
+                Text = entity.Text
+            };
+
+            return response;
+        }
+
+        public async Task<TagGetAll> GetByName(string name, CancellationToken cancellationToken = default)
+        {
+            var entity = await tagRepository.GetAsync(m => m.Text == name, cancellationToken);
+
+            var response = new TagGetAll
+            {
+                Id = entity.Id,
+                Text = entity.Text
+            };
+
+            return response;
+        }
     }
 }

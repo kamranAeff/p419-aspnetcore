@@ -1,0 +1,58 @@
+﻿@model TagGetAll
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Kateqoriyalar</h4>
+                    <span>
+                        Məhsul kateqoriyalarının idarə edilməsi
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">Kateqoriyalar</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        Yeni kateqoriya əlavə etmək
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card" method="post">
+        <div class="card-block">
+            <h4 class="sub-title">Yeni kateqoriya əlavə etmək</h4>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="Text" class="control-label">
+                        Name
+                    </label>
+                    <input asp-for="Text" type="text" class="form-control" />
+                    <p class="form-control">@Model.Text</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 text-right">
+                    <a class="btn btn-info" asp-action="index">Back</a>
+                    <a class="btn btn-warning" asp-action="edit" asp-route-id="@Model.Id">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
