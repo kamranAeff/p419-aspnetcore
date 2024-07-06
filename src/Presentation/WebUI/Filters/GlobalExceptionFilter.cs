@@ -9,6 +9,8 @@ namespace WebUI.Filters
         {
             context.ExceptionHandled = true;
 
+            Console.WriteLine(context.Exception.Message);
+
             switch (context.Exception)
             {
                 case NullReferenceException:

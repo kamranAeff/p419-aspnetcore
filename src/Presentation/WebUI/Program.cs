@@ -46,7 +46,17 @@ namespace WebUI
             });
             builder.Services.AddValidatorsFromAssemblyContaining<IServiceReference>(includeInternalTypes: true);
 
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.Name = "ogani-session";
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
+
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.MapControllerRoute(name: "areas",
@@ -54,7 +64,7 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=home}/{action=index}/{id?}");
+                pattern: "{controller=Lessons}/{action=index}/{id?}");
 
             app.Run();
         }
