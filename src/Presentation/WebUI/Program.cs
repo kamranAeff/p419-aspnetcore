@@ -47,8 +47,6 @@ namespace WebUI
 
             var app = builder.Build();
 
-            app.UseSession();
-
             app.UseStaticFiles();
 
             app.MapControllerRoute(name: "areas",
@@ -56,7 +54,7 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Lessons}/{action=index}/{id?}");
+                pattern: "{controller=Home}/{action=index}/{id?}");
 
             app.Run();
         }

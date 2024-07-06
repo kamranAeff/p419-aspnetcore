@@ -41,5 +41,23 @@ namespace Services.Implementation
 
             return data;
         }
+
+        public async Task<CategoryDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var entity = await categoryRepository.GetAsync(m => m.Id == id, cancellationToken);
+
+            return new CategoryDto
+            {
+                Id = entity.Id,
+                Name = entity.Name
+            };
+        }
+
+        public async Task RemoveAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var entity = await categoryRepository.GetAsync(m => m.Id == id, cancellationToken);
+            categoryRepository.Remove(entity);
+            await categoryRepository.SaveAsync(cancellationToken);
+        }
     }
 }
