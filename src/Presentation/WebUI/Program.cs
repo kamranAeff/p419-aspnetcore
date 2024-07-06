@@ -33,7 +33,6 @@ namespace WebUI
 
             });
 
-
             builder.Services.Configure<EmailConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
             builder.Services.Configure<CryptoServiceConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
 
@@ -45,13 +44,6 @@ namespace WebUI
                 cfg.DisableDataAnnotationsValidation = true;
             });
             builder.Services.AddValidatorsFromAssemblyContaining<IServiceReference>(includeInternalTypes: true);
-
-            builder.Services.AddSession(options =>
-            {
-                options.Cookie.Name = "ogani-session";
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
-                options.Cookie.IsEssential = true;
-            });
 
             var app = builder.Build();
 
