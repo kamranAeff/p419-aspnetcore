@@ -7,7 +7,7 @@ namespace Services.BlogPosts
     {
         public required IFormFile Image { get; set; }
         public required string Body { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 
     public class AddBlogPostResponseDto

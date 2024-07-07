@@ -13,7 +13,7 @@ namespace Services.Implementation
             var entity = new BlogPost
             {
                 Body = request.Body,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId ?? 1
             };
 
             var extension = Path.GetExtension(request.Image.FileName); // .jpg,  .jpeg

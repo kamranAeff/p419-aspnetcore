@@ -1,9 +1,12 @@
 ﻿using Domain;
+using Domain.Entities.Membership;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Contexts
 {
-    class DataContext : DbContext
+    //TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken
+    public class DataContext : IdentityDbContext<OganiUser, OganiRole, int, OganiUserClaim, OganiUserRole, OganiUserLogin, OganiRoleClaim, OganiUserToken>
     {
         public DataContext(DbContextOptions options)
             : base(options)

@@ -1,9 +1,16 @@
-﻿HTMLInputElement.prototype.singleChooser = function () {
+﻿HTMLInputElement.prototype.singleChooser = function (callback) {
     const element = this;
 
-    if (element.type != 'file') throw new Error('available only file type');
+    if (element.type != 'file') {
 
-    const viewer = element.parentElement;
+        if (callback) {
+            callback(new Error('available only file type'));
+            return;
+        }
+        else {
+            throw new Error('available only file type')
+        }
+    } const viewer = element.parentElement;
 
     element.addEventListener('change', function (e) {
 
@@ -15,6 +22,19 @@
             viewer.style.backgroundImage = `url(${reader.result})`;
             viewer.classList.add('loaded');
         }
+
+        let acceptFile = element.accept;
+
+        if (acceptFile != null && !RegExp(`^${acceptFile}`).test(e.target.files[0].type)) {
+            if (callback) {
+                callback(new Error(`available only file type (${acceptFile})`));
+                return;
+            }
+            else {
+                throw new Error(`available only file type (${acceptFile})`)
+            }
+        }
+
         reader.readAsDataURL(e.target.files[0]);
     });
 }

@@ -52,7 +52,7 @@
                     </label>
 
                     <label class="single-chooser">
-                        <input type="file" asp-for="Image" class="form-control" />
+                        <input type="file" asp-for="Image" class="form-control" accept="image/*" />
                     </label>
 
                     <span asp-validation-for="Image" class="text text-danger"></span>
@@ -93,10 +93,12 @@
                 .then(editor => { })
                 .catch(error => { console.error(error); });
 
-            document.querySelector('.single-chooser input[type=file]').singleChooser();
+            document.querySelector('.single-chooser input[type=file]').singleChooser((ex) => {
+                console.log(ex);
+            });
 
         })
 
-        
+
     </script>
 }
