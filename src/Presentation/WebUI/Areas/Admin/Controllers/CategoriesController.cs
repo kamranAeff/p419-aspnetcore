@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Categories;
 
 namespace WebUI.Areas.Admin.Controllers
@@ -13,6 +14,7 @@ namespace WebUI.Areas.Admin.Controllers
             this.categoryService = categoryService;
         }
 
+        [Authorize(Policy = "admin.categories.get")]
         public async Task<IActionResult> Index()
         {
             var data = await categoryService.GetAllAsync();
@@ -20,6 +22,7 @@ namespace WebUI.Areas.Admin.Controllers
             return View(data);
         }
 
+        [Authorize(Policy = "admin.categories.get")]
         public async Task<IActionResult> Details(int id)
         {
             var data = await categoryService.GetByIdAsync(id);
@@ -27,12 +30,15 @@ namespace WebUI.Areas.Admin.Controllers
             return View(data);
         }
 
+        [Authorize(Policy = "admin.categories.add")]
         public IActionResult Create()
         {
+            throw new ArgumentNullException();
             return View();
         }
 
         [HttpPost]
+        [Authorize(Policy = "admin.categories.add")]
         public async Task<IActionResult> Create(AddCategoryRequestDto model)
         {
             await categoryService.AddAsync(model);
@@ -40,6 +46,7 @@ namespace WebUI.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Policy = "admin.categories.edit")]
         public async Task<IActionResult> Edit(int id)
         {
             var data = await categoryService.GetByIdAsync(id);
@@ -48,6 +55,7 @@ namespace WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "admin.categories.edit")]
         public async Task<IActionResult> Edit(EditCategortDto model)
         {
             await categoryService.EditAsync(model);
@@ -55,9 +63,11 @@ namespace WebUI.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [Authorize(Policy = "admin.categories.remove")]
         public async Task<IActionResult> Remove(int id)
         {
+            throw new ArgumentNullException();
+
             await categoryService.RemoveAsync(id);
 
             return Json(new

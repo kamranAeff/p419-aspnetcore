@@ -11,6 +11,33 @@ namespace WebUI.Filters
 
             Console.WriteLine(context.Exception.Message);
 
+            if ("XMLHttpRequest".Equals(context.HttpContext.Request.Headers["X-Requested-With"]))
+            {
+                GenerateAjaxResponse(context);
+                return;
+            }
+
+            GenerateHttpResponse(context);
+        }
+
+        private void GenerateAjaxResponse(ExceptionContext context)
+        {
+            switch (context.Exception)
+            {
+                case NullReferenceException:
+                case ArgumentNullException:
+                default:
+                    context.Result = new JsonResult(new
+                    {
+                        error = true,
+                        message = "nese o deyil"
+                    });
+                    break;
+            }
+        }
+
+        private void GenerateHttpResponse(ExceptionContext context)
+        {
             switch (context.Exception)
             {
                 case NullReferenceException:

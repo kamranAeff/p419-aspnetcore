@@ -23,6 +23,11 @@
     <link rel="stylesheet" type="text/css" href="~/admin/css/jquery.mCustomScrollbar.css">
     <script src="https://kit.fontawesome.com/1154e1d6ee.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("addcss",required:false)
+    <style>
+        li.active > *{
+            color: #FE8A7D !important;
+        }
+    </style>
 </head>
 <body>
     <partial name="_Preloader"/>
@@ -380,6 +385,17 @@
     <!-- custom js -->
     <script src="~/admin/js/vartical-layout.min.js"></script>
     <script type="text/javascript" src="~/admin/js/script.min.js"></script>
+    <script>
+        const path = location.pathname;
+        console.log(path);
+        const menuItem = document.querySelector(`a[href='${path}']`);
+        console.log(menuItem);
+        if (menuItem) {
+            menuItem.parentElement.classList.add('active');
+
+            menuItem.closest('.pcoded-hasmenu')?.classList.add('active', 'pcoded-trigger');
+        }
+    </script>
     @await RenderSectionAsync("addjs", required: false)
 </body>
 </html>

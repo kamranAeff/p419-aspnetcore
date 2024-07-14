@@ -1,7 +1,12 @@
 ﻿using Domain.Entities.Membership;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.Common;
+using System.Security.Claims;
+using System.Web;
 
 namespace WebUI.Controllers
 {
@@ -10,11 +15,13 @@ namespace WebUI.Controllers
     {
         private readonly UserManager<OganiUser> userManager;
         private readonly SignInManager<OganiUser> signInManager;
+        private readonly IEmailService emailService;
 
-        public AccountController(UserManager<OganiUser> userManager, SignInManager<OganiUser> signInManager)
+        public AccountController(UserManager<OganiUser> userManager, SignInManager<OganiUser> signInManager,IEmailService emailService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailService = emailService;
         }
 
         public IActionResult Register()
@@ -41,6 +48,27 @@ namespace WebUI.Controllers
                 }
                 return View();
             }
+
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            token = HttpUtility.UrlEncode(token);
+
+            string link = $"{Request.Scheme}://{Request.Host}/approve-account?token={token}";
+
+
+            string message = $"Salam hesabinizi tesdiq etmek ucun <a href=\"{link}\">link</a>`le davam edin";
+
+            await emailService.SendEmail(email,"Approve Registration", message);
+
+            return RedirectToAction("Index", "Home");
+        }
+        
+        [Route("/approve-account")]
+        public async Task<IActionResult> RegisterComfirm(string token)
+        {
+            var user = await userManager.FindByEmailAsync("akamran@code.edu.az");
+
+            await userManager.ConfirmEmailAsync(user, token);
 
             return RedirectToAction("Index", "Home");
         }
@@ -77,7 +105,29 @@ namespace WebUI.Controllers
                 goto l1;
             }
 
-            await signInManager.SignInAsync(user, true);
+            if (!user.EmailConfirmed)
+            {
+                ModelState.AddModelError("User", "Email not comfirmend");
+                goto l1;
+            }
+
+            //await signInManager.SignInAsync(user, true);
+
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+            };
+
+            var now = DateTime.UtcNow;
+            var properties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                IssuedUtc = now,
+                ExpiresUtc = now.AddMinutes(2)
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, properties);
 
             var callbackUrl = Request.Query["ReturnUrl"];
 

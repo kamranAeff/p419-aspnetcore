@@ -27,18 +27,6 @@ namespace Services.Implementation.Registration
             builder.RegisterTypes(types.Where(m => m.IsSingleton == false).Select(m => m.Type).ToArray())
                .AsImplementedInterfaces()
                .InstancePerLifetimeScope();
-
-            builder.RegisterType(typeof(UserManager<OganiUser>))
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType(typeof(SignInManager<OganiUser>))
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType(typeof(RoleManager<OganiRole>))
-                .AsSelf()
-                .InstancePerLifetimeScope();
         }
     }
 }

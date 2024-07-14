@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace WebUI
+namespace Persistence.Contexts
 {
-    public class OganiIdentityErrorDescriber : IdentityErrorDescriber
+    class ErrorDescriber : IdentityErrorDescriber
     {
         public override IdentityError PasswordRequiresUpper()
         {

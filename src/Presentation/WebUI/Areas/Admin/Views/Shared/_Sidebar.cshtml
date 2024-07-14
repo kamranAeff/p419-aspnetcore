@@ -8,7 +8,7 @@
                     <span class="pcoded-mtext">Ana səhifə</span>
                 </a>
             </li>
-            <li class="pcoded-hasmenu active pcoded-trigger">
+            <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
                     <span class="pcoded-mtext">Məhsullar</span>
@@ -31,20 +31,28 @@
                             <span class="pcoded-badge label label-danger">5</span>
                         </a>
                     </li>
+
+                    @if (User.HasAccess("admin.categories.get"))
+                    {
+                        <li>
+                            <a asp-controller="Categories" asp-action="Index">
+                                <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                                <span class="pcoded-mtext">Kateqoriyalar</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
-            </li>
-            <li>
-                <a asp-controller="Categories" asp-action="Index">
-                    <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                    <span class="pcoded-mtext">Kateqoriyalar</span>
-                </a>
-            </li>
-            <li>
-                <a asp-controller="Tags" asp-action="Index">
-                    <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                    <span class="pcoded-mtext">Təqlər</span>
-                </a>
-            </li>
+            </li>  
+            @if (User.HasAccess("admin.tags.get"))
+            {
+                <li>
+                    <a asp-controller="Tags" asp-action="Index">
+                        <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                        <span class="pcoded-mtext">Təqlər</span>
+                    </a>
+                </li>
+            }
+           
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">

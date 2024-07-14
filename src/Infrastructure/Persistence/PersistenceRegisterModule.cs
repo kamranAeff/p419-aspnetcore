@@ -1,9 +1,5 @@
 ﻿using Autofac;
-using Domain.Entities.Membership;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 
 namespace Persistence
@@ -22,20 +18,6 @@ namespace Persistence
             builder.RegisterType<DataContext>()
                 .As<DbContext>()
                 .InstancePerLifetimeScope();
-
-            builder.Register(ctx =>
-            {
-                var services = new ServiceCollection();
-                Console.WriteLine("ok");
-                services.AddIdentity<OganiUser, OganiRole>()
-                        .AddEntityFrameworkStores<DataContext>()
-                        .AddDefaultTokenProviders();
-
-                // Add any other identity configurations here
-
-                return services;
-            })
-            .As<IServiceCollection>().InstancePerLifetimeScope();
         }
     }
 }
