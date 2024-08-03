@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <div class="box" style="top:100px;left:100px"></div>
+
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/game")
+            .build();
+
+        connection.on('ReceivePositionAsync', function (json) {
+            var position = JSON.parse(json);
+            console.log(position);
+
+            box.style.top = `${position.clientY}px`;
+            box.style.left = `${position.clientX}px`;
+            box.style.backgroundColor = position.backgroundColor;
+        });
+
+        connection.start().then(function () {
+            console.log('connected!');
+
+            document.body.addEventListener('mousemove', mouseMove);
+
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        let box = null;
+
+        function mouseMove(e) {
+
+            if (box == null) {
+                box = document.querySelector('.box');
+            }
+
+            if (box == null || box == undefined) {
+                return;
+            }
+
+            const { clientX, clientY } = e;
+
+            box.style.top = `${clientY}px`;
+            box.style.left = `${clientX}px`;
+            box.style.backgroundColor = `rgb(${(clientX + clientY) % 255},${clientX % 255},${clientY % 255})`;
+        
+            var obj = {
+                clientX,
+                clientY,
+                backgroundColor: box.style.backgroundColor
+            };
+
+            var json = JSON.stringify(obj);
+        
+            connection.invoke("SendPosition", json);
+        }
+    </script>
+</body>
+</html>

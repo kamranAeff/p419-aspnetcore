@@ -1,0 +1,14 @@
+body {
+    height: 100vh;
+    background-color: azure;
+    position: relative;
+    margin: 0;
+}
+
+.box {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: teal;
+    position: absolute;
+}
