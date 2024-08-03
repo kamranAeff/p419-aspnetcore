@@ -23,7 +23,6 @@ namespace WebUI
             LoadPolicies();
 
             var builder = WebApplication.CreateBuilder(args);
-            Console.WriteLine(builder.Environment.EnvironmentName);
 
             builder.Host.UseServiceProviderFactory(new IoCFactory());
 

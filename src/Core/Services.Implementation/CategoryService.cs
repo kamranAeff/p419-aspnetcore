@@ -17,7 +17,7 @@ namespace Services.Implementation
             return new AddCategoryResponseDto { Id = entity.Id, Name = entity.Name };
         }
 
-        public async Task<EditCategortDto> EditAsync(EditCategortDto model, CancellationToken cancellationToken = default)
+        public async Task<EditCategoryDto> EditAsync(EditCategoryDto model, CancellationToken cancellationToken = default)
         {
             var entity = await categoryRepository.GetAsync(m => m.Id == model.Id, cancellationToken);
 

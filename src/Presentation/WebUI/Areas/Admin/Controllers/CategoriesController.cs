@@ -56,7 +56,7 @@ namespace WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Policy = "admin.categories.edit")]
-        public async Task<IActionResult> Edit(EditCategortDto model)
+        public async Task<IActionResult> Edit(EditCategoryDto model)
         {
             await categoryService.EditAsync(model);
 
