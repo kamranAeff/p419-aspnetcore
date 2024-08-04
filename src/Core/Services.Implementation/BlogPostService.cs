@@ -33,24 +33,17 @@ namespace Services.Implementation
             return AddBlogPostResponseDto.Create(entity);
         }
 
-        public async Task<IEnumerable<BlogPostGetAllDto>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<BlogPost>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await blogPostRepository.GetAll()
-                .Select(m => new BlogPostGetAllDto
-                {
-                    Id = m.Id,
-                    ImagePath = m.ImagePath,
-                    Body = m.Body,
-                    CategoryId = m.CategoryId,
-                })
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<BlogPostGetAllDto> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<BlogPost> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var entity = await blogPostRepository.GetAsync(m => m.Id == id, cancellationToken);
 
-            return BlogPostGetAllDto.Create(entity);
+            return entity;
         }
     }
 }

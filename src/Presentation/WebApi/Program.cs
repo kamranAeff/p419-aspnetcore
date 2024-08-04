@@ -7,6 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
 using Services;
 using System.Text.Json.Serialization;
+using WebApi.MapperConfiguration.BlogPosts;
 
 namespace WebApi
 {
@@ -16,12 +17,17 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.UseServiceProviderFactory(new IoCFactory());
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<BlogPostProfile>();
 
-            builder.Services.AddControllers()
-                .AddJsonOptions(cfg =>
-                {
-                    cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                });
+            });
+
+            builder.Services.AddControllers();
+                //.AddJsonOptions(cfg =>
+                //{
+                //    cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                //});
 
             builder.Services.AddDataContext(cfg =>
             {
