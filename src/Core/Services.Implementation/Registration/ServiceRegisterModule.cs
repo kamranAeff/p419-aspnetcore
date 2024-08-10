@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using Domain.Entities.Membership;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
 namespace Services.Implementation.Registration
