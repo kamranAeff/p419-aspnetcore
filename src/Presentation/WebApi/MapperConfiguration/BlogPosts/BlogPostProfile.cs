@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
-using Microsoft.SqlServer.Server;
+using WebApi.MapperConfiguration.Converters;
 using WebApi.Models;
 
 namespace WebApi.MapperConfiguration.BlogPosts

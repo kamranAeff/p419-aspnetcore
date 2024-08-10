@@ -1,47 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Services.Categories;
+﻿using Application.Modules.CategoriesModule.Commands.CategoryAddCommand;
+using Application.Modules.CategoriesModule.Commands.CategoryEditCommand;
+using Application.Modules.CategoriesModule.Commands.CategoryRemoveCommand;
+using Application.Modules.CategoriesModule.Queries.CategoriesGetAllQuery;
+using Application.Modules.CategoriesModule.Queries.CategoryGetByIdQuery;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController(ICategoryService categoryService) : ControllerBase
+    public class CategoriesController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromRoute] CategoriesGetAllRequest request)
         {
-            var data = await categoryService.GetAllAsync();
-            return Ok(data);
+            var response = await mediator.Send(request);
+            return Ok(response);
         }
 
         [HttpGet("{id:int:min(1)}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] CategoryGetByIdRequest request)
         {
-            var data = await categoryService.GetByIdAsync(id);
-            return Ok(data);
+            var response = await mediator.Send(request);
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddCategoryRequestDto request)
+        public async Task<IActionResult> Add(CategoryAddRequest request)
         {
-            var data = await categoryService.AddAsync(request);
-            return CreatedAtAction(nameof(GetById), routeValues: new { id = data.Id }, value: data);
+            var response = await mediator.Send(request);
+
+            return Ok(response);
         }
 
         [HttpPut("{id:int:min(1)}")]
-        public async Task<IActionResult> Edit(int id, [FromBody] EditCategoryDto request)
+        public async Task<IActionResult> Edit(int id, [FromBody] CategoryEditRequest request)
         {
             request.Id = id;
-            var data = await categoryService.EditAsync(request);
-            return Ok(data);
+            var response = await mediator.Send(request);
+
+            return Ok(response);
         }
 
         [HttpDelete("{id:int:min(1)}")]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove([FromRoute] CategoryRemoveRequest request)
         {
-            await categoryService.RemoveAsync(id);
+            await mediator.Send(request);
+
             return NoContent();
         }
-
     }
 }

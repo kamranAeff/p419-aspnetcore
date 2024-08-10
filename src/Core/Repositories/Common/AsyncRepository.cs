@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Repositories.Common
@@ -41,7 +42,7 @@ namespace Repositories.Common
             var entry = await query.FirstOrDefaultAsync(cancellationToken);
 
             if (entry is null)
-                throw new ArgumentNullException();
+                throw new NotFoundException($"{typeof(T).Name} not found by expression");
 
             return entry!;
         }

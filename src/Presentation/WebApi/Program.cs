@@ -1,7 +1,9 @@
+using Application;
+using Application.Behaviors;
 using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
@@ -23,11 +25,14 @@ namespace WebApi
 
             });
 
-            builder.Services.AddControllers();
-                //.AddJsonOptions(cfg =>
-                //{
-                //    cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                //});
+            builder.Services.AddControllers(cfg =>
+            {
+                //cfg.Filters.Add(new GlobalExceptionFilter());
+            })
+                .AddJsonOptions(cfg =>
+                {
+                    cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });
 
             builder.Services.AddDataContext(cfg =>
             {
@@ -49,12 +54,20 @@ namespace WebApi
             {
                 cfg.DisableDataAnnotationsValidation = true;
             });
-            builder.Services.AddValidatorsFromAssemblyContaining<IServiceReference>(includeInternalTypes: true);
+            builder.Services.AddValidatorsFromAssemblyContaining<IApplicationReference>(includeInternalTypes: true);
+            builder.Services.AddScoped<IValidatorInterceptor, ValidatorInterceptor>();
 
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblyContaining<IApplicationReference>();
+                //cfg.AddBehavior(typeof(IPipelineBehavior<,>),typeof(PerformanceBehavior<,>));
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            });
 
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseGlobalException();
 
             if (app.Environment.IsDevelopment())
             {
