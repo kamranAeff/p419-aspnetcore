@@ -1,0 +1,55 @@
+﻿using Application.Modules.TagsModule.Commands.TagAddCommand;
+using Application.Modules.TagsModule.Commands.TagEditCommand;
+using Application.Modules.TagsModule.Commands.TagRemoveCommand;
+using Application.Modules.TagsModule.Queries.TagGetByIdQuery;
+using Application.Modules.TagsModule.Queries.TagsGetAllQuery;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TagsController(IMediator mediator) : ControllerBase
+    {
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromRoute] TagsGetAllRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
+        [HttpGet("{id:int:min(1)}")]
+        public async Task<IActionResult> Get([FromRoute] TagGetByIdRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(TagAddRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return CreatedAtAction(nameof(Get), new { id = data.Id }, response);
+        }
+
+        [HttpPut("{id:int:min(1)}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] TagEditRequest request)
+        {
+            request.Id = id;
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
+        [HttpDelete("{id:int:min(1)}")]
+        public async Task<IActionResult> Remove([FromRoute] TagRemoveRequest request)
+        {
+            await mediator.Send(request);
+            return NoContent();
+        }
+    }
+}

@@ -1,4 +1,4 @@
 ﻿namespace Services
 {
-    public interface IServiceReference {}
+    public interface IServiceReference { }
 }
