@@ -8,6 +8,7 @@ namespace Services.Implementation.Common
     [SingletonLifeTime]
     class LocalFileService(IHostEnvironment env) : IFileService
     {
+
         public async Task<string> UploadAsync(IFormFile file, CancellationToken cancellation = default)
         {
             var extension = Path.GetExtension(file.FileName); // .jpg,  .jpeg
@@ -20,6 +21,41 @@ namespace Services.Implementation.Common
             }
 
             return fileName;
+        }
+        public async Task<string> ChangeAsync(string identifier, string oldFileName, IFormFile file, CancellationToken cancellation = default)
+        {
+            var oldFileInfo = new FileInfo(
+                Path.Combine(env.ContentRootPath, "wwwroot", "uploads", oldFileName)
+                );
+
+            if (oldFileInfo.Exists)
+            {
+                oldFileInfo.MoveTo(
+                    Path.Combine(env.ContentRootPath,
+                    "wwwroot",
+                    "uploads",
+                    $"{identifier}_archive_{Path.GetFileNameWithoutExtension(oldFileInfo.FullName)}{Path.GetExtension(oldFileInfo.FullName)}"));
+            }
+
+            return await UploadAsync(file, cancellation);
+        }
+
+        public Task ArchiveAsync(string identifier, string oldFileName, CancellationToken cancellation = default)
+        {
+            var oldFileInfo = new FileInfo(
+                Path.Combine(env.ContentRootPath, "wwwroot", "uploads", oldFileName)
+                );
+
+            if (oldFileInfo.Exists)
+            {
+                oldFileInfo.MoveTo(
+                    Path.Combine(env.ContentRootPath,
+                    "wwwroot",
+                    "uploads",
+                    $"{identifier}_archive_{Path.GetFileNameWithoutExtension(oldFileInfo.FullName)}{Path.GetExtension(oldFileInfo.FullName)}"));
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

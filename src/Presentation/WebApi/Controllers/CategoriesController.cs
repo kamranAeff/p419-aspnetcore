@@ -2,9 +2,11 @@
 using Application.Modules.CategoriesModule.Commands.CategoryEditCommand;
 using Application.Modules.CategoriesModule.Commands.CategoryRemoveCommand;
 using Application.Modules.CategoriesModule.Queries.CategoriesGetAllQuery;
+using Application.Modules.CategoriesModule.Queries.CategoriesPagedQuery;
 using Application.Modules.CategoriesModule.Queries.CategoryGetByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
 
 namespace WebApi.Controllers
 {
@@ -12,8 +14,15 @@ namespace WebApi.Controllers
     [ApiController]
     public class CategoriesController(IMediator mediator) : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] CategoriesGetAllRequest request)
+        [HttpPost("{page:int:min(1)}/{size:int:min(2)}")]
+        public async Task<IActionResult> GetAll(CategoriesPagedRequest request)
+        {
+            var response = await mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPost("list")]
+        public async Task<IActionResult> GetAll(CategoriesGetAllRequest request)
         {
             var response = await mediator.Send(request);
             return Ok(response);

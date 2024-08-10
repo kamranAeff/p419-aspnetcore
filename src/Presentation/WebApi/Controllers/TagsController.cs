@@ -3,6 +3,7 @@ using Application.Modules.TagsModule.Commands.TagEditCommand;
 using Application.Modules.TagsModule.Commands.TagRemoveCommand;
 using Application.Modules.TagsModule.Queries.TagGetByIdQuery;
 using Application.Modules.TagsModule.Queries.TagsGetAllQuery;
+using Application.Modules.TagsModule.Queries.TagsPagedQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class TagsController(IMediator mediator) : ControllerBase
     {
+        [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
+        public async Task<IActionResult> GetAll([FromRoute] TagsPagedRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromRoute] TagsGetAllRequest request)
         {
@@ -32,7 +40,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Add(TagAddRequest request)
         {
             var data = await mediator.Send(request);
-            var response = ApiResponse.Success(data);
+            var response = ApiResponse.Success(data,StatusCodes.Status201Created);
             return CreatedAtAction(nameof(Get), new { id = data.Id }, response);
         }
 

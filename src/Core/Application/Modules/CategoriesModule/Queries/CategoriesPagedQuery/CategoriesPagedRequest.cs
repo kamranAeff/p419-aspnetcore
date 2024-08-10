@@ -3,9 +3,9 @@ using Domain.Entities;
 using Domain.StableModels;
 using MediatR;
 
-namespace Application.Modules.CategoriesModule.Queries.CategoriesGetAllQuery
+namespace Application.Modules.CategoriesModule.Queries.CategoriesPagedQuery
 {
-    public class CategoriesGetAllRequest : IRequest<IEnumerable<Category>>, ISortable
+    public class CategoriesPagedRequest : Pageable, IRequest<IPagedResponse<Category>>, ISortable
     {
         public string Column { get; set; }
 
