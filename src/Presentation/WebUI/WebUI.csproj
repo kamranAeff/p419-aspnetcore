@@ -7,6 +7,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\Categories\**" />
+    <Compile Remove="Areas\Admin\Views\Dashboard\**" />
+    <Compile Remove="Areas\Admin\Views\Shared\**" />
+    <Compile Remove="Areas\Admin\Views\Subscribers\**" />
+    <Compile Remove="Areas\Admin\Views\Tags\**" />
+    <Compile Remove="Views\Blog\**" />
+    <Compile Remove="Views\Home\**" />
+    <Compile Remove="Views\Shared\Components\AllCategories\**" />
+    <Compile Remove="Views\Shop\**" />
+    <Content Remove="Areas\Admin\Views\Categories\**" />
+    <Content Remove="Areas\Admin\Views\Dashboard\**" />
+    <Content Remove="Areas\Admin\Views\Shared\**" />
+    <Content Remove="Areas\Admin\Views\Subscribers\**" />
+    <Content Remove="Areas\Admin\Views\Tags\**" />
+    <Content Remove="Views\Blog\**" />
+    <Content Remove="Views\Home\**" />
+    <Content Remove="Views\Shared\Components\AllCategories\**" />
+    <Content Remove="Views\Shop\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Categories\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Dashboard\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Shared\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Subscribers\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Tags\**" />
+    <EmbeddedResource Remove="Views\Blog\**" />
+    <EmbeddedResource Remove="Views\Home\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\AllCategories\**" />
+    <EmbeddedResource Remove="Views\Shop\**" />
+    <None Remove="Areas\Admin\Views\Categories\**" />
+    <None Remove="Areas\Admin\Views\Dashboard\**" />
+    <None Remove="Areas\Admin\Views\Shared\**" />
+    <None Remove="Areas\Admin\Views\Subscribers\**" />
+    <None Remove="Areas\Admin\Views\Tags\**" />
+    <None Remove="Views\Blog\**" />
+    <None Remove="Views\Home\**" />
+    <None Remove="Views\Shared\Components\AllCategories\**" />
+    <None Remove="Views\Shop\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\RolesController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\SubscribersController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\TagsController.cs" />
+    <Compile Remove="Controllers\BlogController.cs" />
+    <Compile Remove="Controllers\HomeController.cs" />
+    <Compile Remove="Controllers\ShopController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Blog\Create.cshtml" />
+    <Content Remove="Views\Shared\_Categories.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
@@ -35,6 +90,10 @@
     <Content Update="wwwroot\error-pages\404.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>

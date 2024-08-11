@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     public class BlogPostsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] BlogPostsGetAllRequest request)
+        public async Task<IActionResult> GetAll([FromQuery] BlogPostsGetAllRequest request)
         {
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);

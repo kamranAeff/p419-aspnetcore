@@ -21,8 +21,8 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost("list")]
-        public async Task<IActionResult> GetAll(CategoriesGetAllRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] CategoriesGetAllRequest request)
         {
             var response = await mediator.Send(request);
             return Ok(response);

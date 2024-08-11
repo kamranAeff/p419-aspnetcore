@@ -1,41 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.BlogPosts;
+using WebUI.Proxies;
 
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class BlogController : Controller
     {
-        private readonly IBlogPostService blogPostService;
+        private readonly IBlogPostProxy proxy;
 
-        public BlogController(IBlogPostService blogPostService)
+        public BlogController(IBlogPostProxy proxy)
         {
-            this.blogPostService = blogPostService;
+            this.proxy = proxy;
         }
 
         public async Task<IActionResult> Index()
         {
-            var response = await blogPostService.GetAll();
+            var response = await proxy.GetAll();
             return View(response);
-        }
-
-        public async Task<IActionResult> Details(int id)
-        {
-            var response = await blogPostService.GetById(id);
-            return View(response);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromForm] AddBlogPostRequestDto request)
-        {
-            Console.WriteLine("$$###############################demo");
-            await blogPostService.AddAsync(request);
-            return RedirectToAction(nameof(Index));
         }
     }
 }

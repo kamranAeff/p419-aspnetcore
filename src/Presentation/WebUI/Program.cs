@@ -11,6 +11,7 @@ using Persistence.Contexts;
 using Services;
 using System.Reflection;
 using WebUI.Filters;
+using WebUI.Proxies;
 
 namespace WebUI
 {
@@ -111,6 +112,11 @@ namespace WebUI
                         });
                     });
                 }
+            });
+
+            builder.Services.AddSingleton<IBlogPostProxy>(cfg =>
+            {
+                return new BlogPostProxy(builder.Configuration["proxyChannel"]!);
             });
 
             var app = builder.Build();

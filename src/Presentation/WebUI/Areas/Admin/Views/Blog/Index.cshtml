@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BlogPostGetAllDto>
+﻿@using WebUI.Proxies
+@model ApiResponse<IEnumerable<BlogPost>>
 @{
     ViewData["Title"] = "Index";
 }
@@ -53,10 +54,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Data)
                         {
                             <tr>
-                                <td class="image-cell"><img src="~/uploads/@item.ImagePath" /></td>
+                                <td class="image-cell"><img src="@item.Image" /></td>
                                 <td>@item.Body</td>
                                 <td>@item.CategoryId</td>
                                 <td class="operations">

@@ -10,8 +10,20 @@ namespace Application.Modules.CategoriesModule.Queries.CategoriesGetAllQuery
     {
         public async Task<IEnumerable<Category>> Handle(CategoriesGetAllRequest request, CancellationToken cancellationToken)
         {
-            var response = await categoryRepository.GetAll()
-                .Sort(request)
+            var query = categoryRepository.GetAll();
+
+            #region Filter
+            if (!string.IsNullOrWhiteSpace(request.Name))
+            {
+                query = query.Where(m => m.Name.StartsWith(request.Name));
+            }
+            if (request.Id > 0)
+            {
+                query = query.Where(m => m.Id == request.Id);
+            }
+            #endregion
+
+            var response = await query.Sort(request)
                 .ToListAsync(cancellationToken);
             return response;
         }

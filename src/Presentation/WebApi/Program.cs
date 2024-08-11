@@ -7,8 +7,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
-using Services;
 using System.Text.Json.Serialization;
+using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 
 namespace WebApi
@@ -28,10 +28,14 @@ namespace WebApi
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
+                cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
             })
                 .AddJsonOptions(cfg =>
                 {
                     cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<int>());
+                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<string>());
+                    cfg.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
             builder.Services.AddDataContext(cfg =>
@@ -60,13 +64,17 @@ namespace WebApi
             builder.Services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssemblyContaining<IApplicationReference>();
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>),typeof(PageableBinderPipelineBehavior<,>));
                 //cfg.AddBehavior(typeof(IPipelineBehavior<,>),typeof(PerformanceBehavior<,>));
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             });
 
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(cfg => cfg.AddPolicy("allowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+
             var app = builder.Build();
+            app.UseCors("allowAll");
             app.UseGlobalException();
 
             if (app.Environment.IsDevelopment())
