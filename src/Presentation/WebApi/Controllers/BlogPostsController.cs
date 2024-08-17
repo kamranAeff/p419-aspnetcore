@@ -3,6 +3,7 @@ using Application.Modules.BlogPostsModule.Commands.BlogPostEditCommand;
 using Application.Modules.BlogPostsModule.Commands.BlogPostRemoveCommand;
 using Application.Modules.BlogPostsModule.Queries.BlogPostGetByIdQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery;
+using Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,8 +21,16 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
+        public async Task<IActionResult> GetAll([FromQuery] BlogPostsPagedRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
         [HttpGet("{id:int:min(1)}")]
-        public async Task<IActionResult> Get([FromRoute]BlogPostGetByIdRequest request)
+        public async Task<IActionResult> Get([FromRoute] BlogPostGetByIdRequest request)
         {
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);
@@ -39,7 +48,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm]BlogPostAddRequest request)
+        public async Task<IActionResult> Add([FromForm] BlogPostAddRequest request)
         {
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data, StatusCodes.Status201Created);
@@ -55,7 +64,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id:int:min(1)}")]
-        public async Task<IActionResult> Remove([FromRoute]BlogPostRemoveRequest request)
+        public async Task<IActionResult> Remove([FromRoute] BlogPostRemoveRequest request)
         {
             await mediator.Send(request);
             return NoContent();

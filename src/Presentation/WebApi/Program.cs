@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
 using System.Text.Json.Serialization;
+using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 
@@ -22,6 +23,12 @@ namespace WebApi
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<BlogPostProfile>();
+
+            });
+
+            builder.Services.Configure<RouteOptions>(cfg => {
+
+                cfg.ConstraintMap.TryAdd("slug", typeof(SlugRouteConstraint));
 
             });
 

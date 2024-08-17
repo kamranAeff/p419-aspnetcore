@@ -7,7 +7,7 @@ namespace Repositories.Common
     public abstract class AsyncRepository<T> : IAsyncRepository<T>
         where T : class
     {
-        private readonly DbContext db;
+        protected readonly DbContext db;
 
         public AsyncRepository(DbContext db)
         {

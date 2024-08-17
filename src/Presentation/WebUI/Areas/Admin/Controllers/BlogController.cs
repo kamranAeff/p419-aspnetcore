@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebUI.Proxies;
+using WebUI.Proxies.BlogPostProxy;
 
 namespace WebUI.Areas.Admin.Controllers
 {
