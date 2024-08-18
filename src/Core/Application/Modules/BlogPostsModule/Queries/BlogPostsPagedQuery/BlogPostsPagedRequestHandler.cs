@@ -6,25 +6,25 @@ using Repositories;
 
 namespace Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery
 {
-    class BlogPostsPagedRequestHandler(IBlogPostRepository blogPostRepository,IHttpContextAccessor ctx)
+    class BlogPostsPagedRequestHandler(IBlogPostRepository blogPostRepository,ICategoryRepository categoryRepository,IHttpContextAccessor ctx)
         : IRequestHandler<BlogPostsPagedRequest, IPagedResponse<BlogPostResponse>>
     {
         public async Task<IPagedResponse<BlogPostResponse>> Handle(BlogPostsPagedRequest request, CancellationToken cancellationToken)
         {
-            var query = blogPostRepository.GetAll();
-
-
             var host = ctx.GetHost();
 
-            return await query
-                .Select(m => new BlogPostResponse
-                {
-                    Id = m.Id,
-                    Body = m.Body,
-                    CategoryId = m.CategoryId,
-                    Image = $"{host}/files/{m.ImagePath}",
-                })
-                .Sort(request).ToPaginateAsync(request, cancellationToken);
+            var query = from bp in blogPostRepository.GetAll()
+                        join c in categoryRepository.GetAll() on bp.CategoryId equals c.Id
+                        select new BlogPostResponse
+                        {
+                            Id = bp.Id,
+                            Body = bp.Body,
+                            CategoryId = bp.CategoryId,
+                            CategoryName = c.Name,
+                            Image = $"{host}/files/{bp.ImagePath}",
+                        };
+
+            return await query.Sort(request).ToPaginateAsync(request, cancellationToken);
         }
     }
 }

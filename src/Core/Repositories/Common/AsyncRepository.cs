@@ -24,10 +24,12 @@ namespace Repositories.Common
             db.Entry(entry).State = EntityState.Modified;
         }
 
-        public IQueryable<T> GetAll()
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)
         {
             var query = db.Set<T>().AsQueryable();
 
+            if (predicate is not null)
+                query = query.Where(predicate);
 
             return query;
         }

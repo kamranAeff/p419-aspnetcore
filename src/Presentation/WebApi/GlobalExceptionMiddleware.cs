@@ -22,6 +22,7 @@ namespace WebApi
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 ApiResponse response = null;
                 switch (ex)
                 {

@@ -1,16 +1,5 @@
-using Domain.Configurations;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Contexts;
-using Services;
-using System.Reflection;
-using WebUI.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Services.BlogPost;
 
 namespace WebUI
 {
@@ -25,6 +14,11 @@ namespace WebUI
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
+
+            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddHttpClient("httpClient");
+
+            builder.Services.AddSingleton<IBlogPostService, BlogPostService>();
 
             var app = builder.Build();
             app.UseStaticFiles();
@@ -43,7 +37,7 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=index}/{id?}");
+                pattern: "{controller=Blog}/{action=index}/{id?}");
             #endregion
 
             app.Run();

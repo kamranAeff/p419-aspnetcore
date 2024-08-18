@@ -35,16 +35,6 @@ namespace WebApi.Controllers
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);
             return Ok(response);
-
-            //var response = mapper.Map<BlogPostDto>(data, cfg =>
-            //{
-            //    if (Request.Headers.TryGetValue("dateFormat", out StringValues formats))
-            //        cfg.Items.Add("dateFormat", formats.FirstOrDefault());
-
-            //    string host = $"{Request.Scheme}://{Request.Host}";
-            //    cfg.Items.Add("host", host);
-
-            //});
         }
 
         [HttpPost]
