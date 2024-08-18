@@ -4,9 +4,12 @@ using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
@@ -95,6 +98,28 @@ namespace WebApi
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void LoadPolicies()
+        {
+            var types = typeof(Program).Assembly.GetTypes();
+
+            var policies = types
+                .Where(t => typeof(ControllerBase).IsAssignableFrom(t) && t.IsDefined(typeof(AuthorizeAttribute), true))
+                .SelectMany(t => t.GetCustomAttributes<AuthorizeAttribute>())
+                .Union(
+                types
+                .Where(t => typeof(ControllerBase).IsAssignableFrom(t))
+                .SelectMany(type => type.GetMethods())
+                .Where(method => method.IsPublic
+                 && !method.IsDefined(typeof(NonActionAttribute), true)
+                 && method.IsDefined(typeof(AuthorizeAttribute), true))
+                 .SelectMany(t => t.GetCustomAttributes<AuthorizeAttribute>())
+                )
+                .Where(a => !string.IsNullOrWhiteSpace(a.Policy))
+                .SelectMany(a => a.Policy.Split(new[] { "," }, System.StringSplitOptions.RemoveEmptyEntries))
+                .Distinct()
+                .ToArray();
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿@using Domain.Entities
-@using WebUI.Proxies;
-@model ApiResponse<IEnumerable<BlogPost>>
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
@@ -55,28 +52,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Data)
-                        {
-                            <tr>
-                                <td class="image-cell"><img src="@item.Image" /></td>
-                                <td>@item.Body</td>
-                                <td>@item.CategoryId</td>
-                                <td class="operations">
-                                    <a class="btn btn-sm btn-warning" asp-action="edit"
-                                       asp-route-id="@item.Id">
-                                        <i class="fa fa-pen"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-secondary" asp-action="details"
-                                       asp-route-id="@item.Id">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-danger"
-                                       asp-route-id="@item.Id">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td class="image-cell"><img src="item.Image" /></td>
+                            <td>item.Body</td>
+                            <td>item.CategoryId</td>
+                            <td class="operations">
+                                <a class="btn btn-sm btn-warning" asp-action="edit"
+                                   asp-route-id="item.Id">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a class="btn btn-sm btn-secondary" asp-action="details"
+                                   asp-route-id="item.Id">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="btn btn-sm btn-danger"
+                                   asp-route-id="item.Id">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
