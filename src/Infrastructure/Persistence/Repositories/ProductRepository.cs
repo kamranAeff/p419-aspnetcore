@@ -26,5 +26,10 @@ namespace Persistence.Repositories
             await db.Set<ProductImage>().AddAsync(image, cancellation);
             return image;
         }
+
+        public void RemoveImage(ProductImage image)
+        {
+            db.Set<ProductImage>().Remove(image);
+        }
     }
 }

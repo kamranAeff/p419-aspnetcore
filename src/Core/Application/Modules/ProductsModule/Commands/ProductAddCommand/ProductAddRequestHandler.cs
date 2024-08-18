@@ -7,11 +7,15 @@ using Services.Common;
 
 namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
 {
-    class ProductAddRequestHandler(IProductRepository productRepository, IFileService fileService)
+    class ProductAddRequestHandler(IProductRepository productRepository,
+        IBrandRepository brandRepository,
+        IFileService fileService)
         : IRequestHandler<ProductAddRequest, Product>
     {
         public async Task<Product> Handle(ProductAddRequest request, CancellationToken cancellationToken)
         {
+            var brand = await brandRepository.GetAsync(m => m.Id == request.BrandId, cancellationToken);
+
             var entity = new Product
             {
                 Title = request.Title,
@@ -52,6 +56,7 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
 
     public class ImageItem
     {
+        public int? Id { get; set; }
         public IFormFile Image { get; set; }
         public bool IsMain { get; set; }
     }

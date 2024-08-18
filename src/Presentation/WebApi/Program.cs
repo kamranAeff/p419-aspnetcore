@@ -23,15 +23,9 @@ namespace WebApi
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<BlogPostProfile>();
-
             });
 
-            builder.Services.Configure<RouteOptions>(cfg => {
-
-                cfg.ConstraintMap.TryAdd("slug", typeof(SlugRouteConstraint));
-
-            });
-
+            builder.Services.InjectConstraints();
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
@@ -81,6 +75,8 @@ namespace WebApi
             builder.Services.AddCors(cfg => cfg.AddPolicy("allowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
             var app = builder.Build();
+            app.AutoMigration(); //applied auto migration
+
             app.UseCors("allowAll");
             app.UseGlobalException();
 
