@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+using Repositories;
 using Services.Common;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -9,24 +9,25 @@ namespace Services.Implementation
 {
     public class SubscribeService : ISubscribeService
     {
-        private readonly DbContext db;
+        private readonly ISubscriberRepository subscriberRepository;
         private readonly IEmailService emailService;
         private readonly ICryptoService cryptoService;
         private readonly IHttpContextAccessor ctx;
 
-        public SubscribeService(DbContext db,
+        public SubscribeService(ISubscriberRepository subscriberRepository,
             IEmailService emailService,
             ICryptoService cryptoService,
             IHttpContextAccessor ctx)
         {
-            this.db = db;
+            this.subscriberRepository = subscriberRepository;
             this.emailService = emailService;
             this.cryptoService = cryptoService;
             this.ctx = ctx;
         }
         public async Task<Tuple<bool, string>> Subscribe(string email)
         {
-            var entity = await db.Set<Subscribe>().FirstOrDefaultAsync(x => x.Email.Equals(email));
+            //var entity = await db.Set<Subscribe>().FirstOrDefaultAsync(x => x.Email.Equals(email));
+            var entity = await subscriberRepository.GetAsync(m => m.Email.Equals(email));
 
             //var data = new Tuple<bool, string>(true,"");
             var data = Tuple.Create(true, "");
@@ -43,8 +44,8 @@ namespace Services.Implementation
 
 
             entity = new Subscribe { Email = email };
-            await db.Set<Subscribe>().AddAsync(entity);
-            await db.SaveChangesAsync();
+            await subscriberRepository.AddAsync(entity);
+            await subscriberRepository.SaveAsync();
 
             var token = $"id={entity.Email}|expire={DateTime.Now.AddHours(1):yyyy.MM.dd HH:mm:ss}";
 
@@ -84,7 +85,7 @@ namespace Services.Implementation
                 return Tuple.Create(true, "Sorğunun istifadə müddəti bitmişdir");
             }
 
-            var entity = await db.Set<Subscribe>().FirstOrDefaultAsync(m => m.Email.Equals(email));
+            var entity = await subscriberRepository.GetAsync(m => m.Email.Equals(email));
 
             if (entity is null)
                 goto l1;
@@ -95,7 +96,7 @@ namespace Services.Implementation
             }
 
             entity.ApprovedAt = DateTime.Now;
-            await db.SaveChangesAsync();
+            await subscriberRepository.SaveAsync();
             return Tuple.Create(false, "Abunəliyiniz təsdiq olundu");
 
         l1:

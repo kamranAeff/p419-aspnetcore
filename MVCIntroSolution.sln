@@ -5,11 +5,8 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A07F68EF-B4E2-48EB-B8D2-59623C04B710}"
 	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		Dockerfile = Dockerfile
-		EnvLoad.ps1 = EnvLoad.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -35,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "src\Presentation\W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Implementation", "src\Core\Services.Implementation\Services.Implementation.csproj", "{90869E17-3EC9-47CD-8DBB-15BA951C57E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppElasticSearch", "src\Intros\ConsoleAppElasticSearch\ConsoleAppElasticSearch.csproj", "{05C40D99-33B6-4A5B-9409-CF9C0DA19A18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "src\Core\Repositories\Repositories.csproj", "{13F8D671-1F45-451F-9F18-365EABF96890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +64,10 @@ Global
 		{90869E17-3EC9-47CD-8DBB-15BA951C57E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90869E17-3EC9-47CD-8DBB-15BA951C57E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90869E17-3EC9-47CD-8DBB-15BA951C57E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05C40D99-33B6-4A5B-9409-CF9C0DA19A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05C40D99-33B6-4A5B-9409-CF9C0DA19A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05C40D99-33B6-4A5B-9409-CF9C0DA19A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05C40D99-33B6-4A5B-9409-CF9C0DA19A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F8D671-1F45-451F-9F18-365EABF96890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F8D671-1F45-451F-9F18-365EABF96890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F8D671-1F45-451F-9F18-365EABF96890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F8D671-1F45-451F-9F18-365EABF96890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,7 +81,7 @@ Global
 		{F9CD312A-0CED-4A46-B913-DEB942BF99E0} = {52295662-BAA7-4C00-9F52-71DA125B0A3B}
 		{6942FDAA-6926-4D11-A059-62D23A598324} = {F9CD312A-0CED-4A46-B913-DEB942BF99E0}
 		{90869E17-3EC9-47CD-8DBB-15BA951C57E8} = {52AC7FF7-18E9-472A-84FF-A0F1A8D4E7F6}
-		{05C40D99-33B6-4A5B-9409-CF9C0DA19A18} = {52295662-BAA7-4C00-9F52-71DA125B0A3B}
+		{13F8D671-1F45-451F-9F18-365EABF96890} = {52AC7FF7-18E9-472A-84FF-A0F1A8D4E7F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {382D9201-BEA4-416B-BA86-09E0971B3CA9}

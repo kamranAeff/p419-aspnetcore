@@ -1,18 +1,12 @@
 ﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using Repositories;
 
 namespace Services.Implementation
 {
-    public class ContactPostService : IContactPostService
+    public class ContactPostService(IContactPostRepository contactPostRepository) : IContactPostService
     {
-        private readonly DbContext db;
 
-        public ContactPostService(DbContext db)
-        {
-            this.db = db;
-        }
-
-        public string Add(string fullName, string email, string message)
+        public async Task<string> Add(string fullName, string email, string message)
         {
             var post = new ContactPost
             {
@@ -21,8 +15,8 @@ namespace Services.Implementation
                 Message = message
             };
 
-            db.Set<ContactPost>().Add(post);
-            db.SaveChangesAsync().Wait();
+            await contactPostRepository.AddAsync(post);
+            await contactPostRepository.SaveAsync();
 
             return "Muracietiniz qebul edildi.2 is gunu erzinde size geri doneceyik!";
         }

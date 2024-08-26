@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Contexts
@@ -11,9 +10,6 @@ namespace Persistence.Contexts
         {
 
         }
-
-        public DbSet<ContactPost> ContactPosts { get; set; }
-        public DbSet<Subscribe> Subscribers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
