@@ -1,10 +1,6 @@
-using Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using Services;
-using Services.Common;
-using Services.Implementation;
-using Services.Implementation.Common;
+using System.Text;
 
 namespace WebUI
 {
@@ -14,6 +10,15 @@ namespace WebUI
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
+
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"ASPNETCORE_ENVIRONMENT: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+            sb.AppendLine($"REDIS_HOST: {Environment.GetEnvironmentVariable("REDIS_HOST")}");
+            sb.AppendLine($"REDIS_USER: {Environment.GetEnvironmentVariable("REDIS_USER")}");
+
+            Console.WriteLine(sb.ToString());
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
 
@@ -28,17 +33,17 @@ namespace WebUI
             });
 
 
-            builder.Services.Configure<EmailConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
-            builder.Services.Configure<CryptoServiceConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
+            //builder.Services.Configure<EmailConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
+            //builder.Services.Configure<CryptoServiceConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
 
-            builder.Services.AddSingleton<IEmailService, EmailService>();
-            builder.Services.AddSingleton<ICryptoService, CryptoService>();
-            //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddHttpContextAccessor();
+            //builder.Services.AddSingleton<IEmailService, EmailService>();
+            //builder.Services.AddSingleton<ICryptoService, CryptoService>();
+            ////builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //builder.Services.AddHttpContextAccessor();
 
 
-            builder.Services.AddScoped<IContactPostService, ContactPostService>();
-            builder.Services.AddScoped<ISubscribeService, SubscribeService>();
+            //builder.Services.AddScoped<IContactPostService, ContactPostService>();
+            //builder.Services.AddScoped<ISubscribeService, SubscribeService>();
 
             var app = builder.Build();
             app.UseStaticFiles();

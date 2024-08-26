@@ -1,5 +1,13 @@
 {
   "profiles": {
+    "App.Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+      "REDIS_HOST": "2.2.2.2",
+      "REDIS_USER": "redis2"
+      }
+    },
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
