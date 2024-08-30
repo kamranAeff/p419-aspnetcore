@@ -6,6 +6,7 @@ using Application.Modules.TagsModule.Queries.TagsGetAllQuery;
 using Application.Modules.TagsModule.Queries.TagsPagedQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models.Common;
 
 namespace WebApi.Controllers
 {

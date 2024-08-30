@@ -29,6 +29,8 @@ namespace Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery
             var response = await query.Select(m => new BlogPostResponse
             {
                 Id = m.Id,
+                Title = m.Title,
+                Slug = m.Slug,
                 Body = m.Body,
                 CategoryId = m.CategoryId,
                 Image = $"{host}/files/{m.ImagePath}",

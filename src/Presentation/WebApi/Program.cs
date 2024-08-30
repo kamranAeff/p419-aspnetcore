@@ -14,6 +14,7 @@ using System.Text.Json.Serialization;
 using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
+using WebApi.Middlewares;
 
 namespace WebApi
 {
@@ -32,13 +33,13 @@ namespace WebApi
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
-                cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
+                //cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
             })
                 .AddJsonOptions(cfg =>
                 {
                     cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<int>());
-                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<string>());
+                    //cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<int>());
+                    //cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<string>());
                     cfg.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
@@ -55,7 +56,6 @@ namespace WebApi
             builder.Services.Configure<EmailConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
             builder.Services.Configure<CryptoServiceConfiguration>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
 
-            //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddFluentValidationAutoValidation(cfg =>
@@ -79,6 +79,8 @@ namespace WebApi
 
             var app = builder.Build();
             app.AutoMigration(); //applied auto migration
+
+            app.UseDbTransaction();
 
             app.UseCors("allowAll");
             app.UseGlobalException();

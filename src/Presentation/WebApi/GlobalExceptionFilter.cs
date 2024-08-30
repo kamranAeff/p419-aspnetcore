@@ -1,6 +1,7 @@
 ﻿using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using WebApi.Models.Common;
 
 namespace WebApi
 {

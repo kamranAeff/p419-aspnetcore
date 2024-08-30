@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using WebUI.Services.BlogPost;
+using WebUI.Services.Brands;
+using WebUI.Services.Categories;
+using WebUI.Services.Products;
+using WebUI.Services.Tags;
 
 namespace WebUI
 {
@@ -10,7 +14,6 @@ namespace WebUI
 
             var builder = WebApplication.CreateBuilder(args);
 
-
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
@@ -19,6 +22,12 @@ namespace WebUI
             builder.Services.AddHttpClient("httpClient");
 
             builder.Services.AddSingleton<IBlogPostService, BlogPostService>();
+            builder.Services.AddSingleton<IProductService, ProductService>();
+            builder.Services.AddSingleton<ICategoryService, CategoryService>();
+            builder.Services.AddSingleton<IBrandService, BrandService>();
+            builder.Services.AddSingleton<ITagService, TagService>();
+
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
             var app = builder.Build();
             app.UseStaticFiles();
@@ -37,12 +46,12 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Blog}/{action=index}/{id?}");
+                pattern: "{controller=blog}/{action=index}/{id?}");
             #endregion
 
             app.Run();
         }
 
-        
+
     }
 }

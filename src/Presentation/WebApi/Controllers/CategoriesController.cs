@@ -6,7 +6,7 @@ using Application.Modules.CategoriesModule.Queries.CategoriesPagedQuery;
 using Application.Modules.CategoriesModule.Queries.CategoryGetByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Repositories;
+using WebApi.Models.Common;
 
 namespace WebApi.Controllers
 {
@@ -14,41 +14,45 @@ namespace WebApi.Controllers
     [ApiController]
     public class CategoriesController(IMediator mediator) : ControllerBase
     {
-        [HttpPost("{page:int:min(1)}/{size:int:min(2)}")]
-        public async Task<IActionResult> GetAll(CategoriesPagedRequest request)
-        {
-            var response = await mediator.Send(request);
-            return Ok(response);
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] CategoriesGetAllRequest request)
         {
-            var response = await mediator.Send(request);
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
+        [HttpPost("{page:int:min(1)}/{size:int:min(2)}")]
+        public async Task<IActionResult> GetAll(CategoriesPagedRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
             return Ok(response);
         }
 
         [HttpGet("{id:int:min(1)}")]
-        public async Task<IActionResult> GetById([FromRoute] CategoryGetByIdRequest request)
+        public async Task<IActionResult> Get([FromRoute] CategoryGetByIdRequest request)
         {
-            var response = await mediator.Send(request);
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(CategoryAddRequest request)
         {
-            var response = await mediator.Send(request);
-
-            return Ok(response);
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data, StatusCodes.Status201Created);
+            return CreatedAtAction(nameof(Get), new { id = data.Id }, response);
         }
 
         [HttpPut("{id:int:min(1)}")]
         public async Task<IActionResult> Edit(int id, [FromBody] CategoryEditRequest request)
         {
             request.Id = id;
-            var response = await mediator.Send(request);
-
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
             return Ok(response);
         }
 
@@ -56,7 +60,6 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Remove([FromRoute] CategoryRemoveRequest request)
         {
             await mediator.Send(request);
-
             return NoContent();
         }
     }

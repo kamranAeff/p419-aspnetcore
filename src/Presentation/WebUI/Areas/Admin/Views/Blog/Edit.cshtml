@@ -1,0 +1,110 @@
+﻿@model BlogEditDto
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Paylaşımlar</h4>
+                    <span>
+                        Paylaşımımların idarə edilməsi
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">Paylaşımlar</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        Mövcud paylaşımın redaktə edilməsi
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <form class="card" method="post" enctype="multipart/form-data">
+        <div class="card-block">
+            <h4 class="sub-title">Yeni paylaşım əlavə etmək</h4>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="Title" class="control-label">
+                        Title
+                    </label>
+                    <input asp-for="Title" id="Title" type="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text text-danger"></span>
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="CategoryId" class="control-label">
+                        Category
+                    </label>
+                    <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                        <option value="" selected disabled>--- Seçin ---</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text text-danger"></span>
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="Body" class="control-label">
+                        Body
+                    </label>
+                    <textarea asp-for="Body" id="editor" class="form-control"></textarea>
+                    <span asp-validation-for="Body" class="text text-danger"></span>
+                </div>
+                <div class="form-group col-12">
+                    <label class="control-label">Image</label>
+
+                    <label class="single-chooser loaded" style="background-image:url(@Model.ImagePath)">
+                        <input type="file" asp-for="Image" class="form-control" accept="image/*" />
+                    </label>
+
+                    <span asp-validation-for="Image" class="text text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 text-right">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="ImagePath" type="hidden" />
+                    <a class="btn btn-warning" asp-action="index">Back</a>
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section addcss {
+    <link href="~/lib/single-chooser/single-chooser.css" rel="stylesheet" />
+}
+
+@section addjs {
+    <script src="~/lib/ckeditor5/ckeditor.min.js"></script>
+    <script src="~/lib/single-chooser/single-chooser.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .then(editor => { })
+                .catch(error => { console.error(error); });
+
+            document.querySelector('.single-chooser input[type=file]').singleChooser((ex) => {
+                console.log(ex);
+            });
+
+        })
+
+
+    </script>
+}

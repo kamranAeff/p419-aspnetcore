@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-//using Services.Categories;
+using WebUI.Services.Categories;
 
 namespace WebUI.ViewComponents
 {
-    //public class AllCategoriesViewComponent(ICategoryService categoryService) : ViewComponent
-    //{
-    //    public async Task<IViewComponentResult> InvokeAsync(string view = null)
-    //    {
-    //        var response = await categoryService.GetAllAsync();
+    public class AllCategoriesViewComponent(ICategoryService categoryService) : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync(string view = null)
+        {
+            var response = await categoryService.GetAllAsync();
 
-    //        if (!string.IsNullOrWhiteSpace(view))
-    //            return View(view, response);
+            if (!string.IsNullOrWhiteSpace(view))
+                return View(view, response.Data);
 
-    //        return View(response);
-    //    }
-    //}
+            return View(response.Data);
+        }
+    }
 }

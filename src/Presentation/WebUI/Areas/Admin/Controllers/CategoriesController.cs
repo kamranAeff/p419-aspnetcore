@@ -1,73 +1,69 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Services.Categories;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebUI.Models.DTOs.Categories;
+using WebUI.Services.Categories;
 
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoriesController : Controller
+    public class CategoriesController(ICategoryService categoryService) : Controller
     {
-        private readonly ICategoryService categoryService;
 
-        public CategoriesController(ICategoryService categoryService)
+        //[Authorize(Policy = "admin.categories.get")]
+        public async Task<IActionResult> Index(int page = 1, int size = 15)
         {
-            this.categoryService = categoryService;
+            var request = new CategoryGetPagedRequestDto
+            {
+                Column = "Id",
+                Order = "ascending"
+            };
+
+            var response = await categoryService.GetPagedAsync(page, size, request);
+            return View(response.Data);
         }
 
-        [Authorize(Policy = "admin.categories.get")]
-        public async Task<IActionResult> Index()
-        {
-            var data = await categoryService.GetAllAsync();
-
-            return View(data);
-        }
-
-        [Authorize(Policy = "admin.categories.get")]
+        //[Authorize(Policy = "admin.categories.get")]
         public async Task<IActionResult> Details(int id)
         {
-            var data = await categoryService.GetByIdAsync(id);
-
-            return View(data);
+            var response = await categoryService.GetByIdAsync(id);
+            return View(response.Data);
         }
 
-        [Authorize(Policy = "admin.categories.add")]
+        //[Authorize(Policy = "admin.categories.add")]
         public IActionResult Create()
         {
-            throw new ArgumentNullException();
             return View();
         }
 
         [HttpPost]
-        [Authorize(Policy = "admin.categories.add")]
-        public async Task<IActionResult> Create(AddCategoryRequestDto model)
+        //[Authorize(Policy = "admin.categories.add")]
+        public async Task<IActionResult> Create(Category model)
         {
             await categoryService.AddAsync(model);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Policy = "admin.categories.edit")]
+        //[Authorize(Policy = "admin.categories.edit")]
         public async Task<IActionResult> Edit(int id)
         {
             var data = await categoryService.GetByIdAsync(id);
 
-            return View(data);
+            return View(data.Data);
         }
 
         [HttpPost]
-        [Authorize(Policy = "admin.categories.edit")]
-        public async Task<IActionResult> Edit(EditCategoryDto model)
+        //[Authorize(Policy = "admin.categories.edit")]
+        public async Task<IActionResult> Edit(Category model)
         {
             await categoryService.EditAsync(model);
 
             return RedirectToAction("Index");
         }
 
-        [Authorize(Policy = "admin.categories.remove")]
+        //[Authorize(Policy = "admin.categories.remove")]
+        [HttpPost]
         public async Task<IActionResult> Remove(int id)
         {
-            throw new ArgumentNullException();
-
             await categoryService.RemoveAsync(id);
 
             return Json(new

@@ -1,0 +1,157 @@
+﻿@model ProductAddDto
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Paylaşımlar</h4>
+                    <span>
+                        Paylaşımımların idarə edilməsi
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">Paylaşımlar</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        Yeni paylaşım əlavə etmək
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <form class="card" id="products" method="post" enctype="multipart/form-data">
+        <div class="card-block">
+            <h4 class="sub-title">Yeni paylaşım əlavə etmək</h4>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label asp-for="Title" class="control-label">
+                                Title
+                            </label>
+                            <input asp-for="Title" id="Title" type="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="CategoryId" class="control-label">
+                                Category
+                            </label>
+                            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                                <option value="" selected disabled>--- Seçin ---</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="BrandId" class="control-label">
+                                Brand
+                            </label>
+                            <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-control">
+                                <option value="" selected disabled>--- Seçin ---</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="UnitOfWeight" class="control-label">
+                                Unit
+                            </label>
+                            <select asp-for="UnitOfWeight" asp-items="@Html.GetEnumSelectList<Units>()" class="form-control">
+                                <option value="" selected disabled>--- Seçin ---</option>
+                            </select>
+                            <span asp-validation-for="UnitOfWeight" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="Weight" class="control-label">
+                                Weight
+                            </label>
+                            <input asp-for="Weight" class="form-control text-right" />
+                            <span asp-validation-for="Weight" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-12">
+                            <label asp-for="Information" class="control-label">
+                                Information
+                            </label>
+                            <textarea asp-for="Information" class="form-control"></textarea>
+                            <span asp-validation-for="Information" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group col-12">
+                            <label asp-for="Description" class="control-label">
+                                Description
+                            </label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="imager-container" id="viewer1" name="Images"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 text-right">
+                    <a class="btn btn-warning" asp-action="index">Back</a>
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section addcss {
+    <link href="~/lib/multiple-imager-js/css/imager.css" rel="stylesheet" />
+}
+
+@section addjs {
+    <script src="~/lib/ckeditor5/ckeditor.min.js"></script>
+    <script src="~/lib/multiple-imager-js/js/imager.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+
+            ClassicEditor
+                .create(document.querySelector('#Information'))
+                .then(editor => { })
+                .catch(error => { console.error(error); });
+
+            ClassicEditor
+                .create(document.querySelector('#Description'))
+                .then(editor => { })
+                .catch(error => { console.error(error); });
+
+            $('#viewer1').imgadd({
+                tnWidth: '120px',
+                tnHeight: '120px',
+                fontSize: '55px',
+                plusInnerHtml: '',
+                plusBtnClass: undefined
+            });
+
+            $('#products').submit(function (e) {
+                e.preventDefault();
+
+                const fd = new FormData(e.currentTarget);
+
+                window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
+                    method: 'POST',
+                    body: fd
+                })
+                 .then(response => console.log('Success:'))
+                 .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+}

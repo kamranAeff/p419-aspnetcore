@@ -7,6 +7,12 @@ namespace WebUI.Models.DTOs.Blogs
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("slug")]
+        public string Slug { get; set; }
+
         [JsonProperty("body")]
         public string Body { get; set; }
 

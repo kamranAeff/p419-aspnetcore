@@ -47,6 +47,8 @@ namespace Application.Modules.BlogPostsModule.Commands.BlogPostEditCommand
             return new BlogPostResponse
             {
                 Id = entity.Id,
+                Title = entity.Title,
+                Slug = entity.Slug,
                 Body = entity.Body,
                 CategoryId = entity.CategoryId,
                 Image = $"{ctx.GetHost()}/files/{entity.ImagePath}",

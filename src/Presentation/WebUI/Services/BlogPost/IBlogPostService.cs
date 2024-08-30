@@ -10,6 +10,7 @@ namespace WebUI.Services.BlogPost
         Task<ApiResponse<Models.DTOs.Blogs.BlogPost>> GetByIdAsync(int id, CancellationToken cancellation = default);
         Task<ApiResponse<Models.DTOs.Blogs.BlogPost>> GetBySlugAsync(string slug, CancellationToken cancellation = default);
         Task AddAsync(BlogAddDto model, CancellationToken cancellation = default);
+        Task EditAsync(BlogEditDto model, CancellationToken cancellation = default);
         Task RemoveAsync(int id, CancellationToken cancellation = default);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model AddTagRequestDto
+﻿@model Tag
 @{
     ViewData["Title"] = "Create";
 }
@@ -8,9 +8,9 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Kateqoriyalar</h4>
+                    <h4>Təqlər</h4>
                     <span>
-                        Məhsul kateqoriyalarının idarə edilməsi
+                        Təqlərin idarə edilməsi
                     </span>
                 </div>
             </div>
@@ -24,10 +24,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        <a asp-action="index">Kateqoriyalar</a>
+                        <a asp-action="index">Təqlər</a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        Yeni kateqoriya əlavə etmək
+                        Yeni təq əlavə etmək
                     </li>
                 </ul>
             </div>
@@ -37,11 +37,11 @@
 <div class="page-body">
     <form class="card" method="post">
         <div class="card-block">
-            <h4 class="sub-title">Yeni kateqoriya əlavə etmək</h4>
+            <h4 class="sub-title">Yeni təq əlavə etmək</h4>
             <div class="row">
                 <div class="form-group col-12">
                     <label asp-for="Text" class="control-label">
-                        Name
+                        Text
                     </label>
                     <input asp-for="Text" type="text" class="form-control" />
                     <span asp-validation-for="Text" class="text text-danger"></span>

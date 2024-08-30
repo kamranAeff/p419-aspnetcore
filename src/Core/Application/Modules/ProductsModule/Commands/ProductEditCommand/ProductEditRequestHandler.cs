@@ -58,7 +58,7 @@ namespace Application.Modules.ProductsModule.Commands.ProductEditCommand
                     IsMain = forInsert.IsMain,
                 };
 
-                image.Path = await fileService.UploadAsync(forInsert.Image);
+                image.Path = await fileService.UploadAsync(forInsert.File);
 
                 await productRepository.AddImageAsync(entity, image, cancellationToken);
             }

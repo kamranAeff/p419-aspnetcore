@@ -14,6 +14,8 @@ namespace Persistence.Contexts.Configurations
         public void Configure(EntityTypeBuilder<BlogPost> builder)
         {
             builder.Property(m => m.Id).HasColumnType("int").UseIdentityColumn(1, 1);
+            builder.Property(m => m.Title).HasColumnType("nvarchar").HasMaxLength(300).IsRequired();
+            builder.Property(m => m.Slug).HasColumnType("varchar").HasMaxLength(300).IsRequired();
             builder.Property(m => m.ImagePath).HasColumnType("varchar").HasMaxLength(50).IsRequired();
             builder.Property(m => m.Body).HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(m => m.CategoryId).HasColumnType("int").IsRequired();

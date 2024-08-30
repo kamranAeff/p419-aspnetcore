@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TagGetAll>
+﻿@model PagedResponse<Tag>
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,9 +8,9 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Kateqoriyalar</h4>
+                    <h4>Təqlər</h4>
                     <span>
-                        Məhsul kateqoriyalarının idarə edilməsi
+                        Təqlərin idarə edilməsi
                     </span>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        Kateqoriyalar
+                        Təqlər
                     </li>
                 </ul>
             </div>
@@ -34,7 +34,7 @@
 <div class="page-body">
     <div class="card">
         <div class="card-header">
-            <h5>Kategoriyalar</h5>
+            <h5>Təqlər</h5>
             <span>meyarlar üzrə detallı <code>axtarış</code> etmək</span>
         </div>
         <div class="card-block table-border-style">
@@ -42,49 +42,51 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>First Name</th>
+                            <th>Text</th>
                             <th class="operations">
-                                @if (User.HasAccess("admin.tags.add"))
-                                {
-                                    <a class="btn btn-sm btn-success" asp-action="create">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                }
+                                <a class="btn btn-sm btn-success" asp-action="create">
+                                    <i class="fa fa-plus"></i>
+                                </a>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Items)
                         {
                             <tr>
                                 <td>@item.Text</td>
                                 <td class="operations">
-                                    @if (User.HasAccess("admin.tags.edit"))
-                                    {
-                                        <a class="btn btn-sm btn-warning" asp-action="edit"
-                                           asp-route-id="@item.Id">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
-                                    }
-                                    @if (User.HasAccess("admin.tags.get"))
-                                    {
-                                        <a class="btn btn-sm btn-secondary" asp-action="details"
-                                           asp-route-id="@item.Id">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    }
-                                    @if (User.HasAccess("admin.tags.remove"))
-                                    {
-                                        <a class="btn btn-sm btn-danger"
-                                           asp-action="Remove"
-                                           asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Text');return false;">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    }
+                                    <a class="btn btn-sm btn-warning" asp-action="edit"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary" asp-action="details"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger"
+                                       asp-action="Remove"
+                                       asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Text');return false;">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }
                     </tbody>
+                    @if (Model.Pages > 1)
+                    {
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <pager asp-page="@Model.Page"
+                                           asp-size="@Model.Size"
+                                           asp-pages="@Model.Pages"
+                                           asp-has-next="@Model.HasNext"
+                                           asp-has-previous=@Model.HasPrevious />
+                                </td>
+                            </tr>
+                        </tfoot>
+                    }
                 </table>
             </div>
         </div>

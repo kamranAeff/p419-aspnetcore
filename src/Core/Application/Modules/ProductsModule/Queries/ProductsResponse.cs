@@ -1,4 +1,6 @@
-﻿using Domain.StableModels;
+﻿using Application.Common;
+using Application.Modules.ProductsModule.Commands.ProductAddCommand;
+using Domain.StableModels;
 
 namespace Application.Modules.ProductsModule.Queries
 {
@@ -17,5 +19,6 @@ namespace Application.Modules.ProductsModule.Queries
         public Units UnitOfWeight { get; set; }
         public string Description { get; set; }
         public string Information { get; set; }
+        public IEnumerable<ImageItem> Images { get; set; }
     }
 }

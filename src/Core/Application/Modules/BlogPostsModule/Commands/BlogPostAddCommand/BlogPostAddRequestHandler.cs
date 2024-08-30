@@ -26,16 +26,21 @@ namespace Application.Modules.BlogPostsModule.Commands.BlogPostAddCommand
 
             var entity = new BlogPost
             {
+                Title = request.Title,
+                Slug = request.Title.ToSlug(),
                 Body = request.Body,
                 CategoryId = request.CategoryId,
                 ImagePath = fileName,
             };
+
             await blogPostRepository.AddAsync(entity, cancellationToken);
             await blogPostRepository.SaveAsync(cancellationToken);
 
             return new BlogPostResponse
             {
                 Id = entity.Id,
+                Title = entity.Title,
+                Slug = entity.Slug,
                 Body = entity.Body,
                 CategoryId = entity.CategoryId,
                 Image = $"{ctx.GetHost()}/files/{fileName}",

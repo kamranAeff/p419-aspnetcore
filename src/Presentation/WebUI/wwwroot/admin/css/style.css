@@ -1,4 +1,4 @@
-body {
+﻿body {
     background-color: #f3f3f3;
     font-size: .875em;
     overflow-x: hidden;
@@ -24034,7 +24034,7 @@ td.operations {
 th.image-cell,
 td.image-cell {
     padding: 0.2px;
-    max-width: 28px;
+    max-width: 20px;
     text-align: center;
 }
 
@@ -24048,4 +24048,45 @@ td.image-cell {
 .ck-content{
     min-height:300px;
 }
+
+.form-control.editor {
+    min-height: 300px;
+    max-height: unset;
+    height: auto;
+}
+
+.ellipse-lg {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ellipse-md {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ellipse-multiline-lg {
+    max-width: 1250px;
+    height: 3.6em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.ellipse-multiline-md {
+    width: 150px;
+    height: 2.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 /*# sourceMappingURL=style.css.map */

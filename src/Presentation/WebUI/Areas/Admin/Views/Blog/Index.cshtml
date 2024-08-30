@@ -7,9 +7,9 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Kateqoriyalar</h4>
+                    <h4>Paylaşımlar</h4>
                     <span>
-                        Məhsul kateqoriyalarının idarə edilməsi
+                        Paylaşımların idarə edilməsi
                     </span>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        Kateqoriyalar
+                        Paylaşımlar
                     </li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
 <div class="page-body">
     <div class="card">
         <div class="card-header">
-            <h5>Kategoriyalar</h5>
+            <h5>Paylaşımlar</h5>
             <span>meyarlar üzrə detallı <code>axtarış</code> etmək</span>
         </div>
         <div class="card-block table-border-style">
@@ -42,7 +42,7 @@
                     <thead>
                         <tr>
                             <th class="image-cell"></th>
-                            <th>Body</th>
+                            <th>Title</th>
                             <th>Category</th>
                             <th class="operations">
                                 <a class="btn btn-sm btn-success" asp-action="create">
@@ -56,7 +56,7 @@
                         {
                             <tr>
                                 <td class="image-cell"><img src="@item.Image" /></td>
-                                <td>@item.Body.ClearHtml()</td>
+                                <td class="ellipse-lg">@item.Title</td>
                                 <td>@item.CategoryName</td>
                                 <td class="operations">
                                     <a class="btn btn-sm btn-warning" asp-action="edit"
@@ -69,26 +69,28 @@
                                     </a>
                                     <a class="btn btn-sm btn-danger"
                                        asp-action="Remove"
-                                       asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Body.ClearHtml()');return false;">
+                                       asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Title.ClearHtml(80)');return false;">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
                         }
+                    </tbody>
 
-                        @if (Model.Pages > 1)
-                        {
+                    @if (Model.Pages > 1)
+                    {
+                        <tfoot>
                             <tr>
                                 <td colspan="4">
-                                    <pager asp-page="@Model.Page" 
-                                    asp-size="@Model.Size" 
-                                    asp-pages="@Model.Pages" 
-                                    asp-has-next="@Model.HasNext" 
-                                    asp-has-previous=@Model.HasPrevious />
+                                    <pager asp-page="@Model.Page"
+                                           asp-size="@Model.Size"
+                                           asp-pages="@Model.Pages"
+                                           asp-has-next="@Model.HasNext"
+                                           asp-has-previous=@Model.HasPrevious />
                                 </td>
                             </tr>
-                        }
-                    </tbody>
+                        </tfoot>
+                    }
                 </table>
             </div>
         </div>

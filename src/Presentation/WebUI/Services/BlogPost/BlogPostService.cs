@@ -6,7 +6,7 @@ using WebUI.Services.Common;
 
 namespace WebUI.Services.BlogPost
 {
-    public class BlogPostService : ProxyService, IBlogPostService
+    class BlogPostService : ProxyService, IBlogPostService
     {
         public BlogPostService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
             : base(httpClientFactory, configuration)
@@ -80,12 +80,30 @@ namespace WebUI.Services.BlogPost
         public async Task AddAsync(BlogAddDto model, CancellationToken cancellation = default)
         {
             var content = new MultipartFormDataContent();
+            content.Add(new StringContent(model.Title), nameof(model.Title));
             content.Add(new StringContent(model.Body), nameof(model.Body));
             content.Add(new StringContent(model.CategoryId.ToString()), nameof(model.CategoryId));
 
-            content.Add(new StreamContent(model.Image.OpenReadStream()), nameof(model.Image), model.Image.FileName);
+            if (model.Image is not null) 
+                content.Add(new StreamContent(model.Image.OpenReadStream()), nameof(model.Image), model.Image.FileName);
 
             var response = await client.PostAsync("/api/blogposts", content, cancellation);
+
+            if (!response.IsSuccessStatusCode)
+                throw new BadHttpRequestException("HTTP_CLIENT");
+        }
+        public async Task EditAsync(BlogEditDto model, CancellationToken cancellation = default)
+        {
+            var content = new MultipartFormDataContent();
+            content.Add(new StringContent(model.Title), nameof(model.Title));
+            content.Add(new StringContent(model.Body), nameof(model.Body));
+            content.Add(new StringContent(model.ImagePath), nameof(model.ImagePath));
+            content.Add(new StringContent(model.CategoryId.ToString()), nameof(model.CategoryId));
+
+            if (model.Image is not null)
+                content.Add(new StreamContent(model.Image.OpenReadStream()), nameof(model.Image), model.Image.FileName);
+
+            var response = await client.PutAsync($"/api/blogposts/{model.Id}", content, cancellation);
 
             if (!response.IsSuccessStatusCode)
                 throw new BadHttpRequestException("HTTP_CLIENT");

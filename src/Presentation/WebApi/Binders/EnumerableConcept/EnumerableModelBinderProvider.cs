@@ -1,4 +1,4 @@
-﻿using Application.Modules.ProductsModule.Commands.ProductAddCommand;
+﻿using Application.Common;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
@@ -14,7 +14,8 @@ namespace WebApi.Binders.EnumerableConcept
             if (context.Metadata.IsEnumerableType
                 && context.Metadata.ElementType?.IsEnum != true
                 && context.Metadata.ElementType != typeof(IFormFile)
-                && context.Metadata.ElementType != typeof(ImageItem))
+                && context.Metadata.ElementType != typeof(ImageItem)
+                && context.Metadata.ElementType != typeof(List<ImageItem>))
                 return new BinderTypeModelBinder(typeof(EnumerableModelBinder<>).MakeGenericType(context.Metadata.ElementType!));
 
             return null;

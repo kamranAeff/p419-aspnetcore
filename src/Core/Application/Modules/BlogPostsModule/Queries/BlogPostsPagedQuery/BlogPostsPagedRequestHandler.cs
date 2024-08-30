@@ -18,6 +18,8 @@ namespace Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery
                         select new BlogPostResponse
                         {
                             Id = bp.Id,
+                            Title = bp.Title,
+                            Slug = bp.Slug,
                             Body = bp.Body,
                             CategoryId = bp.CategoryId,
                             CategoryName = c.Name,

@@ -1,6 +1,7 @@
 ﻿using Domain.Exceptions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using WebApi.Models.Common;
 
 namespace WebApi
 {

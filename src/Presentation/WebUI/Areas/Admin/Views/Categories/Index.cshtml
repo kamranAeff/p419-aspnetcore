@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CategoryGetAllDto>
+﻿@model PagedResponse<Category>
 @{
     ViewData["Title"] = "Index";
 }
@@ -43,55 +43,54 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>First Name</th>
+                            <th>Name</th>
                             <th class="operations">
-                                @if (User.HasAccess("admin.categories.add"))
-                                {
-                                    <a class="btn btn-sm btn-success" asp-action="create">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                }
-                                
+                                <a class="btn btn-sm btn-success" asp-action="create">
+                                    <i class="fa fa-plus"></i>
+                                </a>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Items)
                         {
                             <tr>
                                 <td>@item.Name</td>
                                 <td class="operations">
-                                    @if (User.HasAccess("admin.categories.edit"))
-                                    {
-                                        <a class="btn btn-sm btn-warning" asp-action="edit"
-                                           asp-route-id="@item.Id">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
-                                    }
-                                    @if (User.HasAccess("admin.categories.get"))
-                                    {
-                                        <a class="btn btn-sm btn-secondary" asp-action="details"
-                                           asp-route-id="@item.Id">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    }
-                                    @if (User.HasAccess("admin.categories.remove"))
-                                    {
-                                        <a class="btn btn-sm btn-danger"
-                                           asp-action="Remove"
-                                           asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Name');return false;">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    }
-                                </td>
+                                    <a class="btn btn-sm btn-warning" asp-action="edit"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary" asp-action="details"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger"
+                                       asp-action="Remove"
+                                       asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Name');return false;">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                             </tr>
                         }
                     </tbody>
+                    @if (Model.Pages > 1)
+                    {
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <pager asp-page="@Model.Page"
+                                           asp-size="@Model.Size"
+                                           asp-pages="@Model.Pages"
+                                           asp-has-next="@Model.HasNext"
+                                           asp-has-previous=@Model.HasPrevious />
+                                </td>
+                            </tr>
+                        </tfoot>
+                    }
                 </table>
             </div>
         </div>
     </div>
-    <!-- Basic table card end -->
 </div>
 
 @section addcss {
@@ -136,7 +135,7 @@
 
                     fetch(href, {
                         method: 'post',
-                        headers:{
+                        headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         }
                     }).then(response => response.json())

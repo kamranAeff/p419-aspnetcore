@@ -1,4 +1,5 @@
-﻿using Application.Extensions;
+﻿using Application.Common;
+using Application.Extensions;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
@@ -43,6 +44,14 @@ namespace Application.Modules.ProductsModule.Queries.ProductGetByIdQuery
 
             if (entity is null)
                 throw new NotFoundException($"{typeof(Product).Name} not found by expression");
+
+            entity.Images = await productRepository.GetImages(m => m.ProductId == entity.Id)
+                                             .Select(m => new ImageItem
+                                             {
+                                                 Id = m.Id,
+                                                 IsMain = m.IsMain,
+                                                 TempPath = $"{host}/files/{m.Path}"
+                                             }).ToListAsync(cancellationToken);
 
             return entity;
         }

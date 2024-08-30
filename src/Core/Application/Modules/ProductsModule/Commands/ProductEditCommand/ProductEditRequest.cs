@@ -1,4 +1,5 @@
-﻿using Application.Modules.ProductsModule.Commands.ProductAddCommand;
+﻿using Application.Common;
+using Application.Modules.ProductsModule.Commands.ProductAddCommand;
 using Domain.Entities;
 using Domain.StableModels;
 using MediatR;
@@ -15,6 +16,6 @@ namespace Application.Modules.ProductsModule.Commands.ProductEditCommand
         public Units UnitOfWeight { get; set; }
         public string Description { get; set; }
         public string Information { get; set; }
-        public IEnumerable<ImageItem> Images { get; set; }
+        public List<ImageItem> Images { get; set; }
     }
 }

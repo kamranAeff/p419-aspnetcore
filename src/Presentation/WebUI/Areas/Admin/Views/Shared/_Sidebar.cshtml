@@ -15,7 +15,7 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li>
-                        <a>
+                        <a asp-controller="Products" asp-action="Index">
                             <span class="pcoded-mtext">Məhsullar</span>
                         </a>
                     </li>
@@ -38,6 +38,13 @@
                             <span class="pcoded-mtext">Kateqoriyalar</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a asp-controller="Brands" asp-action="Index">
+                            <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                            <span class="pcoded-mtext">Markalar</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -56,7 +63,7 @@
                 </a>
                 <ul class="pcoded-submenu">
                     <li>
-                        <a>
+                        <a asp-controller="Blog" asp-action="Index">
                             <span class="pcoded-mtext">Dərc edilmişlər</span>
                         </a>
                     </li>

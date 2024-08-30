@@ -6,6 +6,7 @@ using Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models.Common;
 
 namespace WebApi.Controllers
 {
@@ -48,6 +49,7 @@ namespace WebApi.Controllers
         [HttpPut("{id:int:min(1)}")]
         public async Task<IActionResult> Edit(int id, [FromForm] BlogPostEditRequest request)
         {
+            request.Id = id;
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);
             return Ok(response);

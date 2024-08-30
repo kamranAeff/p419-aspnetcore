@@ -48,6 +48,16 @@ namespace Persistence.Migrations
                     b.Property<int?>("PublisherId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
