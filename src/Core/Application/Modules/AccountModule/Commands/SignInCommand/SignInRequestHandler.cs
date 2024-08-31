@@ -3,6 +3,7 @@ using Domain.Entities.Membership;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Services.Common;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace Application.Modules.AccountModule.Commands.SignInCommand
 {
-    class SignInRequestHandler(UserManager<OganiUser> userManager, 
+    class SignInRequestHandler(UserManager<OganiUser> userManager,
         SignInManager<OganiUser> signInManager,
         ICryptoService cryptoService) : IRequestHandler<SignInRequest, SignInResponse>
     {
@@ -20,6 +21,7 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             var user = request.UserName switch
             {
                 _ when request.UserName.IsMail() => await userManager.FindByEmailAsync(request.UserName),
+                _ when request.UserName.IsPhone() => await userManager.Users.FirstOrDefaultAsync(m => m.PhoneNumberConfirmed && request.UserName.Equals(m.PhoneNumber)),
                 _ => await userManager.FindByNameAsync(request.UserName)
             };
 
