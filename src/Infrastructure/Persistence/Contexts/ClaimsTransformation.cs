@@ -5,14 +5,14 @@ using System.Security.Claims;
 
 namespace Persistence.Contexts
 {
-    class ClaimsTransformation(DbContext db) : IClaimsTransformation
+    public class ClaimsTransformation(DbContext db) : IClaimsTransformation
     {
+        public static string[] policies = null;
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
             if (principal.Identity is ClaimsIdentity identity && identity.IsAuthenticated
                 && int.TryParse(identity.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.NameIdentifier))?.Value ?? "", out int userId))
             {
-
                 var queryRoles = from r in db.Set<OganiRole>()
                                  join ur in db.Set<OganiUserRole>() on r.Id equals ur.RoleId
                                  where ur.UserId == userId
@@ -22,9 +22,7 @@ namespace Persistence.Contexts
                 var roles = await queryRoles.Select(m => m.Name).ToListAsync();
 
                 foreach (var role in roles)
-                {
                     identity.AddClaim(new Claim(ClaimTypes.Role, role));
-                }
                 #endregion
 
                 #region Load Claims

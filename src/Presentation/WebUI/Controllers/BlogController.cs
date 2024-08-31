@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 using WebUI.Models.DTOs.Categories;
 using WebUI.Services.BlogPost;
 
@@ -21,9 +22,10 @@ namespace WebUI.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(string slug)
         {
-            return View();
+            var response = await blogPostService.GetBySlugAsync(slug);
+            return View(response.Data);
         }
 
         public IActionResult LeaveComment(int id)

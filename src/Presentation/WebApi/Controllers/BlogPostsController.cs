@@ -2,6 +2,7 @@
 using Application.Modules.BlogPostsModule.Commands.BlogPostEditCommand;
 using Application.Modules.BlogPostsModule.Commands.BlogPostRemoveCommand;
 using Application.Modules.BlogPostsModule.Queries.BlogPostGetByIdQuery;
+using Application.Modules.BlogPostsModule.Queries.BlogPostGetBySlugQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery;
 using MediatR;
@@ -36,6 +37,14 @@ namespace WebApi.Controllers
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);
             return Ok(response);
+        }
+
+        [HttpGet("{slug:minlength(3):slug}")]
+        public async Task<IActionResult> GetBySlug([FromRoute] BlogPostGetBySlugRequest request)
+        {
+            var response = await mediator.Send(request);
+            var dto = ApiResponse.Success(response);
+            return Ok(dto);
         }
 
         [HttpPost]

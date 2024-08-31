@@ -33,12 +33,12 @@ namespace WebUI.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ProductAddDto model)
-        {
-            await productService.AddAsync(model);
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromForm] ProductAddDto model)
+        //{
+        //    await productService.AddAsync(model);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public async Task<IActionResult> Edit(int id)
         {

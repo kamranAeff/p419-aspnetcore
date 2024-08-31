@@ -27,6 +27,12 @@ namespace WebApi
                 ApiResponse response = null;
                 switch (ex)
                 {
+                    case UserNameOrPasswordIncorrectException:
+                        response = ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message);
+                        break;
+                    case AccountLockoutException:
+                        response = ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message);
+                        break;
                     case NotFoundException nfEx:
                         response = ApiResponse.Fail(StatusCodes.Status404NotFound, nfEx.Message);
                         break;

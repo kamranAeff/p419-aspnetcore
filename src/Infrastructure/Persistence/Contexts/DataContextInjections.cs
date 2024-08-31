@@ -17,7 +17,7 @@ namespace Persistence.Contexts
             services.AddIdentityCore<OganiUser>()
                 .AddRoles<OganiRole>()
                 .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders()
+                //.AddDefaultTokenProviders()
                 .AddErrorDescriber<ErrorDescriber>()
                 .AddUserManager<UserManager<OganiUser>>()
                 .AddSignInManager<SignInManager<OganiUser>>()

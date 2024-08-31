@@ -13,6 +13,7 @@ namespace Services.Implementation.Common
     {
         private readonly CryptoServiceConfiguration options;
         private readonly HashAlgorithm ha;
+        private readonly HashAlgorithm haSha1;
         private readonly SymmetricAlgorithm csp;
         private bool disposed = false;
 
@@ -20,6 +21,7 @@ namespace Services.Implementation.Common
         {
             this.options = options.Value;
             ha = MD5.Create();
+            haSha1 = SHA1.Create();
             csp = TripleDES.Create();
 
             var keyBytes = ha.ComputeHash(Encoding.UTF8.GetBytes($"{this.options.Key}202$"));
@@ -52,6 +54,8 @@ namespace Services.Implementation.Common
             return Encoding.UTF8.GetString(decryptedBytes);
         }
 
+        public string Sha1Hash(string value) => string.Join(string.Empty, haSha1.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
+        
         public void Dispose()
         {
             Dispose(true);
@@ -71,5 +75,6 @@ namespace Services.Implementation.Common
 
             disposed = true;
         }
+
     }
 }

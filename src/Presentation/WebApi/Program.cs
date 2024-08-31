@@ -4,12 +4,18 @@ using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Persistence.Contexts;
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 using WebApi.Binders.BooleanConcept;
 using WebApi.Binders.ConstraintsConcept;
@@ -23,6 +29,8 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
+            LoadPolicies();
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.UseServiceProviderFactory(new IoCFactory());
             builder.Services.AddAutoMapper(cfg =>
@@ -34,14 +42,21 @@ namespace WebApi
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
-                cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
-                cfg.ModelBinderProviders.Insert(0,new BooleanBinderProvider());
+                cfg.ModelBinderProviders.Insert(0, new EnumerableModelBinderProvider());
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
+
+                var policy = new AuthorizationPolicyBuilder()
+                                  .RequireAuthenticatedUser()
+                                  .Build();
+
+                cfg.Filters.Add(new AuthorizeFilter(policy));
+
             })
                 .AddJsonOptions(cfg =>
                 {
                     cfg.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                    //cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<int>());
-                    //cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<string>());
+                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<int>());
+                    cfg.JsonSerializerOptions.Converters.Add(new EnumerableConverter<string>());
                     cfg.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
@@ -70,7 +85,7 @@ namespace WebApi
             builder.Services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssemblyContaining<IApplicationReference>();
-                cfg.AddBehavior(typeof(IPipelineBehavior<,>),typeof(PageableBinderPipelineBehavior<,>));
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PageableBinderPipelineBehavior<,>));
                 //cfg.AddBehavior(typeof(IPipelineBehavior<,>),typeof(PerformanceBehavior<,>));
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             });
@@ -79,7 +94,44 @@ namespace WebApi
 
             builder.Services.AddCors(cfg => cfg.AddPolicy("allowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
+            builder.Services.AddAuthentication(cfg =>
+            {
+                cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, cfg =>
+            {
+
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "issuer@ogani.az",
+                    ValidAudience = "audience@ogani.az",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("88b0ba2aaff3daa419917a9a1c85732570c4771b")),
+                    ClockSkew = TimeSpan.Zero,
+                    LifetimeValidator = (notBefore, expires, tokenToValidate, @param) => expires != null && expires > DateTime.UtcNow
+                };
+
+            });
+
+            builder.Services.AddAuthorization(cfg =>
+            {
+                foreach (var policy in ClaimsTransformation.policies)
+                {
+                    cfg.AddPolicy(policy, opt => opt.RequireAssertion(handler => handler.User.IsInRole("SUPERADMIN") || handler.User.HasClaim(m => m.Type.Equals(policy) && m.Value.Equals("1"))));
+                }
+            });
+
             var app = builder.Build();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.AutoMigration(); //applied auto migration
 
             app.UseDbTransaction();
@@ -108,7 +160,7 @@ namespace WebApi
         {
             var types = typeof(Program).Assembly.GetTypes();
 
-            var policies = types
+            ClaimsTransformation.policies = types
                 .Where(t => typeof(ControllerBase).IsAssignableFrom(t) && t.IsDefined(typeof(AuthorizeAttribute), true))
                 .SelectMany(t => t.GetCustomAttributes<AuthorizeAttribute>())
                 .Union(

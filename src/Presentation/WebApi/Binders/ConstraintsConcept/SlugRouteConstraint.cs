@@ -11,14 +11,12 @@ namespace WebApi.Binders.ConstraintsConcept
             RouteValueDictionary values,
             RouteDirection routeDirection)
         {
-
             if (!values.ContainsKey(routeKey))
                 return false;
 
-
             var slug = values[routeKey]?.ToString();
 
-            if (string.IsNullOrEmpty(slug))
+            if (string.IsNullOrEmpty(slug) || long.TryParse(slug,out long temp))
                 return false;
 
             return Regex.IsMatch(slug, @"[a-z0-9-]+", RegexOptions.IgnoreCase);

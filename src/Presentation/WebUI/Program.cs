@@ -33,6 +33,11 @@ namespace WebUI
             app.UseStaticFiles();
 
             #region Routing
+
+            app.MapControllerRoute(name: "blog",
+                pattern: "blog/{slug:minlength(2)}",
+                defaults: new { controller = "Blog", action = "Details", area = "" });
+
             app.MapGet("/accessdenied.html", async (context) =>
             {
                 context.Response.Clear();

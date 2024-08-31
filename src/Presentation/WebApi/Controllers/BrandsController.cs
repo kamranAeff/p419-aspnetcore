@@ -7,6 +7,7 @@ using Application.Modules.BrandsModule.Queries.BrandGetByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -16,6 +17,7 @@ namespace WebApi.Controllers
     {
 
         [HttpGet]
+        [Authorize("brands.get")]
         public async Task<IActionResult> GetAll([FromQuery] BrandsGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -23,6 +25,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("brands.get")]
         [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll([FromQuery] BrandsPagedRequest request)
         {
@@ -31,6 +34,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("brands.get")]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] BrandGetByIdRequest request)
         {
@@ -40,6 +44,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize("brands.add")]
         public async Task<IActionResult> Add(BrandAddRequest request)
         {
             var data = await mediator.Send(request);
@@ -47,6 +52,7 @@ namespace WebApi.Controllers
             return CreatedAtAction(nameof(Get), new { id = data.Id }, response);
         }
 
+        [Authorize("brands.edit")]
         [HttpPut("{id:int:min(1)}")]
         public async Task<IActionResult> Edit(int id, [FromBody] BrandEditRequest request)
         {
@@ -56,6 +62,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("brands.remove")]
         [HttpDelete("{id:int:min(1)}")]
         public async Task<IActionResult> Remove([FromRoute] BrandRemoveRequest request)
         {
