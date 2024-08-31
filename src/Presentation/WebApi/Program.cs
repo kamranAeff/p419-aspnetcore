@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Persistence.Contexts;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using WebApi.Binders.BooleanConcept;
 using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
@@ -33,7 +34,8 @@ namespace WebApi
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
-                //cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
+                cfg.ModelBinderProviders.Insert(0,new EnumerableModelBinderProvider());
+                cfg.ModelBinderProviders.Insert(0,new BooleanBinderProvider());
             })
                 .AddJsonOptions(cfg =>
                 {

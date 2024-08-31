@@ -145,7 +145,8 @@
 
                 const fd = new FormData(e.currentTarget);
 
-                window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
+                // window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
+                window.fetch('https://localhost:7082/api/products', {
                     method: 'POST',
                     body: fd
                 })
