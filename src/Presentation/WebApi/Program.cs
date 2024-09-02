@@ -4,8 +4,6 @@ using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -110,13 +108,12 @@ namespace WebApi
                     ValidateAudience = true,
                     ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "issuer@ogani.az",
-                    ValidAudience = "audience@ogani.az",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("88b0ba2aaff3daa419917a9a1c85732570c4771b")),
+                    ValidIssuer = Environment.GetEnvironmentVariable("JWT__ISSUER")!,
+                    ValidAudience = Environment.GetEnvironmentVariable("JWT__AUDIENCE")!,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT__KEY")!)),
                     ClockSkew = TimeSpan.Zero,
                     LifetimeValidator = (notBefore, expires, tokenToValidate, @param) => expires != null && expires > DateTime.UtcNow
                 };
-
             });
 
             builder.Services.AddAuthorization(cfg =>
@@ -148,7 +145,7 @@ namespace WebApi
             app.UseStaticFiles(new StaticFileOptions
             {
                 RequestPath = "/files",
-                FileProvider = new PhysicalFileProvider(builder.Configuration["FilePath"]!)
+                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath,"uploads"))
             });
 
             app.MapControllers();

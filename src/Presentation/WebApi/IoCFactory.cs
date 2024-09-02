@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Persistence;
-using Services.Implementation.Registration;
+using Services.Registration;
 
 namespace WebApi
 {

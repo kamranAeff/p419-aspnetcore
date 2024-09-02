@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using Application.Services;
+using MediatR;
 using Repositories;
-using Services.Common;
 
 namespace Application.Modules.BlogPostsModule.Commands.BlogPostRemoveCommand
 {

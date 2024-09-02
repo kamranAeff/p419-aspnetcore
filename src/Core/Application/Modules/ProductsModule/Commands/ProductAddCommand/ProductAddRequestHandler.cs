@@ -1,8 +1,8 @@
 ﻿using Application.Extensions;
+using Application.Services;
 using Domain.Entities;
 using MediatR;
 using Repositories;
-using Services.Common;
 
 namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
 {

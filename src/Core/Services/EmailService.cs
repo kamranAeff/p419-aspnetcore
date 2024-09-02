@@ -1,11 +1,11 @@
-﻿using Domain.Configurations;
+﻿using Application.Services;
+using Domain.Configurations;
 using Microsoft.Extensions.Options;
-using Services.Common;
-using Services.Implementation.Registration;
+using Services.Registration;
 using System.Net;
 using System.Net.Mail;
 
-namespace Services.Implementation.Common
+namespace Services
 {
     [SingletonLifeTime]
     class EmailService : SmtpClient, IEmailService

@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
+﻿using Application.Services;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
-using Services.Common;
 
 namespace Application.Modules.ProductsModule.Commands.ProductEditCommand
 {

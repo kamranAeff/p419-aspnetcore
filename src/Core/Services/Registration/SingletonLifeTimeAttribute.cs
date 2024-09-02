@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Services.Implementation.Registration
+namespace Services.Registration
 {
     [AttributeUsage(AttributeTargets.Class)]
     class SingletonLifeTimeAttribute : Attribute

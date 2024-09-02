@@ -1,13 +1,12 @@
 ﻿using Application.Extensions;
+using Application.Services;
 using Domain.Entities.Membership;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Services.Common;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 
 namespace Application.Modules.AccountModule.Commands.SignInCommand
@@ -18,6 +17,11 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
     {
         public async Task<SignInResponse> Handle(SignInRequest request, CancellationToken cancellationToken)
         {
+            string key = Environment.GetEnvironmentVariable("JWT__KEY")!;
+            string issuer = Environment.GetEnvironmentVariable("JWT__ISSUER")!;
+            string audience = Environment.GetEnvironmentVariable("JWT__AUDIENCE")!;
+            int minutes = Convert.ToInt32(Environment.GetEnvironmentVariable("JWT__EXPIRATIONDURATIONMINUTES"));
+
             var user = request.UserName switch
             {
                 _ when request.UserName.IsMail() => await userManager.FindByEmailAsync(request.UserName),
@@ -36,14 +40,20 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             if (!checkPasswordResult.Succeeded)
                 throw new UserNameOrPasswordIncorrectException();
 
-            Claim[] claims = [new(JwtRegisteredClaimNames.NameId, $"{user.Id}")];
+            if (request.UserName.IsMail() && !user.EmailConfirmed)
+                throw new UnverifiedEmailException();
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("88b0ba2aaff3daa419917a9a1c85732570c4771b"));
+            if (request.UserName.IsPhone() && !user.PhoneNumberConfirmed)
+                throw new UnverifiedEmailException();
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken("issuer@ogani.az", "audience@ogani.az",
-            claims,
-            expires: DateTime.UtcNow.AddMinutes(10),
+            var token = new JwtSecurityToken(issuer, audience,
+            claims : [
+                new(JwtRegisteredClaimNames.NameId, $"{user.Id}")
+                ],
+            expires: DateTime.UtcNow.AddMinutes(minutes),
             signingCredentials: credentials);
 
             var response = new SignInResponse

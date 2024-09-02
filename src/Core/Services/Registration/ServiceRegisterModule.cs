@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using System.Reflection;
 
-namespace Services.Implementation.Registration
+namespace Services.Registration
 {
     public class ServiceRegisterModule : Autofac.Module
     {
@@ -9,7 +9,7 @@ namespace Services.Implementation.Registration
         {
             base.Load(builder);
 
-            var types = this.GetType().Assembly.GetTypes()
+            var types = GetType().Assembly.GetTypes()
                 .Where(m => m.IsClass)
                 .Select(m => new
                 {

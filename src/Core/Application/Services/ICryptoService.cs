@@ -1,4 +1,4 @@
-﻿namespace Services.Common
+﻿namespace Application.Services
 {
     public interface ICryptoService
     {

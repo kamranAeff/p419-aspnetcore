@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
-using Services.Common;
-using Services.Implementation.Registration;
+using Services.Registration;
 
-namespace Services.Implementation.Common
+namespace Services
 {
     [SingletonLifeTime]
     class LocalFileService(IHostEnvironment env) : IFileService
     {
-
         public async Task<string> UploadAsync(IFormFile file, CancellationToken cancellation = default)
         {
             var extension = Path.GetExtension(file.FileName); // .jpg,  .jpeg

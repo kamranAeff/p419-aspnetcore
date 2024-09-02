@@ -1,12 +1,12 @@
-﻿using Domain.Configurations;
+﻿using Application.Services;
+using Domain.Configurations;
 using Microsoft.Extensions.Options;
-using Services.Common;
-using Services.Implementation.Registration;
+using Services.Registration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace Services.Implementation.Common
+namespace Services
 {
     [SingletonLifeTime]
     class CryptoService : ICryptoService, IDisposable
@@ -55,7 +55,7 @@ namespace Services.Implementation.Common
         }
 
         public string Sha1Hash(string value) => string.Join(string.Empty, haSha1.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
-        
+
         public void Dispose()
         {
             Dispose(true);

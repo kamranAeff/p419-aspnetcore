@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Services.Common
+namespace Application.Services
 {
     public interface IFileService
     {

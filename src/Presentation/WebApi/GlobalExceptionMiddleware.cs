@@ -16,33 +16,23 @@ namespace WebApi
 
         public async Task Invoke(HttpContext context)
         {
-
             try
             {
                 await next(context);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                ApiResponse response = null;
-                switch (ex)
+                var response = ex switch
                 {
-                    case UserNameOrPasswordIncorrectException:
-                        response = ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message);
-                        break;
-                    case AccountLockoutException:
-                        response = ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message);
-                        break;
-                    case NotFoundException nfEx:
-                        response = ApiResponse.Fail(StatusCodes.Status404NotFound, nfEx.Message);
-                        break;
-                    case BadRequestException brEx:
-                        response = ApiResponse.Fail(StatusCodes.Status400BadRequest, brEx.Errors, brEx.Message);
-                        break;
-                    default:
-                        response = ApiResponse.Fail(StatusCodes.Status500InternalServerError, "ServerError");
-                        break;
-                }
+                    UserNameOrPasswordIncorrectException or
+                    AccountLockoutException or
+                    UnverifiedEmailException or
+                    UnverifiedPhoneException => ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message),
+                    
+                    NotFoundException nfEx => ApiResponse.Fail(StatusCodes.Status404NotFound, nfEx.Message),
+                    BadRequestException brEx => ApiResponse.Fail(StatusCodes.Status400BadRequest, brEx.Errors, brEx.Message),
+                    _ => ApiResponse.Fail(StatusCodes.Status500InternalServerError, "ServerError")
+                };
 
                 context.Response.StatusCode = response.Code;
                 await context.Response.WriteAsJsonAsync(response, options: new JsonSerializerOptions
@@ -50,11 +40,6 @@ namespace WebApi
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
-
-                //context.Result = new JsonResult(response)
-                //{
-                //    StatusCode = response.Code
-                //};
             }
 
         }

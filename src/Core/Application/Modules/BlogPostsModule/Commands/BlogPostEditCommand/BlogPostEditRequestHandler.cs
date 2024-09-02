@@ -1,8 +1,8 @@
 ﻿using Application.Extensions;
+using Application.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Repositories;
-using Services.Common;
 
 namespace Application.Modules.BlogPostsModule.Commands.BlogPostEditCommand
 {
@@ -39,14 +39,8 @@ namespace Application.Modules.BlogPostsModule.Commands.BlogPostEditCommand
             }
             #endregion
 
-            entity.Title = request.Title;
             entity.Body = request.Body;
             entity.CategoryId = request.CategoryId;
-
-            if (string.IsNullOrWhiteSpace(entity.Slug))
-            {
-                entity.Slug = request.Title.ToSlug();
-            }
 
             await blogPostRepository.SaveAsync(cancellationToken);
 

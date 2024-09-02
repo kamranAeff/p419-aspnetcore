@@ -1,9 +1,9 @@
 ﻿using Application.Extensions;
+using Application.Services;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Repositories;
-using Services.Common;
 
 namespace Application.Modules.BlogPostsModule.Commands.BlogPostAddCommand
 {
