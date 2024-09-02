@@ -19,7 +19,7 @@ namespace Persistence.Contexts
                                  select r;
 
                 #region Load Roles
-                var roles = await queryRoles.Select(m => m.Name).ToListAsync();
+                var roles = await queryRoles.Select(m => m.NormalizedName).ToListAsync();
 
                 foreach (var role in roles)
                     identity.AddClaim(new Claim(ClaimTypes.Role, role));

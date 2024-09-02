@@ -3,7 +3,7 @@
     public class UserNameOrPasswordIncorrectException : NotFoundException
     {
         public UserNameOrPasswordIncorrectException() 
-            : base("UserName or Passwor is incorrect")
+            : base("UserName or Password is incorrect")
         {
         }
     }

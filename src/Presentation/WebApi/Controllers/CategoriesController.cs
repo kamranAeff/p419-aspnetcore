@@ -5,6 +5,7 @@ using Application.Modules.CategoriesModule.Queries.CategoriesGetAllQuery;
 using Application.Modules.CategoriesModule.Queries.CategoriesPagedQuery;
 using Application.Modules.CategoriesModule.Queries.CategoryGetByIdQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Common;
 
@@ -16,6 +17,7 @@ namespace WebApi.Controllers
     {
 
         [HttpGet]
+        [Authorize("categories.get")]
         public async Task<IActionResult> GetAll([FromQuery] CategoriesGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -23,6 +25,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("categories.get")]
         [HttpPost("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll(CategoriesPagedRequest request)
         {
@@ -31,6 +34,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("categories.get")]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] CategoryGetByIdRequest request)
         {
@@ -40,6 +44,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize("categories.add")]
         public async Task<IActionResult> Add(CategoryAddRequest request)
         {
             var data = await mediator.Send(request);
@@ -48,6 +53,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id:int:min(1)}")]
+        [Authorize("categories.edit")]
         public async Task<IActionResult> Edit(int id, [FromBody] CategoryEditRequest request)
         {
             request.Id = id;
@@ -56,6 +62,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [Authorize("categories.remove")]
         [HttpDelete("{id:int:min(1)}")]
         public async Task<IActionResult> Remove([FromRoute] CategoryRemoveRequest request)
         {

@@ -22,6 +22,8 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             string audience = Environment.GetEnvironmentVariable("JWT__AUDIENCE")!;
             int minutes = Convert.ToInt32(Environment.GetEnvironmentVariable("JWT__EXPIRATIONDURATIONMINUTES"));
 
+            var passwordHasher = new PasswordHasher<OganiUser>();
+
             var user = request.UserName switch
             {
                 _ when request.UserName.IsMail() => await userManager.FindByEmailAsync(request.UserName),
@@ -31,6 +33,8 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
 
             if (user is null)
                 throw new UserNameOrPasswordIncorrectException();
+
+            var password = passwordHasher.HashPassword(user, request.Password);
 
             var checkPasswordResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, true);
 
@@ -50,10 +54,10 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(issuer, audience,
-            claims : [
+            claims: [
                 new(JwtRegisteredClaimNames.NameId, $"{user.Id}")
                 ],
-            expires: DateTime.UtcNow.AddMinutes(minutes),
+            expires: DateTime.UtcNow.AddDays(50),//DateTime.UtcNow.AddMinutes(minutes),
             signingCredentials: credentials);
 
             var response = new SignInResponse
