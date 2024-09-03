@@ -38,6 +38,10 @@ namespace WebUI
                 pattern: "blog/{slug:minlength(2)}",
                 defaults: new { controller = "Blog", action = "Details", area = "" });
 
+            app.MapControllerRoute(name: "shop",
+                pattern: "shop/{slug:minlength(2)}",
+                defaults: new { controller = "Shop", action = "Details", area = "" });
+
             app.MapGet("/accessdenied.html", async (context) =>
             {
                 context.Response.Clear();

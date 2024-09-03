@@ -53,12 +53,12 @@ namespace WebUI.Areas.Admin.Controllers
             return View(data);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit([FromForm] ProductEditDto model)
-        {
-            await productService.EditAsync(model);
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Edit([FromForm] ProductEditDto model)
+        //{
+        //    await productService.EditAsync(model);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Remove(int id)

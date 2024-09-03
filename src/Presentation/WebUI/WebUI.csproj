@@ -10,19 +10,15 @@
     <Compile Remove="Areas\Admin\Views\Dashboard\**" />
     <Compile Remove="Areas\Admin\Views\Subscribers\**" />
     <Compile Remove="Views\Home\**" />
-    <Compile Remove="Views\Shop\**" />
     <Content Remove="Areas\Admin\Views\Dashboard\**" />
     <Content Remove="Areas\Admin\Views\Subscribers\**" />
     <Content Remove="Views\Home\**" />
-    <Content Remove="Views\Shop\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Subscribers\**" />
     <EmbeddedResource Remove="Views\Home\**" />
-    <EmbeddedResource Remove="Views\Shop\**" />
     <None Remove="Areas\Admin\Views\Dashboard\**" />
     <None Remove="Areas\Admin\Views\Subscribers\**" />
     <None Remove="Views\Home\**" />
-    <None Remove="Views\Shop\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,6 +73,10 @@
     <None Include="Views\Blog\Index.cshtml" />
     <None Include="Views\Shared\Components\AllCategories\Default.cshtml" />
     <None Include="Views\Shared\Components\AllCategories\OnlyList.cshtml" />
+    <None Include="Views\Shop\Basket.cshtml" />
+    <None Include="Views\Shop\Checkout.cshtml" />
+    <None Include="Views\Shop\Details.cshtml" />
+    <None Include="Views\Shop\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -56,7 +56,7 @@ namespace WebUI.TagHelpers
                 }
             });
 
-            output.Content.AppendHtml($"<li class='page-item {(this.HasPrevious ? "" : " disabled")}'><a class='page-link' href='{prevLink}'>Previous</a></li>");
+            output.Content.AppendHtml($"<li class='page-item {(this.HasPrevious ? "" : " disabled")}'><a class='page-link' href='{prevLink}'><i class='fa fa-long-arrow-left'></i></a></li>");
             for (int i = start; i <= end; i++)
             {
                 if (i == this.Page)
@@ -77,7 +77,7 @@ namespace WebUI.TagHelpers
                     output.Content.AppendHtml($"<li class='page-item'><a class='page-link' href='{navLink}'>{i}</a></li>");
                 }
             }
-            output.Content.AppendHtml($"<li class='page-item {(this.HasNext ? "" : " disabled")}'><a class='page-link' href='{nextLink}'>Next</a></li>");
+            output.Content.AppendHtml($"<li class='page-item {(this.HasNext ? "" : " disabled")}'><a class='page-link' href='{nextLink}'><i class='fa fa-long-arrow-right'></i></a></li>");
 
         }
     }

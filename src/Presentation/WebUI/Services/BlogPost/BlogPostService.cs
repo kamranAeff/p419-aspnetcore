@@ -45,6 +45,22 @@ namespace WebUI.Services.BlogPost
             return apiResponse;
         }
 
+        public async Task<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>> GetPopularsAsync(int recordCount, CancellationToken cancellation = default)
+        {
+            var response = await client.GetAsync($"/api/blogposts/populars/{recordCount}", cancellation);
+
+            if (!response.IsSuccessStatusCode)
+                throw new BadHttpRequestException("HTTP_CLIENT");
+
+            var content = await response.Content.ReadAsStringAsync(cancellation);
+            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>>(content)!;
+
+            if (!apiResponse.IsSuccess)
+                throw new BadHttpRequestException("HTTP_CLIENT");
+
+            return apiResponse;
+        }
+
         public async Task<ApiResponse<Models.DTOs.Blogs.BlogPost>> GetByIdAsync(int id, CancellationToken cancellation = default)
         {
             var response = await client.GetAsync($"/api/blogposts/{id}", cancellation);
@@ -84,7 +100,7 @@ namespace WebUI.Services.BlogPost
             content.Add(new StringContent(model.Body), nameof(model.Body));
             content.Add(new StringContent(model.CategoryId.ToString()), nameof(model.CategoryId));
 
-            if (model.Image is not null) 
+            if (model.Image is not null)
                 content.Add(new StreamContent(model.Image.OpenReadStream()), nameof(model.Image), model.Image.FileName);
 
             var response = await client.PostAsync("/api/blogposts", content, cancellation);

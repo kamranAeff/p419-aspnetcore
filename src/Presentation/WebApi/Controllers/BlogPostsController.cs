@@ -4,6 +4,7 @@ using Application.Modules.BlogPostsModule.Commands.BlogPostRemoveCommand;
 using Application.Modules.BlogPostsModule.Queries.BlogPostGetByIdQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostGetBySlugQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery;
+using Application.Modules.BlogPostsModule.Queries.BlogPostsGetPopularsQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,14 @@ namespace WebApi.Controllers
 
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] BlogPostGetByIdRequest request)
+        {
+            var data = await mediator.Send(request);
+            var response = ApiResponse.Success(data);
+            return Ok(response);
+        }
+
+        [HttpGet("populars/{recordCount:int:min(2)}")]
+        public async Task<IActionResult> GetPopulars([FromRoute] BlogPostsGetPopularsRequest request)
         {
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data);

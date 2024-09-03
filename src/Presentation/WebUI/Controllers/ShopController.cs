@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebUI.Services.Products;
 
 namespace WebUI.Controllers
 {
-    public class ShopController : Controller
+    public class ShopController(IProductService productService) : Controller
     {
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, int size = 12)
         {
-            return View();
+            var response = await productService.GetPagedAsync(page, size);
+            return View(response.Data);
         }
 
         [AllowAnonymous]
-        public IActionResult Details(int id)
+        public IActionResult Details(string slug)
         {
+            return Content(slug);
             return View();
         }
 

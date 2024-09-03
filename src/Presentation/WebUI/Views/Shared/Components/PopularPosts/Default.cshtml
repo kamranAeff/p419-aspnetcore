@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BlogPost>
+<h4>Popular News</h4>
+<div class="blog__sidebar__recent">
+    @foreach (var post in Model)
+    {
+        <a asp-action="details" 
+           asp-route-slug="@post.Slug" 
+           class="blog__sidebar__recent__item">
+            <div class="blog__sidebar__recent__item__pic">
+                <img src="@post.Image" alt="@post.Slug" style="width:70px;height:70px">
+            </div>
+            <div class="blog__sidebar__recent__item__text">
+                <h6>@post.Title<br /> @post.CategoryName</h6>
+                <span>MAR 05, 2019</span>
+            </div>
+        </a>
+    }
+</div>

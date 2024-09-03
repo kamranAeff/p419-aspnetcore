@@ -14,9 +14,5 @@ namespace WebApi.MapperConfiguration.BlogPosts
                 .ForMember(dest => dest.Content, src => src.MapFrom(m => m.Body))
                 .ForMember(dest => dest.PublishDate, src => src.ConvertUsing(new DateTimeValueConverter(), m => m.PublishDate));
         }
-    }
-
-    
-
-    
+    } 
 }
