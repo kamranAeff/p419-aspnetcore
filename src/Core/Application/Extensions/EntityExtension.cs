@@ -26,7 +26,7 @@ namespace Application.Extensions
             var column = string.IsNullOrWhiteSpace(sortable.Column) ? "Id" : sortable.Column;
 
             var property = typeof(T).GetProperty(column, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-            if (property is  null)
+            if (property is null)
                 return query;
 
             var order = sortable.Order switch
@@ -47,7 +47,7 @@ namespace Application.Extensions
             var resultExpression = Expression.Call(
                                             typeof(Queryable),
                                             order,
-                                            new Type[] { typeof(T), property.PropertyType },
+                                            typeArguments: [typeof(T), property.PropertyType],
                                             query.Expression,
                                             Expression.Quote(orderByExpression));
 
