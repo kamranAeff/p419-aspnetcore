@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Services.Account;
 using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;
 using WebUI.Services.Categories;
+using WebUI.Services.Common;
 using WebUI.Services.Products;
 using WebUI.Services.Tags;
 
@@ -18,9 +20,14 @@ namespace WebUI
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
 
-            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            builder.Services.AddHttpClient("httpClient");
 
+            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddScoped<ProxyAuthorizationMessageHandler>();
+
+            builder.Services.AddHttpClient("httpClient")
+                .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>();
+
+            builder.Services.AddSingleton<IAccountService, AccountService>();
             builder.Services.AddSingleton<IBlogPostService, BlogPostService>();
             builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSingleton<ICategoryService, CategoryService>();
