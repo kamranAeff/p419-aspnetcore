@@ -1,6 +1,4 @@
-﻿
-using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net;
 using WebUI.Models.Common;
 
@@ -10,9 +8,10 @@ namespace WebUI.Services.Common
     {
         async protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("GlobalExceptionMessageHandler: before");
             var response = await base.SendAsync(request, cancellationToken);
-            Console.WriteLine("GlobalExceptionMessageHandler: after");
+
+            if (response.IsSuccessStatusCode)
+                return response;
 
 #warning Bu Hisse RefreshToken mentiqini block edir duzeltmek lazimdir
             switch (response.StatusCode)
@@ -25,13 +24,9 @@ namespace WebUI.Services.Common
                     var badRequestJson = await response.Content.ReadAsStringAsync(cancellationToken);
                     var badResponse = JsonConvert.DeserializeObject<ApiResponse>(badRequestJson);
                     throw new BadRequestException("BADREQ", badResponse.Errors);
-                case HttpStatusCode.InternalServerError:
-                    throw new NotImplementedException();
                 default:
-                    return response;
+                    throw new NotImplementedException();
             }
-
-            return response;
         }
     }
 
