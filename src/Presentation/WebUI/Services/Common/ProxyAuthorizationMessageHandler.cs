@@ -48,12 +48,15 @@ namespace WebUI.Services.Common
                         ctx.ActionContext.HttpContext.Response.Cookies.Append("accessToken", refreshTokenResponse.Data.AccessToken, options);
                         ctx.ActionContext.HttpContext.Response.Cookies.Append("refreshToken", refreshTokenResponse.Data.RefreshToken, options);
 
+                        request.Headers.TryAddWithoutValidation("raise401","on");
                         request.Headers.Remove("Authorization");
                         request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {refreshTokenResponse.Data.AccessToken}");
                         response = await base.SendAsync(request, cancellationToken);
                     }
                 }
             }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                request.Headers.TryAddWithoutValidation("raise401", "on");
 
             return response;
         }

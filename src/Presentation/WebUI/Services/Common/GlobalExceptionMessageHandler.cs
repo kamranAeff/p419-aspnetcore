@@ -16,7 +16,9 @@ namespace WebUI.Services.Common
 #warning Bu Hisse RefreshToken mentiqini block edir duzeltmek lazimdir
             switch (response.StatusCode)
             {
-                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Unauthorized when (!request.Headers.TryGetValues("raise401", out IEnumerable<string> raiseError) || !raiseError.Any()):
+                    return response;
+                case HttpStatusCode.Unauthorized when request.Headers.TryGetValues("raise401", out IEnumerable<string> raiseError) && raiseError.Any():
                     throw new UnauthorizedAccessException();
                 case HttpStatusCode.NotFound:
                     throw new NotFoundException();
