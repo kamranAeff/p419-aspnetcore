@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
+using WebUI.Exceptions;
 using WebUI.Models.Common;
 
 namespace WebUI.Services.Common
 {
-    public class GlobalExceptionMessageHandler : DelegatingHandler
+    public class ProxyExceptionMessageHandler : DelegatingHandler
     {
         async protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -13,12 +14,11 @@ namespace WebUI.Services.Common
             if (response.IsSuccessStatusCode)
                 return response;
 
-#warning Bu Hisse RefreshToken mentiqini block edir duzeltmek lazimdir
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized when (!request.Headers.TryGetValues("raise401", out IEnumerable<string> raiseError) || !raiseError.Any()):
                     return response;
-                case HttpStatusCode.Unauthorized when request.Headers.TryGetValues("raise401", out IEnumerable<string> raiseError) && raiseError.Any():
+                case HttpStatusCode.Unauthorized:
                     throw new UnauthorizedAccessException();
                 case HttpStatusCode.NotFound:
                     throw new NotFoundException();
@@ -30,18 +30,5 @@ namespace WebUI.Services.Common
                     throw new NotImplementedException();
             }
         }
-    }
-
-
-    public class BadRequestException : Exception
-    {
-        public Dictionary<string, IEnumerable<string>> Errors { get; private set; }
-
-        public BadRequestException(string message, Dictionary<string, IEnumerable<string>> errors)
-            : base(message) => this.Errors = errors;
-    }
-
-    public class NotFoundException : Exception
-    {
     }
 }

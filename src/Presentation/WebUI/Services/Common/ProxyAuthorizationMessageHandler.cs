@@ -1,7 +1,4 @@
-﻿
-using Azure;
-using Azure.Core;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Net;
 using WebUI.Models.DTOs.Account;
 using WebUI.Services.Account;
@@ -15,9 +12,7 @@ namespace WebUI.Services.Common
             if (ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("accessToken", out string accessToken))
                 request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {accessToken}");
 
-            Console.WriteLine("ProxyAuthorizationMessageHandler: before");
             var response = await base.SendAsync(request, cancellationToken);
-            Console.WriteLine("ProxyAuthorizationMessageHandler: after");
 
             if (!string.IsNullOrWhiteSpace(accessToken) 
                 && response.StatusCode == HttpStatusCode.Unauthorized 

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using WebUI.Services.Common;
+using WebUI.Exceptions;
 
 namespace WebUI.Filters
 {
@@ -61,8 +61,6 @@ namespace WebUI.Filters
                     };
                     break;
                 case NotFoundException:
-                case NullReferenceException:
-                case ArgumentNullException:
                     context.Result = new ContentResult
                     {
                         Content = File.ReadAllText("wwwroot/error-pages/404.html"),

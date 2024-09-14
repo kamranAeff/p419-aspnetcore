@@ -22,7 +22,7 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             string audience = Environment.GetEnvironmentVariable("JWT__AUDIENCE")!;
             int minutes = Convert.ToInt32(Environment.GetEnvironmentVariable("JWT__EXPIRATIONDURATIONMINUTES"));
 
-            var passwordHasher = new PasswordHasher<OganiUser>();
+            //var passwordHasher = new PasswordHasher<OganiUser>();
 
             var user = request.UserName switch
             {
@@ -34,7 +34,7 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             if (user is null)
                 throw new UserNameOrPasswordIncorrectException();
 
-            var password = passwordHasher.HashPassword(user, request.Password);
+            //var password = passwordHasher.HashPassword(user, request.Password);
 
             var checkPasswordResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, true);
 

@@ -23,21 +23,9 @@ namespace WebUI.Services.Common
         {
             var response = await client.GetAsync(endpoint, cancellation);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync(cancellation);
-                var apiResponse = JsonConvert.DeserializeObject<T>(content)!;
-                return apiResponse;
-            }
-
-            switch (response.StatusCode)
-            {
-                case System.Net.HttpStatusCode.Unauthorized:
-                    throw new UnauthorizedAccessException();
-                default:
-                    throw new NotImplementedException();
-            }
-
+            var content = await response.Content.ReadAsStringAsync(cancellation);
+            var apiResponse = JsonConvert.DeserializeObject<T>(content)!;
+            return apiResponse;
         }
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest request, CancellationToken cancellation = default)
@@ -47,15 +35,8 @@ namespace WebUI.Services.Common
             var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, MediaTypeNames.Application.Json);
             var response = await client.PostAsync(endpoint, content, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
             var contentJsonContent = await response.Content.ReadAsStringAsync(cancellation);
-
             var apiResponse = JsonConvert.DeserializeObject<TResponse>(contentJsonContent)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
 
             return apiResponse;
         }
@@ -67,25 +48,15 @@ namespace WebUI.Services.Common
             var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, MediaTypeNames.Application.Json);
             var response = await client.PutAsync(endpoint, content, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
             var contentJsonContent = await response.Content.ReadAsStringAsync(cancellation);
-
             var apiResponse = JsonConvert.DeserializeObject<TResponse>(contentJsonContent)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
 
             return apiResponse;
         }
 
         public async Task DeleteAsync(string endpoint, CancellationToken cancellation = default)
         {
-            var response = await client.DeleteAsync(endpoint, cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+            await client.DeleteAsync(endpoint, cancellation);
         }
     }
 }

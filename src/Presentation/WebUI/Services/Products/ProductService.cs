@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using WebUI.Extensions;
+﻿using WebUI.Extensions;
 using WebUI.Models.Common;
 using WebUI.Models.DTOs.Products;
 using WebUI.Services.Common;
@@ -13,53 +12,14 @@ namespace WebUI.Services.Products
         {
         }
 
-        public async Task<ApiResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync("/api/products", cancellation);
+        public Task<ApiResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<IEnumerable<Product>>>("/api/products", cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+        public Task<ApiResponse<PagedResponse<Product>>> GetPagedAsync(int page, int size, CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<PagedResponse<Product>>>($"/api/products/{page}/{size}", cancellation);
 
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Product>>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<PagedResponse<Product>>> GetPagedAsync(int page, int size, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/products/{page}/{size}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<PagedResponse<Product>>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<ProductDetail>> GetByIdAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/products/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<ProductDetail>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
+        public Task<ApiResponse<ProductDetail>> GetByIdAsync(int id, CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<ProductDetail>>($"/api/products/{id}", cancellation);
 
         public async Task AddAsync(ProductAddDto model, CancellationToken cancellation = default)
         {
@@ -152,12 +112,6 @@ namespace WebUI.Services.Products
                 throw new BadHttpRequestException("HTTP_CLIENT");
         }
 
-        public async Task RemoveAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.DeleteAsync($"/api/products/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-        }
+        public Task RemoveAsync(int id, CancellationToken cancellation = default) => base.DeleteAsync($"/api/products/{id}", cancellation);
     }
 }

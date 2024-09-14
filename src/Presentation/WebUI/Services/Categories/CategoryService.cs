@@ -1,9 +1,4 @@
-﻿using Azure.Core;
-using Newtonsoft.Json;
-using System.Drawing;
-using System.Net.Mime;
-using System.Text;
-using WebUI.Models.Common;
+﻿using WebUI.Models.Common;
 using WebUI.Models.DTOs.Categories;
 using WebUI.Services.Common;
 

@@ -1,8 +1,6 @@
-﻿using Azure;
-using Newtonsoft.Json;
-using WebUI.Models.Common;
-using WebUI.Models.DTOs.Blogs;
+﻿using WebUI.Models.Common;
 using WebUI.Services.Common;
+using bp = WebUI.Models.DTOs.Blogs;
 
 namespace WebUI.Services.BlogPost
 {
@@ -13,87 +11,17 @@ namespace WebUI.Services.BlogPost
         {
         }
 
-        public async Task<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>> GetAllAsync(CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync("/api/blogposts", cancellation);
+        public Task<ApiResponse<IEnumerable<bp.BlogPost>>> GetAllAsync(CancellationToken cancellation = default) => base.GetAsync<ApiResponse<IEnumerable<bp.BlogPost>>>("/api/blogposts", cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+        public Task<ApiResponse<PagedResponse<bp.BlogPost>>> GetPagedAsync(int page, int size, CancellationToken cancellation = default) => base.GetAsync<ApiResponse<PagedResponse<bp.BlogPost>>>($"/api/blogposts/{page}/{size}", cancellation);
 
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>>(content)!;
+        public Task<ApiResponse<IEnumerable<bp.BlogPost>>> GetPopularsAsync(int recordCount, CancellationToken cancellation = default) => base.GetAsync<ApiResponse<IEnumerable<bp.BlogPost>>>($"/api/blogposts/populars/{recordCount}", cancellation);
 
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+        public Task<ApiResponse<bp.BlogPost>> GetByIdAsync(int id, CancellationToken cancellation = default) => base.GetAsync<ApiResponse<bp.BlogPost>>($"/api/blogposts/{id}", cancellation);
 
-            return apiResponse;
-        }
+        public Task<ApiResponse<bp.BlogPost>> GetBySlugAsync(string slug, CancellationToken cancellation = default) => base.GetAsync<ApiResponse<bp.BlogPost>>($"/api/blogposts/{slug}", cancellation);
 
-        public async Task<ApiResponse<PagedResponse<Models.DTOs.Blogs.BlogPost>>> GetPagedAsync(int page, int size, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/blogposts/{page}/{size}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<PagedResponse<Models.DTOs.Blogs.BlogPost>>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>> GetPopularsAsync(int recordCount, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/blogposts/populars/{recordCount}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Models.DTOs.Blogs.BlogPost>>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<Models.DTOs.Blogs.BlogPost>> GetByIdAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/blogposts/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Models.DTOs.Blogs.BlogPost>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<Models.DTOs.Blogs.BlogPost>> GetBySlugAsync(string slug, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/blogposts/{slug}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Models.DTOs.Blogs.BlogPost>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task AddAsync(BlogAddDto model, CancellationToken cancellation = default)
+        public async Task AddAsync(bp.BlogAddDto model, CancellationToken cancellation = default)
         {
             var content = new MultipartFormDataContent();
             content.Add(new StringContent(model.Title), nameof(model.Title));
@@ -108,7 +36,7 @@ namespace WebUI.Services.BlogPost
             if (!response.IsSuccessStatusCode)
                 throw new BadHttpRequestException("HTTP_CLIENT");
         }
-        public async Task EditAsync(BlogEditDto model, CancellationToken cancellation = default)
+        public async Task EditAsync(bp.BlogEditDto model, CancellationToken cancellation = default)
         {
             var content = new MultipartFormDataContent();
             content.Add(new StringContent(model.Title), nameof(model.Title));
@@ -125,12 +53,6 @@ namespace WebUI.Services.BlogPost
                 throw new BadHttpRequestException("HTTP_CLIENT");
         }
 
-        public async Task RemoveAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.DeleteAsync($"/api/blogposts/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-        }
+        public Task RemoveAsync(int id, CancellationToken cancellation = default) => base.DeleteAsync($"/api/blogposts/{id}", cancellation);
     }
 }

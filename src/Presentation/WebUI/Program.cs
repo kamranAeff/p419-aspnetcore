@@ -28,11 +28,11 @@ namespace WebUI
 
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             builder.Services.AddScoped<ProxyAuthorizationMessageHandler>();
-            builder.Services.AddScoped<GlobalExceptionMessageHandler>();
+            builder.Services.AddScoped<ProxyExceptionMessageHandler>();
 
             builder.Services.AddHttpClient("httpClient")
-                .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>()
-                .AddHttpMessageHandler<GlobalExceptionMessageHandler>();
+                .AddHttpMessageHandler<ProxyExceptionMessageHandler>()
+                .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>();
 
             builder.Services.AddSingleton<IAccountService, AccountService>();
             builder.Services.AddSingleton<IBlogPostService, BlogPostService>();
