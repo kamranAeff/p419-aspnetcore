@@ -14,21 +14,11 @@ namespace WebUI.Services.Account
         {
         }
 
-        public async Task<ApiResponse<SignInResponseDto>> SignInAsync(SignInRequestDto request, CancellationToken cancellation = default)
-        {
-            var requestContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, MediaTypeNames.Application.Json);
-            var response = await client.PostAsync("/api/account/signin", requestContent, cancellation);
+        public Task<ApiResponse<AuthenticateResponseDto>> SignInAsync(SignInRequestDto request, CancellationToken cancellation = default)
+            => base.PostAsync<SignInRequestDto, ApiResponse<AuthenticateResponseDto>>("/api/account/signin", request, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+        public  Task<ApiResponse<AuthenticateResponseDto>> RefreshTokenAsync(RefreshTokenRequestDto request, CancellationToken cancellation = default)
+        => base.PostAsync<RefreshTokenRequestDto, ApiResponse<AuthenticateResponseDto>>("/api/account/refresh-token", request, cancellation);
 
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<SignInResponseDto>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
     }
 }

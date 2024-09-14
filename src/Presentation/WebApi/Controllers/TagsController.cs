@@ -40,6 +40,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TagAddRequest request)
         {
+            request.Text = string.Empty;
+
             var data = await mediator.Send(request);
             var response = ApiResponse.Success(data,StatusCodes.Status201Created);
             return CreatedAtAction(nameof(Get), new { id = data.Id }, response);

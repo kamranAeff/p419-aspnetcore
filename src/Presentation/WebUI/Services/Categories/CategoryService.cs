@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Azure.Core;
+using Newtonsoft.Json;
+using System.Drawing;
 using System.Net.Mime;
 using System.Text;
 using WebUI.Models.Common;
@@ -14,81 +16,24 @@ namespace WebUI.Services.Categories
         {
         }
 
-        public async Task<ApiResponse<PagedResponse<Category>>> GetPagedAsync(int page, int size, CategoryGetPagedRequestDto request, CancellationToken cancellation = default)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, MediaTypeNames.Application.Json);
-            var response = await client.PostAsync($"/api/categories/{page}/{size}", content, cancellation);
+        public Task<ApiResponse<PagedResponse<Category>>> GetPagedAsync(int page, int size, CategoryGetPagedRequestDto request, CancellationToken cancellation = default)
+            => base.PostAsync<CategoryGetPagedRequestDto, ApiResponse<PagedResponse<Category>>>($"/api/categories/{page}/{size}", request, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+        public Task<ApiResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<IEnumerable<Category>>>("/api/categories", cancellation);
 
-            var contentjsonContent = await response.Content.ReadAsStringAsync(cancellation);
-            Console.WriteLine(contentjsonContent);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<PagedResponse<Category>>>(contentjsonContent)!;
-            Console.WriteLine(contentjsonContent);
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync("/api/categories", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Category>>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
-
-        public async Task<ApiResponse<Category>> GetByIdAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.GetAsync($"/api/categories/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            var content = await response.Content.ReadAsStringAsync(cancellation);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Category>>(content)!;
-
-            if (!apiResponse.IsSuccess)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-
-            return apiResponse;
-        }
+        public Task<ApiResponse<Category>> GetByIdAsync(int id, CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<Category>>($"/api/categories/{id}", cancellation);
 
 
-        public async Task AddAsync(Category model, CancellationToken cancellation = default)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, MediaTypeNames.Application.Json);
-            var response = await client.PostAsync("/api/categories", content, cancellation);
+        public Task<ApiResponse> AddAsync(Category request, CancellationToken cancellation = default)
+            => base.PostAsync<Category, ApiResponse>("/api/categories", request, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-        }
+        public Task<ApiResponse> EditAsync(Category request, CancellationToken cancellation = default)
+            => base.PutAsync<Category, ApiResponse>($"/api/categories/{request.Id}", request, cancellation);
 
-        public async Task EditAsync(Category model, CancellationToken cancellation = default)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, MediaTypeNames.Application.Json);
-            var response = await client.PutAsync($"/api/categories/{model.Id}", content, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-        }
-
-        public async Task RemoveAsync(int id, CancellationToken cancellation = default)
-        {
-            var response = await client.DeleteAsync($"/api/categories/{id}", cancellation);
-
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
-        }
+        public Task RemoveAsync(int id, CancellationToken cancellation = default)
+            => base.DeleteAsync($"/api/categories/{id}", cancellation);
     }
 }

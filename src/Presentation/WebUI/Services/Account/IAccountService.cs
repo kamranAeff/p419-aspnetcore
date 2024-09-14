@@ -5,6 +5,7 @@ namespace WebUI.Services.Account
 {
     public interface IAccountService
     {
-        Task<ApiResponse<SignInResponseDto>> SignInAsync(SignInRequestDto request, CancellationToken cancellation = default);
+        Task<ApiResponse<AuthenticateResponseDto>> SignInAsync(SignInRequestDto request, CancellationToken cancellation = default);
+        Task<ApiResponse<AuthenticateResponseDto>> RefreshTokenAsync(RefreshTokenRequestDto request, CancellationToken cancellation = default);
     }
 }

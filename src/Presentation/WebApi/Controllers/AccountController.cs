@@ -1,4 +1,5 @@
-﻿using Application.Modules.AccountModule.Commands.SignInCommand;
+﻿using Application.Modules.AccountModule.Commands.RefreshTokenCommand;
+using Application.Modules.AccountModule.Commands.SignInCommand;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,16 @@ namespace WebApi.Controllers
     {
         [AllowAnonymous]
         [HttpPost("signin")]
-        public async Task<IActionResult> SingIn([FromBody] SignInRequest request)
+        public async Task<IActionResult> SignIn([FromBody] SignInRequest request)
+        {
+            var response = await mediator.Send(request);
+            var dto = ApiResponse.Success(response);
+            return Ok(dto);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             var response = await mediator.Send(request);
             var dto = ApiResponse.Success(response);

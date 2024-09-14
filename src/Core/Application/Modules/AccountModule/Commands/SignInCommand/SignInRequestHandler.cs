@@ -13,9 +13,9 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
 {
     class SignInRequestHandler(UserManager<OganiUser> userManager,
         SignInManager<OganiUser> signInManager,
-        ICryptoService cryptoService) : IRequestHandler<SignInRequest, SignInResponse>
+        ICryptoService cryptoService) : IRequestHandler<SignInRequest, AuthenticateResponse>
     {
-        public async Task<SignInResponse> Handle(SignInRequest request, CancellationToken cancellationToken)
+        public async Task<AuthenticateResponse> Handle(SignInRequest request, CancellationToken cancellationToken)
         {
             string key = Environment.GetEnvironmentVariable("JWT__KEY")!;
             string issuer = Environment.GetEnvironmentVariable("JWT__ISSUER")!;
@@ -57,10 +57,10 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             claims: [
                 new(JwtRegisteredClaimNames.NameId, $"{user.Id}")
                 ],
-            expires: DateTime.UtcNow.AddDays(50),//DateTime.UtcNow.AddMinutes(minutes),
+            expires: DateTime.UtcNow.AddMinutes(minutes),
             signingCredentials: credentials);
 
-            var response = new SignInResponse
+            var response = new AuthenticateResponse
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token)
             };

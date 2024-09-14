@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Filters;
 using WebUI.Services.Account;
 using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;
@@ -16,16 +17,22 @@ namespace WebUI
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(cfg => {
+
+                cfg.Filters.Add<GlobalExceptionFilter>();
+
+            });
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
 
 
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             builder.Services.AddScoped<ProxyAuthorizationMessageHandler>();
+            builder.Services.AddScoped<GlobalExceptionMessageHandler>();
 
             builder.Services.AddHttpClient("httpClient")
-                .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>();
+                .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>()
+                .AddHttpMessageHandler<GlobalExceptionMessageHandler>();
 
             builder.Services.AddSingleton<IAccountService, AccountService>();
             builder.Services.AddSingleton<IBlogPostService, BlogPostService>();

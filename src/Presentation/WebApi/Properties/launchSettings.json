@@ -17,7 +17,7 @@
         "JWT__KEY": "88b0ba2aaff3daa419917a9a1c85732570c4771b",
         "JWT__ISSUER": "api.ogani.az",
         "JWT__AUDIENCE": "api.ogani.az",
-        "JWT__EXPIRATIONDURATIONMINUTES": "5"
+        "JWT__EXPIRATIONDURATIONMINUTES": "1"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7082;http://localhost:5189"

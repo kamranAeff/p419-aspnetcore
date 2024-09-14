@@ -1,18 +1,59 @@
 ﻿
+using Azure;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Net;
+using WebUI.Models.DTOs.Account;
+using WebUI.Services.Account;
 
 namespace WebUI.Services.Common
 {
     public class ProxyAuthorizationMessageHandler(IActionContextAccessor ctx) : DelegatingHandler
     {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        async protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("accessToken",out string token))
-                request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {token}");
+            if (ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("accessToken", out string accessToken))
+                request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {accessToken}");
 
+            Console.WriteLine("ProxyAuthorizationMessageHandler: before");
+            var response = await base.SendAsync(request, cancellationToken);
+            Console.WriteLine("ProxyAuthorizationMessageHandler: after");
 
-            var response =  base.SendAsync(request, cancellationToken);
-            //after
+            if (!string.IsNullOrWhiteSpace(accessToken) 
+                && response.StatusCode == HttpStatusCode.Unauthorized 
+                && ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("refreshToken", out string refreshToken)
+                && !string.IsNullOrWhiteSpace(refreshToken))
+            {
+                using (var scope = ctx.ActionContext.HttpContext.RequestServices.CreateScope())
+                {
+                    var accountService = scope.ServiceProvider.GetService<IAccountService>();
+
+                    var refreshTokenRequest = new RefreshTokenRequestDto
+                    {
+                        AccessToken = accessToken,
+                        RefreshToken = refreshToken
+                    };
+
+                    var refreshTokenResponse = await accountService.RefreshTokenAsync(refreshTokenRequest);
+
+                    if (refreshTokenResponse.IsSuccess)
+                    {
+                        var options = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Expires = DateTimeOffset.UtcNow.AddDays(7),
+                            Path = "/"
+                        };
+
+                        ctx.ActionContext.HttpContext.Response.Cookies.Append("accessToken", refreshTokenResponse.Data.AccessToken, options);
+                        ctx.ActionContext.HttpContext.Response.Cookies.Append("refreshToken", refreshTokenResponse.Data.RefreshToken, options);
+
+                        request.Headers.Remove("Authorization");
+                        request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {refreshTokenResponse.Data.AccessToken}");
+                        response = await base.SendAsync(request, cancellationToken);
+                    }
+                }
+            }
 
             return response;
         }

@@ -1,6 +1,6 @@
-﻿namespace Application.Modules.AccountModule.Commands.SignInCommand
+﻿namespace Application.Modules.AccountModule.Commands
 {
-    public class SignInResponse
+    public class AuthenticateResponse
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }

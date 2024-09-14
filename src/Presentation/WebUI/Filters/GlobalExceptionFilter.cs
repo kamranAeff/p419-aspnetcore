@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using WebUI.Services.Common;
 
 namespace WebUI.Filters
 {
@@ -40,6 +43,24 @@ namespace WebUI.Filters
         {
             switch (context.Exception)
             {
+                case UnauthorizedAccessException:
+                    context.Result = new RedirectResult("~/signin.html");
+                    break;
+                case BadRequestException ex:
+                    context.ModelState.Clear();
+                    foreach (var itemError in ex.Errors)
+                    {
+                        foreach (var message in itemError.Value)
+                            context.ModelState.AddModelError(itemError.Key, message);
+                    }
+
+                    context.Result = new ViewResult
+                    {
+                        ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), context.ModelState),
+                        ViewName = context.RouteData.Values["action"]?.ToString()
+                    };
+                    break;
+                case NotFoundException:
                 case NullReferenceException:
                 case ArgumentNullException:
                     context.Result = new ContentResult
