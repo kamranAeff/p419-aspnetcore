@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebUI.Exceptions;
 using WebUI.Models.DTOs.Categories;
 using WebUI.Services.BlogPost;
 
