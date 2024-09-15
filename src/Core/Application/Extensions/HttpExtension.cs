@@ -5,6 +5,13 @@ namespace Application.Extensions
     public static partial class Extension
     {
         public static string GetHost(this IHttpContextAccessor ctx)
-            => $"{ctx.HttpContext.Request.Scheme}://{ctx.HttpContext.Request.Host}";
+        {
+            var host = Environment.GetEnvironmentVariable("FILE_HOST");
+
+            if (!string.IsNullOrWhiteSpace(host))
+                return host;
+
+            return $"{ctx.HttpContext.Request.Scheme}://{ctx.HttpContext.Request.Host}";
+        }
     }
 }
