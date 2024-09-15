@@ -20,6 +20,8 @@ namespace WebUI.Services.Common
                     return response;
                 case HttpStatusCode.Unauthorized:
                     throw new UnauthorizedAccessException();
+                case HttpStatusCode.Forbidden:
+                    throw new ForbiddenException();
                 case HttpStatusCode.NotFound:
                     throw new NotFoundException();
                 case HttpStatusCode.BadRequest:

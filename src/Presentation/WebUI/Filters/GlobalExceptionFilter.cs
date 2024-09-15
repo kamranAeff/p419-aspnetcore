@@ -12,8 +12,6 @@ namespace WebUI.Filters
         {
             context.ExceptionHandled = true;
 
-            Console.WriteLine(context.Exception.Message);
-
             if ("XMLHttpRequest".Equals(context.HttpContext.Request.Headers["X-Requested-With"]))
             {
                 GenerateAjaxResponse(context);
@@ -64,6 +62,14 @@ namespace WebUI.Filters
                     context.Result = new ContentResult
                     {
                         Content = File.ReadAllText("wwwroot/error-pages/404.html"),
+                        ContentType = "text/html",
+                        StatusCode = 200
+                    };
+                    break;
+                case ForbiddenException:
+                    context.Result = new ContentResult
+                    {
+                        Content = File.ReadAllText("wwwroot/error-pages/403.html"),
                         ContentType = "text/html",
                         StatusCode = 200
                     };
