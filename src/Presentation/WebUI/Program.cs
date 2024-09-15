@@ -5,6 +5,7 @@ using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;
 using WebUI.Services.Categories;
 using WebUI.Services.Common;
+using WebUI.Services.ContactPosts;
 using WebUI.Services.Products;
 using WebUI.Services.Tags;
 
@@ -34,6 +35,7 @@ namespace WebUI
                 .AddHttpMessageHandler<ProxyExceptionMessageHandler>()
                 .AddHttpMessageHandler<ProxyAuthorizationMessageHandler>();
 
+            builder.Services.AddSingleton<IContactPostsService, ContactPostsService>();
             builder.Services.AddSingleton<IAccountService, AccountService>();
             builder.Services.AddSingleton<IBlogPostService, BlogPostService>();
             builder.Services.AddSingleton<IProductService, ProductService>();

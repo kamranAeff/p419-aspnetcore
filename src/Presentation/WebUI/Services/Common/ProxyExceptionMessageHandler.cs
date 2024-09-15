@@ -28,6 +28,9 @@ namespace WebUI.Services.Common
                     ctx.ActionContext.HttpContext.Response.WriteAsync(File.ReadAllText("wwwroot/error-pages/403.html"));
                     break;
                 case HttpStatusCode.NotFound:
+                    if ("XMLHttpRequest".Equals(ctx.ActionContext.HttpContext.Request.Headers["X-Requested-With"]))
+                        throw new NotFoundException();
+
                     ctx.ActionContext.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                     ctx.ActionContext.HttpContext.Response.WriteAsync(File.ReadAllText("wwwroot/error-pages/404.html"));
                     break;

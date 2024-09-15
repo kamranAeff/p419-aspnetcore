@@ -9,23 +9,18 @@
   <ItemGroup>
     <Compile Remove="Areas\Admin\Views\Dashboard\**" />
     <Compile Remove="Areas\Admin\Views\Subscribers\**" />
-    <Compile Remove="Views\Home\**" />
     <Content Remove="Areas\Admin\Views\Dashboard\**" />
     <Content Remove="Areas\Admin\Views\Subscribers\**" />
-    <Content Remove="Views\Home\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Subscribers\**" />
-    <EmbeddedResource Remove="Views\Home\**" />
     <None Remove="Areas\Admin\Views\Dashboard\**" />
     <None Remove="Areas\Admin\Views\Subscribers\**" />
-    <None Remove="Views\Home\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Remove="Areas\Admin\Controllers\RolesController.cs" />
     <Compile Remove="Areas\Admin\Controllers\SubscribersController.cs" />
-    <Compile Remove="Controllers\HomeController.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +66,9 @@
     <None Include="Areas\Admin\Views\Tags\Index.cshtml" />
     <None Include="Views\Blog\Details.cshtml" />
     <None Include="Views\Blog\Index.cshtml" />
+    <None Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\SubscribeApprove.cshtml" />
     <None Include="Views\Shared\Components\AllCategories\Default.cshtml" />
     <None Include="Views\Shared\Components\AllCategories\OnlyList.cshtml" />
     <None Include="Views\Shop\Basket.cshtml" />

@@ -116,13 +116,15 @@
         <form method="post" id="frm">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <input type="text" name="fullName" placeholder="Your name">
+                    <input type="text" name="FullName" placeholder="Your name">
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <input type="text" name="email" placeholder="Your Email">
+                    <input type="text" name="Email" placeholder="Your Email">
                 </div>
                 <div class="col-lg-12 text-center">
-                    <textarea name="message" placeholder="Your message"></textarea>
+                    <textarea name="Message" placeholder="Your message"></textarea>
+                </div>
+                <div class="col-lg-12 text-center">
                     <button type="submit" class="site-btn">SEND MESSAGE</button>
                 </div>
             </div>
@@ -150,16 +152,38 @@
                 method: 'POST',
                 body: fd,
                 headers: {
-
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
             })
                 .then(response => response.json())
                 .then(response => {
 
-                    if (response.error == false) {
+                    document.querySelectorAll(`span.text-danger`).forEach(element => element.remove());
+                    if (response.isSuccess == true) {
                         toastr.success(response.message, "Success");
                         element.reset();
                         return;
+                    }
+                    else if (response.code == 400) {
+                        Object.keys(response.errors).forEach(m => {
+                            const input = document.querySelector(`[name='${m}']`);
+
+                            if (input){
+
+                                let messageIndecator = document.createElement('span');
+                                messageIndecator.textContent = response.errors[m][0];
+                                messageIndecator.classList.add('text-danger');
+
+                                input.parentNode.appendChild(messageIndecator);
+
+                            }
+
+                            console.log(m, response.errors[m]);
+                        })
+                        return;
+                    }
+                    else {
+                        toastr.error(response.message, "Warning");
                     }
 
 

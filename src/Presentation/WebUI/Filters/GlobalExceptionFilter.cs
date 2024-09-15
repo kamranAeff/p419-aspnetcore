@@ -25,6 +25,31 @@ namespace WebUI.Filters
         {
             switch (context.Exception)
             {
+                case NotFoundException:
+                    context.Result = new JsonResult(new
+                    {
+                        isSuccess = false,
+                        code = StatusCodes.Status404NotFound,
+                        message = "resurs not found"
+                    });
+                    break;
+                case ForbiddenException:
+                    context.Result = new JsonResult(new
+                    {
+                        isSuccess = false,
+                        code = StatusCodes.Status403Forbidden,
+                        message = "you havent permission"
+                    });
+                    break;
+                case BadRequestException ex:
+                    context.Result = new JsonResult(new
+                    {
+                        isSuccess = false,
+                        code = StatusCodes.Status400BadRequest,
+                        message = "please check your inputs",
+                        errors = ex.Errors
+                    });
+                    break;
                 case NullReferenceException:
                 case ArgumentNullException:
                 default:
