@@ -9,7 +9,10 @@ namespace WebApi.MapperConfiguration.Converters
             if (sourceMember is null)
                 return null;
 
-            string host;
+            string host = Environment.GetEnvironmentVariable("SOURCE_URL");
+
+            if (!string.IsNullOrWhiteSpace(host))
+                return $"{host}/files/{sourceMember}";
 
             if (context.TryGetItems(out Dictionary<string, object> items) && items.TryGetValue("host", out object _host))
                 host = _host?.ToString();
