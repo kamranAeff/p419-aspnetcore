@@ -31,6 +31,8 @@ namespace WebApi
 
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.UseServiceProviderFactory(new IoCFactory());
+            builder.Services.AddHostedService<EmailReceiveService>();
+
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<BlogPostProfile>();
@@ -145,7 +147,7 @@ namespace WebApi
             app.UseStaticFiles(new StaticFileOptions
             {
                 RequestPath = "/files",
-                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath,"uploads"))
+                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath, "uploads"))
             });
 
             app.MapControllers();
