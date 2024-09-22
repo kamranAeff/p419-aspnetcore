@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Contexts;
+using Serilog;
+using Serilog.Formatting.Json;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -29,8 +31,12 @@ namespace WebApi
         {
             LoadPolicies();
 
+            ConfigureLogger();
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.UseServiceProviderFactory(new IoCFactory());
+            builder.Host.UseSerilog();
+
             builder.Services.AddHostedService<EmailReceiveService>();
 
             builder.Services.AddAutoMapper(cfg =>
@@ -153,6 +159,18 @@ namespace WebApi
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ConfigureLogger()
+        {
+            var configuration = new ConfigurationBuilder()
+                                 .SetBasePath(AppContext.BaseDirectory)
+                                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
+                                 .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                            .ReadFrom.Configuration(configuration)
+                            .CreateLogger();
         }
 
         private static void LoadPolicies()
