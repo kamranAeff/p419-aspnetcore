@@ -22,6 +22,7 @@ namespace WebApi
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 var response = ex switch
                 {
                     UserNameOrPasswordIncorrectException or

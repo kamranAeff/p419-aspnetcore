@@ -2,29 +2,37 @@
 using RabbitMQ.Client.Events;
 using System.Text;
 using Application.Extensions;
+using Newtonsoft.Json;
+using Application.Services;
 
 namespace WebApi
 {
     class EmailReceiveService : IHostedService
     {
+        private readonly IEmailService emailService;
         IConnection connection = default;
         IModel channel = default;
 
-        public EmailReceiveService()
+        public EmailReceiveService(IEmailService emailService)
         {
             connection = Environment.GetEnvironmentVariable("RABBIT_URL")
                 .BuildRabbitMqConnection();
 
             channel = connection.CreateModel();
+            this.emailService = emailService;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var consumer = new EventingBasicConsumer(channel);
 
-            consumer.Received += (sender, e) =>
+            consumer.Received += async (sender, e) =>
             {
                 string json = Encoding.Unicode.GetString(e.Body.ToArray());
+
+                var request = JsonConvert.DeserializeObject<SendEmailRequest>(json);
+
+                await emailService.SendEmail(request);
 
                 Console.WriteLine(json);
 

@@ -50,7 +50,7 @@ namespace Services
             using var channel = connection.CreateModel();
 
             channel.QueueDeclare(queue: "emails",
-                                 durable: false,
+                                 durable: true,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);

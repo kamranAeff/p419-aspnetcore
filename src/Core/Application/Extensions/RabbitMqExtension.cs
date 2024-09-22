@@ -13,7 +13,7 @@ namespace Application.Extensions
                 UserName = uri.UserInfo.Split(':')[0],
                 Password = uri.UserInfo.Split(':')[1],
                 Port = (int)uri.Port,
-                VirtualHost = uri.AbsolutePath.TrimStart('/'), // Remove the leading '/'
+                //VirtualHost = uri.AbsolutePath.TrimStart('/'), // Remove the leading '/'
             };
 
             return factory.CreateConnection();

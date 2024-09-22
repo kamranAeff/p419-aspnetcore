@@ -20,4 +20,11 @@ docker run -d --net bridge --ip 172.17.0.22 -p 5081:80 --restart=always -e "ASPN
 
 docker run -d --name rabbitmq rabbitmq:3 -e "" -e ""
 
-docker run -d --name rabbitmq -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+docker run -d --name rabbitmq -v rabbit:/etc/rabbitmq/ -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+docker update --restart=always rabbitmq
+
+docker update-v rabbit:"/etc/rabbitmq/" rabbitmq
+
+
+[Serilog](https://medium.com/@brucycenteio/adding-serilog-to-asp-net-core-net-7-8-5cba1d0dea2)
