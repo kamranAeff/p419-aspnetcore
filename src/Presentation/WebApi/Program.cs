@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Contexts;
 using Serilog;
@@ -169,6 +170,17 @@ namespace WebApi
                                  .Build();
 
             Log.Logger = new LoggerConfiguration()
+                //.Filter.ByExcluding(logEvent =>
+                //{
+                //    var message = logEvent.MessageTemplate.Text;
+                //    if (logEvent.RenderMessage.Contains(message))
+                //    {
+                //        return true; // Exclude this log
+                //    }
+
+                //    loggedMessages.Add(message);
+                //    return false; // Include this log
+                //})
                             .ReadFrom.Configuration(configuration)
                             .CreateLogger();
         }
