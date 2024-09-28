@@ -3,6 +3,7 @@
 docker network create --subnet=172.18.0.0/24 --gateway=172.18.0.1 ogani
 
 docker network connect --ip 172.18.0.6 --alias oganirabbitmq ogani rabbitmq
+docker network disconnect ogani rabbitmq
 
 > docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mssqlserver
 

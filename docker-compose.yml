@@ -1,0 +1,73 @@
+version: "3"
+networks:
+  ogani:
+   driver: bridge
+   ipam:
+     config:
+       - subnet: 172.18.0.0/24
+         gateway: 172.18.0.1 
+
+volumes:
+  rabbit:
+  mongodb:  
+  oganiapi:  
+  
+services:
+  rabbitmq-ogani:
+   image: rabbitmq:3-management
+   container_name: rabbitmq-ogani
+   restart: always
+   networks:
+     ogani:
+      ipv4_address: 172.18.0.3
+   volumes:
+     - rabbit:/app/wwwroot
+   ports:
+     - "5672:5672" 
+     - "15672:15672" 
+   environment:
+     - RABBITMQ_DEFAULT_USER=admin 
+     - RABBITMQ_DEFAULT_PASS=password
+
+  mongo-ogani:
+   image: mongo:5.0.15-focal
+   container_name: mongo-ogani
+   restart: always
+   networks:
+    ogani:
+     ipv4_address: 172.18.0.4
+   volumes:
+    - mongodb:/data/db
+   ports:
+    - "27018:27017"
+   environment:
+    - MONGO_INITDB_ROOT_USERNAME=admin
+    - MONGO_INITDB_ROOT_PASSWORD=password
+  
+  ogani-api:
+   image: ogani-api:v1
+   build:
+    context: .
+    dockerfile: ./src/Presentation/WebApi/Dockerfile
+   container_name: ogani-api
+   restart: always
+   networks:
+    ogani:
+     ipv4_address: 172.18.0.10
+   volumes:
+    - oganiapi:/app/wwwroot
+   ports:
+    - 5080:80
+   environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    - SOURCE_URL=http://localhost:5080
+    - JWT__KEY=88b0ba2aaff3daa419917a9a1c85732570c4771b
+    - JWT__ISSUER=api.ogani.az" -e "JWT__AUDIENCE=api.ogani.az
+    - JWT__EXPIRATIONDURATIONMINUTES=10
+    - RABBIT_URL=amqp://admin:password@rabbit.ogani.az:5672
+    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=query;MultipleActiveResultSets=True;Encrypt=false;App=OganiWebApp"
+    - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://admin:password@mongo.ogani.az:27018/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
+   extra_hosts:
+    - rabbit.ogani.az:172.18.0.3
+    - mongo.ogani.az:172.18.0.4
+    - sql.ogani.az:172.18.0.5

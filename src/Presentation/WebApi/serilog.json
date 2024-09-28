@@ -15,7 +15,7 @@
       {
         "Name": "MongoDB",
         "Args": {
-          "databaseUrl": "mongodb://ogani:ogani123@172.18.0.3:27017/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
+          "databaseUrl": "mongodb://admin:password@localhost:27018/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
           "collectionName": "logs",
           "autoCreateCollection": true
         }
