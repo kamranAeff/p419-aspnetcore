@@ -10,9 +10,26 @@ networks:
 volumes:
   rabbit:
   mongodb:  
-  oganiapi:  
+  oganiapi:
+  mssql:
   
 services:
+  mssql-ogani:
+   image: mcr.microsoft.com/mssql/server:2022-latest
+   container_name: mssql-ogani
+   restart: always
+   networks:
+    ogani:
+     ipv4_address: 172.18.0.2
+   volumes:
+    - mssql:/var/opt/mssql
+   ports:
+    - "1434:1433" 
+   environment:
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=!Dquery20@4
+    - MSSQL_PID=Developer
+    
   rabbitmq-ogani:
    image: rabbitmq:3-management
    container_name: rabbitmq-ogani
@@ -39,11 +56,11 @@ services:
    volumes:
     - mongodb:/data/db
    ports:
-    - "27018:27017"
+    - "27017:27017"
    environment:
     - MONGO_INITDB_ROOT_USERNAME=admin
     - MONGO_INITDB_ROOT_PASSWORD=password
-  
+
   ogani-api:
    image: ogani-api:v1
    build:
@@ -62,10 +79,11 @@ services:
     - ASPNETCORE_ENVIRONMENT=Development
     - SOURCE_URL=http://localhost:5080
     - JWT__KEY=88b0ba2aaff3daa419917a9a1c85732570c4771b
-    - JWT__ISSUER=api.ogani.az" -e "JWT__AUDIENCE=api.ogani.az
+    - JWT__ISSUER=api.ogani.az
+    - JWT__AUDIENCE=api.ogani.az
     - JWT__EXPIRATIONDURATIONMINUTES=10
     - RABBIT_URL=amqp://admin:password@rabbit.ogani.az:5672
-    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=query;MultipleActiveResultSets=True;Encrypt=false;App=OganiWebApp"
+    - "ConnectionStrings__cString=Data Source=sql.ogani.az,1434;Initial Catalog=OganiDb;User Id=sa;Password=query;MultipleActiveResultSets=True;Encrypt=false;App=OganiWebApp"
     - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://admin:password@mongo.ogani.az:27018/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
    extra_hosts:
     - rabbit.ogani.az:172.18.0.3
