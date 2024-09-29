@@ -77,6 +77,9 @@ services:
     - 5080:80
    environment:
     - ASPNETCORE_ENVIRONMENT=Development
+    - SUPERADMIN_USER=kamranAeff
+    - SUPERADMIN_EMAIL=akamran@code.edu.az
+    - SUPERADMIN_PASSWORD=!Dquery20@4
     - SOURCE_URL=http://localhost:5080
     - JWT__KEY=88b0ba2aaff3daa419917a9a1c85732570c4771b
     - JWT__ISSUER=api.ogani.az

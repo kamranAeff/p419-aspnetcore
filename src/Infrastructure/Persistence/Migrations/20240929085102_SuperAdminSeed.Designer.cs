@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240929085102_SuperAdminSeed")]
+    partial class SuperAdminSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,63 +84,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Fresh Meat"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Vegetables"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Fruit & Nut Gifts"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Fresh Berries"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Ocean Foods"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Butter & Eggs"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Fastfood"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Fresh Onion"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Papayaya & Crisps"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Oatmeal"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Fresh Bananas"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
@@ -156,18 +102,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Beauty"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Travel"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ContactPost", b =>
@@ -244,14 +178,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a499f6e7-d79f-411d-8509-1ba7610c9ff7",
+                            ConcurrencyStamp = "da5f8147-a9cc-4d5a-8921-4d09af4f0e6d",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "3e8dcb8e-0a50-4343-9daa-43ef1dfdd6a2",
+                            ConcurrencyStamp = "fbc40520-dfd7-45aa-909d-a92dacbabe9e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

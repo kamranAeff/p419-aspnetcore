@@ -13,6 +13,20 @@ namespace Persistence.Contexts.Configurations
 
             builder.HasKey(m => m.Id);
             builder.ToTable("Brands");
+
+            builder.HasData([
+                new (){ Id = 1,Name="Fresh Meat" },
+                new (){ Id = 2,Name="Vegetables" },
+                new (){ Id = 3,Name="Fruit & Nut Gifts" },
+                new (){ Id = 4,Name="Fresh Berries" },
+                new (){ Id = 5,Name="Ocean Foods" },
+                new (){ Id = 6,Name="Butter & Eggs" },
+                new (){ Id = 7,Name="Fastfood" },
+                new (){ Id = 8,Name="Fresh Onion" },
+                new (){ Id = 9,Name="Papayaya & Crisps" },
+                new (){ Id = 10,Name="Oatmeal" },
+                new (){ Id = 11,Name="Fresh Bananas" },
+                ]);
         }
     }
 }

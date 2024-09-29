@@ -13,6 +13,11 @@ namespace Persistence.Contexts.Configurations
 
             builder.HasKey(m => m.Id);
             builder.ToTable("Categories");
+
+            builder.HasData([
+                new (){ Id = 1,Name="Beauty" },
+                new (){ Id = 2,Name="Travel" }
+                ]);
         }
     }
 }
