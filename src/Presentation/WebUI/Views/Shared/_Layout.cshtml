@@ -50,8 +50,9 @@
                 <div>English</div>
                 <span class="arrow_carrot-down"></span>
                 <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
+                    <li><a data-lang="az">Azerbaycan</a></li>
+                    <li><a data-lang="en">English</a></li>
+                    <li><a data-lang="ru">Русский</a></li>
                 </ul>
             </div>
             <div class="header__top__right__auth">
@@ -116,8 +117,9 @@
                                 <div>English</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
+                                    <li><a data-lang="az">Azerbaycan</a></li>
+                                    <li><a data-lang="en">English</a></li>
+                                    <li><a data-lang="ru">Русский</a></li>
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
@@ -274,6 +276,15 @@
                 });
         });
 
+
+        document.querySelectorAll('[data-lang]').forEach(el => { 
+            el.addEventListener('click', function (e) {
+                const lang = el.getAttribute('data-lang');
+                document.cookie = `lang=${lang}; path=/;`
+
+                location.reload();
+            });
+        });
     </script>
 
     @await RenderSectionAsync("addjs", required: false)

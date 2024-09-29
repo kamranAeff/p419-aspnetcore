@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using WebUI.Filters;
+using WebUI.Localization.Implementation;
 using WebUI.Services.Account;
 using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;
@@ -16,9 +17,11 @@ namespace WebUI
         public static void Main(string[] args)
         {
 
+
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews(cfg => {
+            builder.Services.AddControllersWithViews(cfg =>
+            {
 
                 cfg.Filters.Add<GlobalExceptionFilter>();
 
@@ -48,7 +51,13 @@ namespace WebUI
             var app = builder.Build();
             app.UseStaticFiles();
 
+            app.UseLocalization();
+
             #region Routing
+
+            app.MapControllerRoute(
+                name: "default-via-language",
+                pattern: "{lang:regex(en|az|ru)}/{controller=blog}/{action=index}/{id?}");
 
             app.MapControllerRoute(name: "blog",
                 pattern: "blog/{slug:minlength(2)}",
@@ -79,4 +88,7 @@ namespace WebUI
 
 
     }
+
+
+    
 }

@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="Areas\Admin\Views\Dashboard\**" />
     <Compile Remove="Areas\Admin\Views\Subscribers\**" />
+    <Compile Remove="Resources\**" />
     <Content Remove="Areas\Admin\Views\Dashboard\**" />
     <Content Remove="Areas\Admin\Views\Subscribers\**" />
+    <Content Remove="Resources\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Subscribers\**" />
+    <EmbeddedResource Remove="Resources\**" />
     <None Remove="Areas\Admin\Views\Dashboard\**" />
     <None Remove="Areas\Admin\Views\Subscribers\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +82,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Localization\ContactResources\" />
+    <Folder Include="Localization\HomeResources\" />
+    <Folder Include="Localization\Shop\" />
     <Folder Include="wwwroot\lib\multiple-imager-js\js\" />
   </ItemGroup>
 
