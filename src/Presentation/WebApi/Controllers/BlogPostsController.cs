@@ -7,6 +7,7 @@ using Application.Modules.BlogPostsModule.Queries.BlogPostsGetAllQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsGetPopularsQuery;
 using Application.Modules.BlogPostsModule.Queries.BlogPostsPagedQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Common;
 
@@ -17,6 +18,7 @@ namespace WebApi.Controllers
     public class BlogPostsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] BlogPostsGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -24,6 +26,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll([FromQuery] BlogPostsPagedRequest request)
         {
@@ -32,6 +35,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] BlogPostGetByIdRequest request)
         {
@@ -40,6 +44,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("populars/{recordCount:int:min(2)}")]
         public async Task<IActionResult> GetPopulars([FromRoute] BlogPostsGetPopularsRequest request)
         {
@@ -48,6 +53,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{slug:minlength(3):slug}")]
         public async Task<IActionResult> GetBySlug([FromRoute] BlogPostGetBySlugRequest request)
         {

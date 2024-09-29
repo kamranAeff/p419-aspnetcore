@@ -3,6 +3,7 @@ using Application.Modules.ContactPostsModule.Commands.ContactPostReplyCommand;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApi.Models.Common;
 
 namespace WebApi.Controllers
@@ -21,7 +22,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("reply")]
-        [AllowAnonymous]
+        [Authorize("contact-posts.reply")]
+        //[SwaggerOperation(Description = "admin cavab gondere bilir", Summary = "Admin Cavab Yazir cavab istifadecinin qeyd etdiyi e-poct addresine gonderilir")]
+        //[SwaggerResponse(StatusCodes.Status201Created, "Cavab gonderildi")]
+        //[SwaggerResponse(StatusCodes.Status404NotFound, "Muraciet tapilmadi")]
+        //[SwaggerResponse(StatusCodes.Status400BadRequest, "Validasiya xetasi")]
         public async Task<IActionResult> Reply(ContactPostReplyRequest request)
         {
             await mediator.Send(request);

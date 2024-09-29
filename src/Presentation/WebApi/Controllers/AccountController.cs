@@ -22,7 +22,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult> RefreshToken([FromHeader] RefreshTokenRequest request)
         {
             var response = await mediator.Send(request);
             var dto = ApiResponse.Success(response);

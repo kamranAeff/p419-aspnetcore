@@ -4,6 +4,7 @@ using System.Text;
 using Application.Extensions;
 using Newtonsoft.Json;
 using Application.Services;
+using System.Threading.Channels;
 
 namespace WebApi
 {
@@ -24,6 +25,7 @@ namespace WebApi
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            var queue = channel.QueueDeclare("emails", true, false, false, null);
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += async (sender, e) =>
@@ -39,7 +41,7 @@ namespace WebApi
                 channel.BasicAck(deliveryTag: e.DeliveryTag, multiple: false);
             };
 
-            channel.BasicConsume("emails", false, consumer);
+            channel.BasicConsume(queue.QueueName, false, consumer);
 
             return Task.CompletedTask;
         }

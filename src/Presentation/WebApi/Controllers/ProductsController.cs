@@ -6,6 +6,7 @@ using Application.Modules.ProductsModule.Queries.ProductGetBySlugQuery;
 using Application.Modules.ProductsModule.Queries.ProductPagesQuery;
 using Application.Modules.ProductsModule.Queries.ProductsGetAllQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Common;
 
@@ -16,6 +17,7 @@ namespace WebApi.Controllers
     public class ProductsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromRoute] ProductsGetAllRequest request)
         {
             var response = await mediator.Send(request);
@@ -23,6 +25,7 @@ namespace WebApi.Controllers
             return Ok(dto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll([FromQuery] ProductPagedRequest request)
         {
@@ -31,6 +34,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> GetById([FromRoute] ProductGetByIdRequest request)
         {
@@ -39,6 +43,7 @@ namespace WebApi.Controllers
             return Ok(dto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{slug:minlength(3):slug}")]
         public async Task<IActionResult> GetBySlug([FromRoute] ProductGetBySlugRequest request)
         {

@@ -10,11 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Contexts;
 using Serilog;
-using Serilog.Formatting.Json;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -23,6 +21,7 @@ using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 using WebApi.Middlewares;
+using WebApi.Swagger.OperationFilters;
 
 namespace WebApi
 {
@@ -97,7 +96,13 @@ namespace WebApi
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             });
 
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(cfg =>
+            {
+                cfg.OperationFilter<RefreshTokenHeaderOperationFilter>();
+                cfg.OperationFilter<ResponseStatusOperationFilter>();
+                cfg.OperationFilter<LanguageHeaderOperationFilter>();
+                cfg.EnableAnnotations();
+            });
 
             builder.Services.AddCors(cfg => cfg.AddPolicy("allowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
@@ -170,17 +175,17 @@ namespace WebApi
                                  .Build();
 
             Log.Logger = new LoggerConfiguration()
-                //.Filter.ByExcluding(logEvent =>
-                //{
-                //    var message = logEvent.MessageTemplate.Text;
-                //    if (logEvent.RenderMessage.Contains(message))
-                //    {
-                //        return true; // Exclude this log
-                //    }
+                            //.Filter.ByExcluding(logEvent =>
+                            //{
+                            //    var message = logEvent.MessageTemplate.Text;
+                            //    if (logEvent.RenderMessage.Contains(message))
+                            //    {
+                            //        return true; // Exclude this log
+                            //    }
 
-                //    loggedMessages.Add(message);
-                //    return false; // Include this log
-                //})
+                            //    loggedMessages.Add(message);
+                            //    return false; // Include this log
+                            //})
                             .ReadFrom.Configuration(configuration)
                             .CreateLogger();
         }

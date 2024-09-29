@@ -4,7 +4,12 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT__KEY": "88b0ba2aaff3daa419917a9a1c85732570c4771b",
+        "JWT__ISSUER": "api.ogani.az",
+        "JWT__AUDIENCE": "api.ogani.az",
+        "JWT__EXPIRATIONDURATIONMINUTES": "1",
+        "RABBIT_URL": "amqp://admin:password@localhost:5672"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5189"

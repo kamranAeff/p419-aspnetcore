@@ -17,7 +17,7 @@ namespace WebApi.Controllers
     {
 
         [HttpGet]
-        [Authorize("categories.get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] CategoriesGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -25,7 +25,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize("categories.get")]
+        [AllowAnonymous]
         [HttpPost("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll(CategoriesPagedRequest request)
         {
@@ -34,7 +34,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize("categories.get")]
+        [AllowAnonymous]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] CategoryGetByIdRequest request)
         {

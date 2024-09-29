@@ -17,7 +17,7 @@ namespace WebApi.Controllers
     {
 
         [HttpGet]
-        [Authorize("brands.get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] BrandsGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -25,7 +25,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize("brands.get")]
+        [AllowAnonymous]
         [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll([FromQuery] BrandsPagedRequest request)
         {
@@ -34,7 +34,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [Authorize("brands.get")]
+        [AllowAnonymous]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] BrandGetByIdRequest request)
         {

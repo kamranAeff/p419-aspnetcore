@@ -5,6 +5,7 @@ using Application.Modules.TagsModule.Queries.TagGetByIdQuery;
 using Application.Modules.TagsModule.Queries.TagsGetAllQuery;
 using Application.Modules.TagsModule.Queries.TagsPagedQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.Common;
 
@@ -14,6 +15,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class TagsController(IMediator mediator) : ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet("{page:int:min(1)}/{size:int:min(2)}")]
         public async Task<IActionResult> GetAll([FromRoute] TagsPagedRequest request)
         {
@@ -21,7 +23,9 @@ namespace WebApi.Controllers
             var response = ApiResponse.Success(data);
             return Ok(response);
         }
+
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromRoute] TagsGetAllRequest request)
         {
             var data = await mediator.Send(request);
@@ -29,6 +33,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int:min(1)}")]
         public async Task<IActionResult> Get([FromRoute] TagGetByIdRequest request)
         {
