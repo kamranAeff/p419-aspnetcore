@@ -129,4 +129,28 @@
   <data name="Blog" xml:space="preserve">
     <value>Блог</value>
   </data>
+  <data name="AboutOurShop" xml:space="preserve">
+    <value>О нашем магазине</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>О нас</value>
+  </data>
+  <data name="DeliveryInfomation" xml:space="preserve">
+    <value>Информация о доставке</value>
+  </data>
+  <data name="OurSitemap" xml:space="preserve">
+    <value>Наша карта сайта</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Политика конфиденциальности</value>
+  </data>
+  <data name="SecureShopping" xml:space="preserve">
+    <value>Безопасные покупки</value>
+  </data>
+  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
+    <value>Получайте по электронной почте обновления о наших последних магазинах и специальных предложениях</value>
+  </data>
+  <data name="JoinOurNewsletterNow" xml:space="preserve">
+    <value>Подпишитесь на нашу рассылку прямо сейчас</value>
+  </data>
 </root>

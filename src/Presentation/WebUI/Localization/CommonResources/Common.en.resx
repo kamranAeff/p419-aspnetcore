@@ -129,4 +129,28 @@
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
+  <data name="AboutOurShop" xml:space="preserve">
+    <value>About Our Shop</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="DeliveryInfomation" xml:space="preserve">
+    <value>Delivery Infomation</value>
+  </data>
+  <data name="OurSitemap" xml:space="preserve">
+    <value>Our Sitemap</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="SecureShopping" xml:space="preserve">
+    <value>Secure Shopping</value>
+  </data>
+  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
+    <value>Get E-mail updates about our latest shop and special offers</value>
+  </data>
+  <data name="JoinOurNewsletterNow" xml:space="preserve">
+    <value>Join Our Newsletter Now</value>
+  </data>
 </root>

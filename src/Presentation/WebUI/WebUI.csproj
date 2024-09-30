@@ -97,4 +97,19 @@
     <Folder Include="wwwroot\lib\multiple-imager-js\js\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Localization\CommonResources\Common.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\CommonResources\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

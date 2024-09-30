@@ -19,7 +19,7 @@ namespace WebUI.Localization.CommonResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Common {
@@ -61,6 +61,24 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mağazamız haqqında.
+        /// </summary>
+        public static string AboutOurShop {
+            get {
+                return ResourceManager.GetString("AboutOurShop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haqqımızda.
+        /// </summary>
+        public static string AboutUs {
+            get {
+                return ResourceManager.GetString("AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paylasimlar.
         /// </summary>
         public static string Blog {
@@ -79,11 +97,65 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çatdırılma məlumatı.
+        /// </summary>
+        public static string DeliveryInfomation {
+            get {
+                return ResourceManager.GetString("DeliveryInfomation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ən son mağazamız və xüsusi təkliflər haqqında e-poçt yeniləmələri alın.
+        /// </summary>
+        public static string GetMailUpdatesAboutOurLatestShopAndSpecialOffers {
+            get {
+                return ResourceManager.GetString("GetMailUpdatesAboutOurLatestShopAndSpecialOffers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana sehife.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bülletenimizə indi qoşulun.
+        /// </summary>
+        public static string JoinOurNewsletterNow {
+            get {
+                return ResourceManager.GetString("JoinOurNewsletterNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sayt xəritəmiz.
+        /// </summary>
+        public static string OurSitemap {
+            get {
+                return ResourceManager.GetString("OurSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Məxfilik siyasəti.
+        /// </summary>
+        public static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Təhlükəsiz alış-veriş.
+        /// </summary>
+        public static string SecureShopping {
+            get {
+                return ResourceManager.GetString("SecureShopping", resourceCulture);
             }
         }
         

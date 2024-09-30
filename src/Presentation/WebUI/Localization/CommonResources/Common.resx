@@ -129,4 +129,28 @@
   <data name="Blog" xml:space="preserve">
     <value>Paylasimlar</value>
   </data>
+  <data name="AboutOurShop" xml:space="preserve">
+    <value>Mağazamız haqqında</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>Haqqımızda</value>
+  </data>
+  <data name="DeliveryInfomation" xml:space="preserve">
+    <value>Çatdırılma məlumatı</value>
+  </data>
+  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
+    <value>Ən son mağazamız və xüsusi təkliflər haqqında e-poçt yeniləmələri alın</value>
+  </data>
+  <data name="JoinOurNewsletterNow" xml:space="preserve">
+    <value>Bülletenimizə indi qoşulun</value>
+  </data>
+  <data name="OurSitemap" xml:space="preserve">
+    <value>Sayt xəritəmiz</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Məxfilik siyasəti</value>
+  </data>
+  <data name="SecureShopping" xml:space="preserve">
+    <value>Təhlükəsiz alış-veriş</value>
+  </data>
 </root>
