@@ -16,8 +16,6 @@ namespace WebUI
     {
         public static void Main(string[] args)
         {
-
-
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews(cfg =>
@@ -28,7 +26,6 @@ namespace WebUI
             });
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
-
 
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             builder.Services.AddScoped<ProxyAuthorizationMessageHandler>();
@@ -50,43 +47,36 @@ namespace WebUI
 
             var app = builder.Build();
             app.UseStaticFiles();
-
             app.UseLocalization();
 
             #region Routing
 
             app.MapControllerRoute(
-                name: "default-via-language",
+                name: "default",
                 pattern: "{lang:regex(en|az|ru)}/{controller=blog}/{action=index}/{id?}");
 
+            app.MapControllerRoute(name: "areas",
+                pattern: "{lang:regex(en|az|ru)}/{area:exists}/{controller=Dashboard}/{action=index}/{id?}");
+
             app.MapControllerRoute(name: "blog",
-                pattern: "blog/{slug:minlength(2)}",
+                pattern: "{lang:regex(en|az|ru)}/blog/{slug:minlength(2)}",
                 defaults: new { controller = "Blog", action = "Details", area = "" });
 
             app.MapControllerRoute(name: "shop",
-                pattern: "shop/{slug:minlength(2)}",
+                pattern: "{lang:regex(en|az|ru)}/shop/{slug:minlength(2)}",
                 defaults: new { controller = "Shop", action = "Details", area = "" });
 
-            app.MapGet("/accessdenied.html", async (context) =>
+            app.MapGet("{lang:regex(en|az|ru)}/accessdenied.html", async (context) =>
             {
                 context.Response.Clear();
                 context.Response.ContentType = "text/html";
                 context.Response.StatusCode = 200;
                 await context.Response.WriteAsync(File.ReadAllText("wwwroot/error-pages/403.html"));
             });
-
-            app.MapControllerRoute(name: "areas",
-                pattern: "{area:exists}/{controller=Dashboard}/{action=index}/{id?}");
-
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=blog}/{action=index}/{id?}");
             #endregion
 
             app.Run();
         }
-
-
     }
 
 

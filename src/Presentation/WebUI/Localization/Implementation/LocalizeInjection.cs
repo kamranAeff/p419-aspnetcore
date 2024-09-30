@@ -6,6 +6,8 @@ namespace WebUI.Localization.Implementation
     {
         public static IApplicationBuilder UseLocalization(this IApplicationBuilder app)
         {
+            app.UseMiddleware<LocalizeRedirectionalMiddleware>();
+
             app.UseRequestLocalization(cfg =>
             {
                 var supportedCultures = new[] {
@@ -18,7 +20,7 @@ namespace WebUI.Localization.Implementation
                 cfg.SupportedUICultures = supportedCultures;
 
                 cfg.RequestCultureProviders.Clear(); 
-                cfg.RequestCultureProviders.Add(new AppCultureProvider());
+                cfg.RequestCultureProviders.Add(new LocalizeCultureProvider());
             });
             return app;
         }

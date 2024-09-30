@@ -277,12 +277,15 @@
         });
 
 
-        document.querySelectorAll('[data-lang]').forEach(el => { 
+        document.querySelectorAll('[data-lang]').forEach(el => {
             el.addEventListener('click', function (e) {
                 const lang = el.getAttribute('data-lang');
-                document.cookie = `lang=${lang}; path=/;`
+                let callback = `${location.pathname}${location.search}`.replace(/\/(az|en|ru)\/?/g, `/${lang}/`);
 
-                location.reload();
+                if (callback.endsWith('/'))
+                    callback = callback.substr(0, callback.length - 1);
+
+                location.href = callback;
             });
         });
     </script>
