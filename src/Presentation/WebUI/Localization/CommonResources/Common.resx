@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Home" xml:space="preserve">
-    <value>Ana sehife</value>
+    <value>Ana səhifə</value>
   </data>
   <data name="Shop" xml:space="preserve">
-    <value>Magaza</value>
+    <value>Mağaza</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Muraciet</value>
+    <value>Müraciət</value>
   </data>
   <data name="Blog" xml:space="preserve">
-    <value>Paylasimlar</value>
+    <value>Paylaşımlar</value>
   </data>
   <data name="AboutOurShop" xml:space="preserve">
     <value>Mağazamız haqqında</value>
@@ -152,5 +152,44 @@
   </data>
   <data name="SecureShopping" xml:space="preserve">
     <value>Təhlükəsiz alış-veriş</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Ünvan</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-poçt</value>
+  </data>
+  <data name="Innovation" xml:space="preserve">
+    <value>Yenilik</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Daxil ol</value>
+  </data>
+  <data name="OurServices" xml:space="preserve">
+    <value>Xidmətlərimiz</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Layihələr</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Abunə ol</value>
+  </data>
+  <data name="Testimonials" xml:space="preserve">
+    <value>Rəylər</value>
+  </data>
+  <data name="UsefulLinks" xml:space="preserve">
+    <value>Faydalı Linklər</value>
+  </data>
+  <data name="WhoWeAre" xml:space="preserve">
+    <value>Biz kimik</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>E-poçt adresiniz</value>
+  </data>
+  <data name="Support_24_7" xml:space="preserve">
+    <value>7/24 dəstək</value>
   </data>
 </root>

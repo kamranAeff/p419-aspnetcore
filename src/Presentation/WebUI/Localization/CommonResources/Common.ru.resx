@@ -153,4 +153,43 @@
   <data name="JoinOurNewsletterNow" xml:space="preserve">
     <value>Подпишитесь на нашу рассылку прямо сейчас</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+  <data name="Innovation" xml:space="preserve">
+    <value>Инновации</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Авторизоваться</value>
+  </data>
+  <data name="OurServices" xml:space="preserve">
+    <value>Наши услуги</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Проекты</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Подписаться</value>
+  </data>
+  <data name="Testimonials" xml:space="preserve">
+    <value>Отзывы</value>
+  </data>
+  <data name="UsefulLinks" xml:space="preserve">
+    <value>Полезные ссылки</value>
+  </data>
+  <data name="WhoWeAre" xml:space="preserve">
+    <value>Кто мы такие</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>Ваш электронный адрес</value>
+  </data>
+  <data name="Support_24_7" xml:space="preserve">
+    <value>поддержка 24/7</value>
+  </data>
 </root>

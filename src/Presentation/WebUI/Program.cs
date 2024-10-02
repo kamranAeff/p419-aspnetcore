@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Binders.ConstraintsConcept;
 using WebUI.Filters;
 using WebUI.Localization.Implementation;
 using WebUI.Services.Account;
@@ -25,6 +26,7 @@ namespace WebUI
 
             });
 
+            builder.Services.InjectConstraints();
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
 
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -53,20 +55,20 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{lang:regex(en|az|ru)}/{controller=blog}/{action=index}/{id?}");
+                pattern: "{lang:language}/{controller=blog}/{action=index}/{id?}");
 
             app.MapControllerRoute(name: "areas",
-                pattern: "{lang:regex(en|az|ru)}/{area:exists}/{controller=Dashboard}/{action=index}/{id?}");
+                pattern: "{lang:language}/{area:exists}/{controller=Dashboard}/{action=index}/{id?}");
 
             app.MapControllerRoute(name: "blog",
-                pattern: "{lang:regex(en|az|ru)}/blog/{slug:minlength(2)}",
+                pattern: "{lang:language}/blog/{slug:slug}",
                 defaults: new { controller = "Blog", action = "Details", area = "" });
 
             app.MapControllerRoute(name: "shop",
-                pattern: "{lang:regex(en|az|ru)}/shop/{slug:minlength(2)}",
+                pattern: "{lang:language}/shop/{slug:slug}",
                 defaults: new { controller = "Shop", action = "Details", area = "" });
 
-            app.MapGet("{lang:regex(en|az|ru)}/accessdenied.html", async (context) =>
+            app.MapGet("{lang:language}/accessdenied.html", async (context) =>
             {
                 context.Response.Clear();
                 context.Response.ContentType = "text/html";

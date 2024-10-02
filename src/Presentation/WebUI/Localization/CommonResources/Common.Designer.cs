@@ -79,7 +79,16 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paylasimlar.
+        ///   Looks up a localized string similar to Ünvan.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paylaşımlar.
         /// </summary>
         public static string Blog {
             get {
@@ -88,7 +97,7 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Muraciet.
+        ///   Looks up a localized string similar to Müraciət.
         /// </summary>
         public static string Contact {
             get {
@@ -106,6 +115,15 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-poçt.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ən son mağazamız və xüsusi təkliflər haqqında e-poçt yeniləmələri alın.
         /// </summary>
         public static string GetMailUpdatesAboutOurLatestShopAndSpecialOffers {
@@ -115,11 +133,20 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ana sehife.
+        ///   Looks up a localized string similar to Ana səhifə.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yenilik.
+        /// </summary>
+        public static string Innovation {
+            get {
+                return ResourceManager.GetString("Innovation", resourceCulture);
             }
         }
         
@@ -133,11 +160,38 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daxil ol.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xidmətlərimiz.
+        /// </summary>
+        public static string OurServices {
+            get {
+                return ResourceManager.GetString("OurServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sayt xəritəmiz.
         /// </summary>
         public static string OurSitemap {
             get {
                 return ResourceManager.GetString("OurSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
             }
         }
         
@@ -151,6 +205,15 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Layihələr.
+        /// </summary>
+        public static string Projects {
+            get {
+                return ResourceManager.GetString("Projects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Təhlükəsiz alış-veriş.
         /// </summary>
         public static string SecureShopping {
@@ -160,11 +223,65 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Magaza.
+        ///   Looks up a localized string similar to Mağaza.
         /// </summary>
         public static string Shop {
             get {
                 return ResourceManager.GetString("Shop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abunə ol.
+        /// </summary>
+        public static string Subscribe {
+            get {
+                return ResourceManager.GetString("Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7/24 dəstək.
+        /// </summary>
+        public static string Support_24_7 {
+            get {
+                return ResourceManager.GetString("Support_24_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rəylər.
+        /// </summary>
+        public static string Testimonials {
+            get {
+                return ResourceManager.GetString("Testimonials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faydalı Linklər.
+        /// </summary>
+        public static string UsefulLinks {
+            get {
+                return ResourceManager.GetString("UsefulLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biz kimik.
+        /// </summary>
+        public static string WhoWeAre {
+            get {
+                return ResourceManager.GetString("WhoWeAre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-poçt adresiniz.
+        /// </summary>
+        public static string YourEmail {
+            get {
+                return ResourceManager.GetString("YourEmail", resourceCulture);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace WebApi.Binders.ConstraintsConcept
+﻿namespace WebUI.Binders.ConstraintsConcept
 {
     public static class ConstraintsInjection
     {

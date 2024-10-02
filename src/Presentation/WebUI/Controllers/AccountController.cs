@@ -11,20 +11,20 @@ namespace WebUI.Controllers
             return View();
         }
 
-        [Route("/{lang:regex(en|az|ru)}/approve-account")]
+        [Route("/{lang:language}/approve-account")]
         public async Task<IActionResult> RegisterComfirm(string token)
         {
             return RedirectToAction("Index", "Home");
         }
 
-        [Route("/{lang:regex(en|az|ru)}/signin.html")]
+        [Route("/{lang:language}/signin.html")]
         public IActionResult Signin()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("/{lang:regex(en|az|ru)}/signin.html")]
+        [Route("/{lang:language}/signin.html")]
         public async Task<IActionResult> Signin(SignInRequestDto request)
         {
             var response = await accountService.SignInAsync(request);

@@ -4,22 +4,17 @@ namespace WebUI.Localization.Implementation
 {
     public static class LocalizeInjection
     {
+        internal const string SUPPORTED_CULTURES = "az|en|ru";
+
         public static IApplicationBuilder UseLocalization(this IApplicationBuilder app)
         {
             app.UseMiddleware<LocalizeRedirectionalMiddleware>();
 
             app.UseRequestLocalization(cfg =>
             {
-                var supportedCultures = new[] {
-                   new CultureInfo("en"),
-                   new CultureInfo("az"),
-                   new CultureInfo("ru")
-                };
+                cfg.RequestCultureProviders.Clear();
 
-                cfg.SupportedCultures = supportedCultures;
-                cfg.SupportedUICultures = supportedCultures;
-
-                cfg.RequestCultureProviders.Clear(); 
+                cfg.SupportedUICultures = cfg.SupportedCultures = SUPPORTED_CULTURES.Split('|').Select(m => new CultureInfo(m)).ToArray();
                 cfg.RequestCultureProviders.Add(new LocalizeCultureProvider());
             });
             return app;

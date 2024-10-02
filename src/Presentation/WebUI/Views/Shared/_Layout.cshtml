@@ -56,13 +56,13 @@
                 </ul>
             </div>
             <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+                <a href="#"><i class="fa fa-user"></i> @Common.Login</a>
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-controller="shop" asp-action="index">Shop</a></li>
+                <li class="active"><a asp-controller="Home" asp-action="Index">@Common.Home</a></li>
+                <li><a asp-controller="shop" asp-action="index">@Common.Shop</a></li>
                 <li>
                     <a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
@@ -72,8 +72,8 @@
                         <li><a href="blog-details.html">Blog Details</a></li>
                     </ul>
                 </li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a asp-controller="Home" asp-action="contact">Contact</a></li>
+                <li><a href="blog.html">@Common.Blog</a></li>
+                <li><a asp-controller="Home" asp-action="contact">@Common.Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -123,7 +123,7 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <a href="#"><i class="fa fa-user"></i> @Common.Login</a>
                             </div>
                         </div>
                     </div>
@@ -175,15 +175,15 @@
                             <a asp-controller="Home" asp-action="Index"><img src="~/assets/img/logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: <a href="https://colorlib.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="335b565f5f5c73505c5f5c415f5a511d505c5e">[email&#160;protected]</a></li>
+                            <li>@Common.Address: 60-49 Road 11378 New York</li>
+                            <li>@Common.Phone: +65 11.188.888</li>
+                            <li>@Common.Email: <a href="https://colorlib.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="335b565f5f5c73505c5f5c415f5a511d505c5e">[email&#160;protected]</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                        <h6>Useful Links</h6>
+                        <h6>@Common.UsefulLinks</h6>
                         <ul>
                             <li><a href="#">@Common.AboutUs</a></li>
                             <li><a href="#">@Common.AboutOurShop</a></li>
@@ -193,12 +193,12 @@
                             <li><a href="#">@Common.OurSitemap</a></li>
                         </ul>
                         <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="#">@Common.WhoWeAre</a></li>
+                            <li><a href="#">@Common.OurServices</a></li>
+                            <li><a href="#">@Common.Projects</a></li>
+                            <li><a href="#">@Common.Contact</a></li>
+                            <li><a href="#">@Common.Innovation</a></li>
+                            <li><a href="#">@Common.Testimonials</a></li>
                         </ul>
                     </div>
                 </div>
@@ -207,8 +207,8 @@
                         <h6>@Common.JoinOurNewsletterNow</h6>
                         <p>@Common.GetMailUpdatesAboutOurLatestShopAndSpecialOffers</p>
                         <form method="post" id="subscribe" autocomplete="off">
-                            <input type="text" name="email" placeholder="E-poçt adresiniz">
-                            <button type="submit" class="site-btn">Abunə ol</button>
+                            <input type="text" name="email" placeholder="@Common.YourEmail">
+                            <button type="submit" class="site-btn">@Common.Subscribe</button>
                         </form>
                         <div class="footer__widget__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>

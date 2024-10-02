@@ -153,4 +153,43 @@
   <data name="JoinOurNewsletterNow" xml:space="preserve">
     <value>Join Our Newsletter Now</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Innovation" xml:space="preserve">
+    <value>Innovation</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="OurServices" xml:space="preserve">
+    <value>Our Services</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="Testimonials" xml:space="preserve">
+    <value>Testimonials</value>
+  </data>
+  <data name="UsefulLinks" xml:space="preserve">
+    <value>Useful Links</value>
+  </data>
+  <data name="WhoWeAre" xml:space="preserve">
+    <value>Who We Are</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>Your email address</value>
+  </data>
+  <data name="Support_24_7" xml:space="preserve">
+    <value>support 24/7 time</value>
+  </data>
 </root>
