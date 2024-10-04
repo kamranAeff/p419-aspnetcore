@@ -34,54 +34,8 @@ docker update-v rabbit:"/etc/rabbitmq/" rabbitmq
 > docker run -d -p 27017:27017 --net ogani --ip 172.18.0.3 --name ogani-mongo -e MONGO_INITDB_ROOT_USERNAME=ogani -e MONGO_INITDB_ROOT_PASSWORD=ogani123 -v ogani-mongo:/data/db mongo
 
 
+> docker exec -it elasticsearch bin/elasticsearch-certutil ca --out /usr/share/elasticsearch/config/certs/esnode.p12 --pass "elastic"
 
-{
-  "Serilog": {
-    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.MongoDB" ],
-    "MinimumLevel": {
-      "Default": "Information",
-      "Override": {
-        "Microsoft": "Warning",
-        "System": "Warning"
-      }
-    },
-    "WriteTo": [
-      {
-        "Name": "Console"
-      },
-      {
-        "Name": "MongoDB",
-        "Args": {
-          "connectionString": "mongodb://ogani:ogani123@172.18.0.3:27017/?authSource=admin&authMechanism=SCRAM-SHA-1",
-          "databaseName": "ogani",
-          "collectionName": "logs",
-          "autoCreateCollection": true
-        }
-      }
-      //{
-      //  "Name": "File",    ##### , "Serilog.Sinks.File"
-      //  "Args": {
-      //    "path": "Logs/log-ogani-api-.json",
-      //    "rollingInterval": "Day",
-      //    "rollOnFileSizeLimit": false,
-      //    "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
-      //  }
-      //},
-      //{
-      //  "Name": "MSSqlServer",
-      //  "Args": {
-      //    "connectionString": "data source=.;initial catalog=BigonP516;user id=sa;password=query;MultipleActiveResultSets=True;Encrypt=false",
-      //    "sinkOptionsSection": {
-      //      "tableName": "Logs",
-      //      "schemaName": "Serilog",
-      //      "autoCreateSqlTable": true
-      //    }
-      //  }
-      //}
-    ],
-    "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ],
-    "Properties": {
-      "Application": "Ogani Web Api"
-    }
-  }
-}
+> docker exec -it elasticsearch bin/elasticsearch-create-enrollment-token -scope kibana --url "https://localhost:9200" --pass "elastic"
+
+> docker cp kibana.yml kibana:/usr/share/kibana/config/kibana.yml

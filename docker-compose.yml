@@ -12,6 +12,7 @@ volumes:
   mongodb:  
   oganiapi:
   mssql:
+  elasticsearch:
   
 services:
   mssql-ogani:
@@ -60,6 +61,45 @@ services:
    environment:
     - MONGO_INITDB_ROOT_USERNAME=admin
     - MONGO_INITDB_ROOT_PASSWORD=password
+  
+  elasticsearch-ogani:
+   container_name: elasticsearch-ogani
+   image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+   ports:
+    - 9200:9200
+   volumes:
+    - elasticsearch:/usr/share/elasticsearch/data
+   environment:
+    - cluster.name=elastic
+    - ELASTIC_PASSWORD=elastic
+    - xpack.license.self_generated.type=basic
+    - node.name=es01
+    - discovery.type=single-node
+    - bootstrap.memory_lock=true
+    - ES_JAVA_OPTS=-Xms4g -Xmx4g
+    - xpack.security.enrollment.enabled=true
+#    - xpack.security.http.ssl.enabled=false
+   networks:
+     ogani:
+       ipv4_address: 172.18.0.5
+
+  kibana-ogani:
+    container_name: kibana-ogani
+    image: docker.elastic.co/kibana/kibana:8.14.3
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch-ogani
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic.az:9200
+      - ELASTICSEARCH_USERNAME=kibana
+      - ELASTICSEARCH_PASSWORD=elastic
+      - ELASTICSEARCH_SSL_VERIFICATION_MODE=none
+    networks:
+      ogani:
+        ipv4_address: 172.18.0.6
+    extra_hosts:
+     - elastic.az:172.18.0.5
 
   ogani-api:
    image: ogani-api:v1

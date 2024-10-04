@@ -1,6 +1,6 @@
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.MongoDB" ],
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.MongoDB", "Serilog.Sinks.Elasticsearch" ],
     "MinimumLevel": {
       "Default": "Information",
       "Override": {
@@ -18,6 +18,15 @@
           "databaseUrl": "mongodb://admin:password@localhost:27018/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
           "collectionName": "logs",
           "autoCreateCollection": true
+        }
+      },
+      {
+        "Name": "Elasticsearch",
+        "Args": {
+          "nodeUris": "http://localhost:9200",
+          "autoRegisterTemplate": true,
+          "indexFormat": "logs-{0:yyyy.MM}",
+          "inlineFields": true
         }
       }
     ],
