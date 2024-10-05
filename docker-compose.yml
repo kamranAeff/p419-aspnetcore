@@ -78,7 +78,6 @@ services:
     - bootstrap.memory_lock=true
     - ES_JAVA_OPTS=-Xms4g -Xmx4g
     - xpack.security.enrollment.enabled=true
-#    - xpack.security.http.ssl.enabled=false
    networks:
      ogani:
        ipv4_address: 172.18.0.5
@@ -91,15 +90,13 @@ services:
     depends_on:
       - elasticsearch-ogani
     environment:
-      - ELASTICSEARCH_HOSTS=http://elastic.az:9200
       - ELASTICSEARCH_USERNAME=kibana
       - ELASTICSEARCH_PASSWORD=elastic
-      - ELASTICSEARCH_SSL_VERIFICATION_MODE=none
     networks:
       ogani:
         ipv4_address: 172.18.0.6
     extra_hosts:
-     - elastic.az:172.18.0.5
+     - elastic.ogani.az:172.18.0.5
 
   ogani-api:
    image: ogani-api:v1
@@ -128,10 +125,14 @@ services:
     - RABBIT_URL=amqp://admin:password@rabbit.ogani.az:5672
     - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=!Dquery20@4;MultipleActiveResultSets=True;Encrypt=false;App=OganiWebApp"
     - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://admin:password@mongo.ogani.az/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
+    - "ELASTIC_URL=https://elastic.ogani.az:9200"
+    - "ELASTIC_USER=elastic"
+    - "ELASTIC_PASSWORD=elastic"
    extra_hosts:
     - sql.ogani.az:172.18.0.2
     - rabbit.ogani.az:172.18.0.3
     - mongo.ogani.az:172.18.0.4
+    - elastic.ogani.az:172.18.0.5
 
   ogani-ui:
    image: ogani-ui:v1
@@ -147,6 +148,6 @@ services:
     - "5081:80"
    environment: 
     - ASPNETCORE_ENVIRONMENT=Production
-    - API_URL=api.ogani.az
+    - API_URL=http://api.ogani.az
    extra_hosts:
     - api.ogani.az:172.18.0.10

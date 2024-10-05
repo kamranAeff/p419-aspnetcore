@@ -31,5 +31,13 @@ namespace Persistence.Repositories
         {
             db.Set<ProductImage>().Remove(image);
         }
+
+        public Task<Basket> AddBasketAsync(Product product, Basket basket, CancellationToken cancellation = default)
+        {
+            basket.ProductId = product.Id;
+            db.Set<Basket>().AddAsync(basket,cancellation);
+
+            return Task.FromResult(basket);
+        }
     }
 }

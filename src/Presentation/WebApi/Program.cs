@@ -1,3 +1,4 @@
+using Amazon.Runtime.Internal.Util;
 using Application;
 using Application.Behaviors;
 using Domain.Configurations;
@@ -11,8 +12,12 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Nest;
 using Persistence.Contexts;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System;
+using System.Net.Security;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -29,11 +34,19 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
+            Serilog.Debugging.SelfLog.Enable(msg =>
+            {
+                Console.Error.WriteLine(msg);
+            });
+
             LoadPolicies();
 
-            ConfigureLogger();
 
             var builder = WebApplication.CreateBuilder(args);
+
+
+            ConfigureLogger(builder.Environment);
+
             builder.Host.UseServiceProviderFactory(new IoCFactory());
             builder.Host.UseSerilog();
 
@@ -167,24 +180,24 @@ namespace WebApi
             app.Run();
         }
 
-        private static void ConfigureLogger()
+        private static void ConfigureLogger(IWebHostEnvironment env)
         {
+            var elasticUrl = Environment.GetEnvironmentVariable("ELASTIC_URL");
+            var elasticUser = Environment.GetEnvironmentVariable("ELASTIC_USERNAME");
+            var elasticPassword = Environment.GetEnvironmentVariable("ELASTIC_PASSWORD");
+
             var configuration = new ConfigurationBuilder()
                                  .SetBasePath(AppContext.BaseDirectory)
                                  .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
                                  .Build();
-
             Log.Logger = new LoggerConfiguration()
-                            //.Filter.ByExcluding(logEvent =>
+                            //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
                             //{
-                            //    var message = logEvent.MessageTemplate.Text;
-                            //    if (logEvent.RenderMessage.Contains(message))
-                            //    {
-                            //        return true; // Exclude this log
-                            //    }
-
-                            //    loggedMessages.Add(message);
-                            //    return false; // Include this log
+                            //    ModifyConnectionSettings = x => 
+                            //    x.BasicAuthentication(elasticUser, elasticPassword)
+                            //     .ServerCertificateValidationCallback((sender, certificate, chain, sslPolicyErrors) => true),
+                            //    AutoRegisterTemplate = true,
+                            //    IndexFormat = $"oganiapi-{env.EnvironmentName}-logs-{DateTime.UtcNow.AddHours(4):yyyyMM}"
                             //})
                             .ReadFrom.Configuration(configuration)
                             .CreateLogger();

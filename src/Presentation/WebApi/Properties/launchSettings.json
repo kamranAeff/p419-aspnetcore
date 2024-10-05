@@ -12,7 +12,11 @@
         "JWT__ISSUER": "api.ogani.az",
         "JWT__AUDIENCE": "api.ogani.az",
         "JWT__EXPIRATIONDURATIONMINUTES": "1",
-        "RABBIT_URL": "amqp://admin:password@localhost:5672"
+        "RABBIT_URL": "amqp://admin:password@localhost:5672",
+        "Serilog__WriteTo[1]__Args__databaseUrl": "mongodb://admin:password@localhost/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
+        "ELASTIC_URL": "https://localhost:9200",
+        "ELASTIC_USERNAME": "elastic",
+        "ELASTIC_PASSWORD": "elastic"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5189"

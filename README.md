@@ -34,8 +34,8 @@ docker update-v rabbit:"/etc/rabbitmq/" rabbitmq
 > docker run -d -p 27017:27017 --net ogani --ip 172.18.0.3 --name ogani-mongo -e MONGO_INITDB_ROOT_USERNAME=ogani -e MONGO_INITDB_ROOT_PASSWORD=ogani123 -v ogani-mongo:/data/db mongo
 
 
-> docker exec -it elasticsearch bin/elasticsearch-certutil ca --out /usr/share/elasticsearch/config/certs/esnode.p12 --pass "elastic"
+> docker exec -it elasticsearch-ogani bin/elasticsearch-certutil ca --out /usr/share/elasticsearch/config/certs/esnode.p12 --pass "elastic"
 
-> docker exec -it elasticsearch bin/elasticsearch-create-enrollment-token -scope kibana --url "https://localhost:9200" --pass "elastic"
+> docker exec -it elasticsearch-ogani bin/elasticsearch-create-enrollment-token -scope kibana --url "https://localhost:9200"
 
-> docker cp kibana.yml kibana:/usr/share/kibana/config/kibana.yml
+> docker cp kibana.yml kibana-ogani:/usr/share/kibana/config/kibana.yml

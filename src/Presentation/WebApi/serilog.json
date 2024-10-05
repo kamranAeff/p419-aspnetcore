@@ -15,18 +15,9 @@
       {
         "Name": "MongoDB",
         "Args": {
-          "databaseUrl": "mongodb://admin:password@localhost:27018/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
+          "databaseUrl": "mongodb://admin:password@mongo.ogani.az:27017/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
           "collectionName": "logs",
           "autoCreateCollection": true
-        }
-      },
-      {
-        "Name": "Elasticsearch",
-        "Args": {
-          "nodeUris": "http://localhost:9200",
-          "autoRegisterTemplate": true,
-          "indexFormat": "logs-{0:yyyy.MM}",
-          "inlineFields": true
         }
       }
     ],
