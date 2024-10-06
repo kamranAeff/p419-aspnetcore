@@ -1,4 +1,3 @@
-using Amazon.Runtime.Internal.Util;
 using Application;
 using Application.Behaviors;
 using Domain.Configurations;
@@ -12,12 +11,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using Nest;
 using Persistence.Contexts;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
-using System;
-using System.Net.Security;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;

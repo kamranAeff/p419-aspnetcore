@@ -1,6 +1,8 @@
-﻿using Application.Modules.ProductsModule.Commands.ProductAddCommand;
+﻿using Application.Modules.ProductsModule.Commands.BasketInteractCommand;
+using Application.Modules.ProductsModule.Commands.ProductAddCommand;
 using Application.Modules.ProductsModule.Commands.ProductEditCommand;
 using Application.Modules.ProductsModule.Commands.ProductRemoveCommand;
+using Application.Modules.ProductsModule.Queries.BasketGetAllQuery;
 using Application.Modules.ProductsModule.Queries.ProductGetByIdQuery;
 using Application.Modules.ProductsModule.Queries.ProductGetBySlugQuery;
 using Application.Modules.ProductsModule.Queries.ProductPagesQuery;
@@ -74,6 +76,22 @@ namespace WebApi.Controllers
         {
             await mediator.Send(request);
             return NoContent();
+        }
+
+        [HttpPost("basket-interact")]
+        public async Task<IActionResult> BasketInteract([FromBody] BasketInteractRequest request)
+        {
+            var response = await mediator.Send(request);
+            var dto = ApiResponse.Success(response);
+            return Ok(dto);
+        }
+
+        [HttpGet("basket")]
+        public async Task<IActionResult> Basket([FromRoute] BasketGetAllRequest request)
+        {
+            var response = await mediator.Send(request);
+            var dto = ApiResponse.Success(response);
+            return Ok(dto);
         }
     }
 }
