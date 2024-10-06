@@ -428,14 +428,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "33520081-7bc2-47f7-86d9-ead654c0dcc0",
+                            ConcurrencyStamp = "cec2c85f-893f-438b-b528-a6cb1be7a777",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "567a55a3-3320-4e05-a37e-d5feb3f4a2e6",
+                            ConcurrencyStamp = "227a1a27-2270-42ab-b1da-03fbe24822c3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -543,7 +543,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "AKAMRAN@CODE.EDU.AZ",
                             NormalizedUserName = "KAMRANAEFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAECpxiem5TR/F3B65TycLMQyRnyHa5Gro8tb/xOsEYdpSMbfEGRE4lQNSD8QOXUPCrg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL1FK766fwOzNi4ofvfHGlNOPRrGwAk1sC75ez1q2VOyG5v89JB60+ktojX4cAelXQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "a2679ce7-36e9-4db7-9bce-1152995e5f2b",
                             TwoFactorEnabled = false,
@@ -681,11 +681,6 @@ namespace Persistence.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -709,9 +704,6 @@ namespace Persistence.Migrations
                     b.HasIndex("DeletedBy");
 
                     b.HasIndex("ModifiedBy");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Products", (string)null);
                 });
@@ -756,6 +748,15 @@ namespace Persistence.Migrations
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
@@ -767,6 +768,9 @@ namespace Persistence.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.HasIndex("SizeId");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.HasIndex("ProductId", "SizeId", "ColorId")
                         .IsUnique();

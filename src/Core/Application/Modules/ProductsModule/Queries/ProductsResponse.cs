@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.Modules.ProductsModule.Commands.ProductAddCommand;
+using Domain.Entities;
 using Domain.StableModels;
 
 namespace Application.Modules.ProductsModule.Queries
@@ -15,10 +16,12 @@ namespace Application.Modules.ProductsModule.Queries
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public decimal Rate { get; set; }
+        public decimal Price { get; set; }
         public decimal? Weight { get; set; }
         public Units UnitOfWeight { get; set; }
         public string Description { get; set; }
         public string Information { get; set; }
         public IEnumerable<ImageItem> Images { get; set; }
+        public IEnumerable<ProductCardResponse> Cards { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace Application.Modules.ProductsModule.Queries.ProductGetByIdQuery
     class ProductGetByIdRequestHandler(IProductRepository productRepository,
      ICategoryRepository categoryRepository,
      IBrandRepository brandRepository,
+     IColorRepository colorRepository,
+     ISizeRepository sizeRepository,
      IHttpContextAccessor ctx) : IRequestHandler<ProductGetByIdRequest, ProductsResponse>
     {
         public async Task<ProductsResponse> Handle(ProductGetByIdRequest request, CancellationToken cancellationToken)
@@ -20,20 +22,22 @@ namespace Application.Modules.ProductsModule.Queries.ProductGetByIdQuery
 
             var query = from p in productRepository.GetAll()
                         join pi in productRepository.GetImages(m => m.IsMain == true) on p.Id equals pi.ProductId
+                        join pc in productRepository.GetCards(m => m.IsDefault == true) on p.Id equals pc.ProductId
                         join c in categoryRepository.GetAll() on p.CategoryId equals c.Id
                         join b in brandRepository.GetAll() on p.BrandId equals b.Id
                         where p.Id == request.Id
                         select new ProductsResponse
                         {
                             Id = p.Id,
-                            Title = p.Title,
-                            Slug = p.Slug,
+                            Title = pc.Title,
+                            Slug = pc.Slug,
                             Path = $"{host}/files/{pi.Path}",
                             BrandId = p.BrandId,
                             BrandName = b.Name,
                             CategoryId = p.CategoryId,
                             CategoryName = c.Name,
                             Rate = p.Rate,
+                            Price = pc.Price,
                             Weight = p.Weight,
                             UnitOfWeight = p.UnitOfWeight,
                             Description = p.Description,
@@ -52,6 +56,21 @@ namespace Application.Modules.ProductsModule.Queries.ProductGetByIdQuery
                                                  IsMain = m.IsMain,
                                                  TempPath = $"{host}/files/{m.Path}"
                                              }).ToListAsync(cancellationToken);
+
+            entity.Cards = await (from card in productRepository.GetCards(m => m.ProductId == entity.Id)
+                                 join color in colorRepository.GetAll() on card.ColorId equals color.Id
+                                 join size in sizeRepository.GetAll() on card.SizeId equals size.Id
+                                 select new ProductCardResponse
+                                 {
+                                     Id = card.Id,
+                                     Slug = card.Slug,
+                                     ColorId = color.Id,
+                                     Color = color.Name,
+                                     ColorHex = color.HexCode,
+                                     SizeId = size.Id,
+                                     Size = size.SmallName,
+                                     IsDefault = card.IsDefault
+                                 }).ToListAsync(cancellationToken);
 
             return entity;
         }

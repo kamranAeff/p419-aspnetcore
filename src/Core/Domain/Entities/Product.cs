@@ -6,7 +6,6 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public required string Title { get; set; }
-        public required string Slug { get; set; }
         public required int BrandId { get; set; }
         public required int CategoryId { get; set; }
         public decimal Rate { get; set; }

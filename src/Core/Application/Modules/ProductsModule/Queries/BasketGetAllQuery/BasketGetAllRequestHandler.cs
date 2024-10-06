@@ -17,15 +17,15 @@ namespace Application.Modules.ProductsModule.Queries.BasketGetAllQuery
             var userId = identityService.UserId;
 
             var query = from p in productRepository.GetAll()
-                        join pc in productRepository.GetProductCards() on p.Id  equals pc.ProductId
+                        join pc in productRepository.GetCards() on p.Id  equals pc.ProductId
                         join c in colorRepository.GetAll() on pc.ColorId  equals c.Id
                         join s in sizeRepository.GetAll() on pc.SizeId  equals s.Id
                         join b in productRepository.GetBaskets(m => m.UserId == userId) on pc.Id equals b.ProductCardId
                         select new BasketItem
                         {
                             ProductId = p.Id,
-                            ProductTitle = $"{p.Title} {c.Name} {s.SmallName}",
-                            ProductSlug = p.Slug,
+                            Title = pc.Title,
+                            Slug = pc.Slug,
                             Price = pc.Price,
                             Count = b.Count
                         };

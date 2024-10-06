@@ -13,12 +13,14 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.ProductId).HasColumnType("int").IsRequired();
             builder.Property(m => m.SizeId).HasColumnType("int").IsRequired();
             builder.Property(m => m.ColorId).HasColumnType("int").IsRequired();
+            builder.Property(m => m.Slug).HasColumnType("varchar").HasMaxLength(300).IsRequired();
             builder.Property(m => m.Price).HasColumnType("decimal").HasPrecision(18, 2).IsRequired();
             builder.Property(m => m.IsDefault).HasColumnType("bit").IsRequired();
 
             builder.ConfigureAuditable();
 
             builder.HasIndex(m => new { m.ProductId, m.SizeId, m.ColorId }).IsUnique();
+            builder.HasIndex(m => m.Slug).IsUnique();
 
             builder.HasKey(m => m.Id);
             builder.ToTable("ProductCards");

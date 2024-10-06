@@ -18,13 +18,14 @@ namespace Application.Modules.ProductsModule.Queries.ProductPagesQuery
 
             var query = from p in productRepository.GetAll()
                         join pi in productRepository.GetImages(m => m.IsMain == true) on p.Id equals pi.ProductId
+                        join pc in productRepository.GetCards(m => m.IsDefault == true) on p.Id equals pc.ProductId
                         join c in categoryRepository.GetAll() on p.CategoryId equals c.Id
                         join b in brandRepository.GetAll() on p.BrandId equals b.Id
                         select new ProductsResponse
                         {
                             Id = p.Id,
                             Title = p.Title,
-                            Slug = p.Slug,
+                            Slug = pc.Slug,
                             Path = $"{host}/files/{pi.Path}",
                             BrandId = p.BrandId,
                             BrandName = b.Name,

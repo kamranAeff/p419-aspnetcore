@@ -13,8 +13,8 @@ namespace Repositories
         Task<Basket> AddBasketAsync(ProductCard card, Basket basket, CancellationToken cancellation = default);
         IQueryable<Basket> GetBaskets(Expression<Func<Basket, bool>> predicate = null);
         EntityEntry<Basket> RemoveBasket(Basket basket);
-        Task<ProductCard> AddProductCardAsync(Product product, ProductCard card, CancellationToken cancellation = default);
-        IQueryable<ProductCard> GetProductCards(Expression<Func<ProductCard, bool>> predicate = null);
-        EntityEntry<ProductCard> RemoveBasket(ProductCard card);
+        Task<ProductCard> AddCardAsync(Product product, ProductCard card, CancellationToken cancellation = default);
+        IQueryable<ProductCard> GetCards(Expression<Func<ProductCard, bool>> predicate = null);
+        EntityEntry<ProductCard> RemoveCard(ProductCard card);
     }
 }

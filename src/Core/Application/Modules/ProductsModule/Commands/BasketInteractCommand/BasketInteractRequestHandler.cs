@@ -14,12 +14,12 @@ namespace Application.Modules.ProductsModule.Commands.BasketInteractCommand
         {
             var userId = identityService.UserId;
 
-            var entity = await productRepository.GetBaskets(m => m.ProductCardId == request.ProductCardId && m.UserId == userId).FirstOrDefaultAsync(cancellationToken);
+            var entity = await productRepository.GetBaskets(m => m.ProductCardId == request.Id && m.UserId == userId).FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null && request.Count == 0)
                 throw new NotFoundException($"{typeof(Basket).Name} not found by expression");
 
-            var productCard = await productRepository.GetProductCards(m => m.Id == request.ProductCardId).FirstOrDefaultAsync(cancellationToken);
+            var productCard = await productRepository.GetCards(m => m.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
             if (productCard is null)
                 throw new NotFoundException($"{typeof(ProductCard).Name} not found by expression");

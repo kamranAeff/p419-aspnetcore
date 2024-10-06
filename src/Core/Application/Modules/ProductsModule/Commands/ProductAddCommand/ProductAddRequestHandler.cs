@@ -2,6 +2,7 @@
 using Application.Services;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 
 namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
@@ -9,6 +10,8 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
     class ProductAddRequestHandler(IProductRepository productRepository,
         IBrandRepository brandRepository,
         ICategoryRepository categoryRepository,
+        ISizeRepository sizeRepository,
+        IColorRepository colorRepository,
         IFileService fileService)
         : IRequestHandler<ProductAddRequest, Product>
     {
@@ -20,7 +23,6 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
             var entity = new Product
             {
                 Title = request.Title,
-                Slug = request.Title.ToSlug(),
                 BrandId = brand.Id,
                 CategoryId = category.Id,
                 Rate = 5,
@@ -51,21 +53,28 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
 
             if (request.Cards is not null)
             {
-                foreach (var item in request.Cards)
+                var cardColors = await colorRepository.GetAll(m => request.Cards.Select(m => m.ColorId).Contains(m.Id)).ToListAsync(cancellationToken);
+                var cardSizes = await sizeRepository.GetAll(m => request.Cards.Select(m => m.SizeId).Contains(m.Id)).ToListAsync(cancellationToken);
+
+                var cards = from card in request.Cards
+                            join color in cardColors on card.ColorId equals color.Id
+                            join size in cardSizes on card.SizeId equals size.Id
+                            select new ProductCard
+                            {
+                                Id = Guid.NewGuid(),
+                                ProductId = entity.Id,
+                                SizeId = card.ColorId,
+                                ColorId = card.ColorId,
+                                Title = $"{entity.Title}, {color.Name}, {size.Name}",
+                                Price = card.Price,
+                                IsDefault = card.IsDefault
+                            };
+
+                foreach (var card in cards)
                 {
-                    var card = new ProductCard
-                    {
-                        Id = Guid.NewGuid(),
-                        ProductId = entity.Id,
-                        SizeId = item.ColorId,
-                        ColorId = item.ColorId,
-                        Price = item.Price,
-                        IsDefault = item.IsDefault
-                    };
-
-                    await productRepository.AddProductCardAsync(entity, card, cancellationToken);
+                    card.Slug = card.Title.ToSlug();
+                    await productRepository.AddCardAsync(entity, card, cancellationToken);
                 }
-
                 await productRepository.SaveAsync(cancellationToken);
             }
 

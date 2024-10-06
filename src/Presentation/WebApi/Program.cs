@@ -11,14 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Persistence.Contexts;
 using Serilog;
-using Services;
 using System.Reflection;
-using System.Security.Principal;
 using System.Text;
 using System.Text.Json.Serialization;
 using WebApi.Binders.BooleanConcept;
@@ -27,7 +23,6 @@ using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 using WebApi.Middlewares;
 using WebApi.Swagger;
-using WebApi.Swagger.OperationFilters;
 
 namespace WebApi
 {
@@ -101,7 +96,6 @@ namespace WebApi
             });
             builder.Services.AddValidatorsFromAssemblyContaining<IApplicationReference>(includeInternalTypes: true);
             builder.Services.AddScoped<IValidatorInterceptor, ValidatorInterceptor>();
-            builder.Services.AddScoped<IIdentityService, IdentityService>();
 
             builder.Services.AddMediatR(cfg =>
             {
@@ -153,10 +147,10 @@ namespace WebApi
 
             app.AutoMigration(); //applied auto migration
 
-            app.UseDbTransaction();
 
             app.UseCors("allowAll");
             app.UseGlobalException();
+            app.UseDbTransaction();
 
             if (app.Environment.IsDevelopment())
                 app.UseSwagger();

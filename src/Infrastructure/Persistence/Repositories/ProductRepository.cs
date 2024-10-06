@@ -47,14 +47,14 @@ namespace Persistence.Repositories
 
         public EntityEntry<Basket> RemoveBasket(Basket basket) => db.Set<Basket>().Remove(basket);
 
-        public async Task<ProductCard> AddProductCardAsync(Product product, ProductCard card, CancellationToken cancellation = default)
+        public async Task<ProductCard> AddCardAsync(Product product, ProductCard card, CancellationToken cancellation = default)
         {
             card.ProductId = product.Id;
             await db.Set<ProductCard>().AddAsync(card, cancellation);
             return card;
         }
 
-        public IQueryable<ProductCard> GetProductCards(Expression<Func<ProductCard, bool>> predicate = null)
+        public IQueryable<ProductCard> GetCards(Expression<Func<ProductCard, bool>> predicate = null)
         {
             if (predicate is null)
                 return this.db.Set<ProductCard>();
@@ -62,6 +62,6 @@ namespace Persistence.Repositories
             return this.db.Set<ProductCard>().Where(predicate);
         }
 
-        public EntityEntry<ProductCard> RemoveBasket(ProductCard card) => db.Set<ProductCard>().Remove(card);
+        public EntityEntry<ProductCard> RemoveCard(ProductCard card) => db.Set<ProductCard>().Remove(card);
     }
 }

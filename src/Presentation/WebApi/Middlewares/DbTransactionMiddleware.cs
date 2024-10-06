@@ -33,7 +33,6 @@ namespace WebApi.Middlewares
 
             IDbContextTransaction transaction = null;
 
-
             try
             {
                 transaction = db.Database.BeginTransaction();

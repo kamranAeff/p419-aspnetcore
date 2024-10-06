@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class ProductCard_Id_and_IsDefault : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -450,7 +450,6 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Slug = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -506,6 +505,8 @@ namespace Persistence.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     SizeId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false),
                     CreateBy = table.Column<int>(type: "int", nullable: false),
@@ -628,15 +629,15 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "33520081-7bc2-47f7-86d9-ead654c0dcc0", "SuperAdmin", "SUPERADMIN" },
-                    { 2, "567a55a3-3320-4e05-a37e-d5feb3f4a2e6", "Admin", "ADMIN" }
+                    { 1, "cec2c85f-893f-438b-b528-a6cb1be7a777", "SuperAdmin", "SUPERADMIN" },
+                    { 2, "227a1a27-2270-42ab-b1da-03fbe24822c3", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Membership",
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "akamran@code.edu.az", true, false, null, "AKAMRAN@CODE.EDU.AZ", "KAMRANAEFF", "AQAAAAIAAYagAAAAECpxiem5TR/F3B65TycLMQyRnyHa5Gro8tb/xOsEYdpSMbfEGRE4lQNSD8QOXUPCrg==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "kamranAeff" });
+                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "akamran@code.edu.az", true, false, null, "AKAMRAN@CODE.EDU.AZ", "KAMRANAEFF", "AQAAAAIAAYagAAAAEL1FK766fwOzNi4ofvfHGlNOPRrGwAk1sC75ez1q2VOyG5v89JB60+ktojX4cAelXQ==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "kamranAeff" });
 
             migrationBuilder.InsertData(
                 table: "Brands",
@@ -794,6 +795,12 @@ namespace Persistence.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCards_Slug",
+                table: "ProductCards",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_CreateBy",
                 table: "ProductImages",
                 column: "CreateBy");
@@ -837,12 +844,6 @@ namespace Persistence.Migrations
                 name: "IX_Products_ModifiedBy",
                 table: "Products",
                 column: "ModifiedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_Slug",
-                table: "Products",
-                column: "Slug",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
