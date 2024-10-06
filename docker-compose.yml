@@ -123,7 +123,7 @@ services:
     - JWT__AUDIENCE=api.ogani.az
     - JWT__EXPIRATIONDURATIONMINUTES=10
     - RABBIT_URL=amqp://admin:password@rabbit.ogani.az:5672
-    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=!Dquery20@4;MultipleActiveResultSets=True;Encrypt=false;App=OganiWebApp"
+    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=!Dquery20@4;MultipleActiveResultSets=False;Encrypt=false;App=OganiWebApp"
     - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://admin:password@mongo.ogani.az/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
     - "ELASTIC_URL=https://elastic.ogani.az:9200"
     - "ELASTIC_USER=elastic"
