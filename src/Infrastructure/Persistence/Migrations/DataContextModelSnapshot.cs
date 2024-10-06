@@ -27,8 +27,8 @@ namespace Persistence.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductCardId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -36,9 +36,9 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.HasKey("UserId", "ProductId");
+                    b.HasKey("UserId", "ProductCardId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductCardId");
 
                     b.ToTable("Baskets", (string)null);
                 });
@@ -428,14 +428,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "253e36cd-5d91-4d89-8026-95548ddc9c8c",
+                            ConcurrencyStamp = "33520081-7bc2-47f7-86d9-ead654c0dcc0",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "d87e8d06-5576-4e2d-a52f-5ceacda57442",
+                            ConcurrencyStamp = "567a55a3-3320-4e05-a37e-d5feb3f4a2e6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -543,7 +543,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "AKAMRAN@CODE.EDU.AZ",
                             NormalizedUserName = "KAMRANAEFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAENbQ0q2ROfBxjb8wCKhNZqKRQKiYhD9tmP+ibI4docKsSwusixKOyLoJpzC4jUI/TA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECpxiem5TR/F3B65TycLMQyRnyHa5Gro8tb/xOsEYdpSMbfEGRE4lQNSD8QOXUPCrg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "a2679ce7-36e9-4db7-9bce-1152995e5f2b",
                             TwoFactorEnabled = false,
@@ -737,6 +737,9 @@ namespace Persistence.Migrations
                     b.Property<int?>("DeletedBy")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime");
 
@@ -755,11 +758,15 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ColorId");
+
                     b.HasIndex("CreateBy");
 
                     b.HasIndex("DeletedBy");
 
                     b.HasIndex("ModifiedBy");
+
+                    b.HasIndex("SizeId");
 
                     b.HasIndex("ProductId", "SizeId", "ColorId")
                         .IsUnique();
@@ -967,9 +974,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Basket", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", null)
+                    b.HasOne("Domain.Entities.ProductCard", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductCardId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1146,6 +1153,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.ProductCard", b =>
                 {
+                    b.HasOne("Domain.Entities.Color", null)
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Membership.OganiUser", null)
                         .WithMany()
                         .HasForeignKey("CreateBy")
@@ -1161,6 +1174,18 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedBy")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Size", null)
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductImage", b =>

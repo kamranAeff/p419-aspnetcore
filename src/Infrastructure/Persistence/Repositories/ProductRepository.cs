@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Repositories;
 using Repositories.Common;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Persistence.Repositories
@@ -28,9 +29,9 @@ namespace Persistence.Repositories
 
         public EntityEntry<ProductImage> RemoveImage(ProductImage image) => db.Set<ProductImage>().Remove(image);
 
-        public async Task<Basket> AddBasketAsync(Product product, Basket basket, CancellationToken cancellation = default)
+        public async Task<Basket> AddBasketAsync(ProductCard card, Basket basket, CancellationToken cancellation = default)
         {
-            basket.ProductId = product.Id;
+            basket.ProductCardId = card.Id;
             basket.CreatedAt = DateTime.UtcNow.AddHours(4);
             await db.Set<Basket>().AddAsync(basket, cancellation);
             return basket;
@@ -45,5 +46,22 @@ namespace Persistence.Repositories
         }
 
         public EntityEntry<Basket> RemoveBasket(Basket basket) => db.Set<Basket>().Remove(basket);
+
+        public async Task<ProductCard> AddProductCardAsync(Product product, ProductCard card, CancellationToken cancellation = default)
+        {
+            card.ProductId = product.Id;
+            await db.Set<ProductCard>().AddAsync(card, cancellation);
+            return card;
+        }
+
+        public IQueryable<ProductCard> GetProductCards(Expression<Func<ProductCard, bool>> predicate = null)
+        {
+            if (predicate is null)
+                return this.db.Set<ProductCard>();
+
+            return this.db.Set<ProductCard>().Where(predicate);
+        }
+
+        public EntityEntry<ProductCard> RemoveBasket(ProductCard card) => db.Set<ProductCard>().Remove(card);
     }
 }

@@ -6,7 +6,7 @@ namespace Application.Modules.ProductsModule.Commands.BasketInteractCommand
     {
         public BasketInteractRequestValidator()
         {
-            RuleFor(m => m.ProductId).GreaterThan(0).WithMessage(m => $"{nameof(m.ProductId)} must be greater than zero");
+            RuleFor(m => m.ProductCardId).NotEqual(Guid.Empty).WithMessage(m => $"{nameof(m.Count)} cant be empty");
             RuleFor(m => m.Count).GreaterThanOrEqualTo(0).WithMessage(m => $"{nameof(m.Count)} must be greater than or equal to zero");
         }
     }

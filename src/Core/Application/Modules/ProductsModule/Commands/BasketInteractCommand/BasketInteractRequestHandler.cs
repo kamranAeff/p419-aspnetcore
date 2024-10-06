@@ -14,22 +14,24 @@ namespace Application.Modules.ProductsModule.Commands.BasketInteractCommand
         {
             var userId = identityService.UserId;
 
-            var entity = await productRepository.GetBaskets(m => m.ProductId == request.ProductId && m.UserId == userId).FirstOrDefaultAsync(cancellationToken);
+            var entity = await productRepository.GetBaskets(m => m.ProductCardId == request.ProductCardId && m.UserId == userId).FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null && request.Count == 0)
                 throw new NotFoundException($"{typeof(Basket).Name} not found by expression");
 
-            var product = await productRepository.GetAsync(m => m.Id == request.ProductId, cancellationToken);
+            var productCard = await productRepository.GetProductCards(m => m.Id == request.ProductCardId).FirstOrDefaultAsync(cancellationToken);
+
+            if (productCard is null)
+                throw new NotFoundException($"{typeof(ProductCard).Name} not found by expression");
 
             if (entity is null)
             {
                 entity = new Basket
                 {
                     UserId = userId,
-                    ProductId = request.ProductId,
                     Count = request.Count
                 };
-                await productRepository.AddBasketAsync(product, entity, cancellationToken);
+                await productRepository.AddBasketAsync(productCard, entity, cancellationToken);
             }
             else if (entity is not null && request.Count == 0)
                 productRepository.RemoveBasket(entity);

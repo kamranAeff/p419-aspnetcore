@@ -15,5 +15,6 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
         public string Description { get; set; }
         public string Information { get; set; }
         public IEnumerable<ImageItem> Images { get; set; }
+        public IEnumerable<ProductCardItem> Cards { get; set; }
     }
 }

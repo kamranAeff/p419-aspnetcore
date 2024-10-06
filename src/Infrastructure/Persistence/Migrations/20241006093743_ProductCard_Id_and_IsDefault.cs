@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ProductCard_Id_and_IsDefault : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -220,45 +220,6 @@ namespace Persistence.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Colors_Users_ModifiedBy",
-                        column: x => x.ModifiedBy,
-                        principalSchema: "Membership",
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductCards",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    ColorId = table.Column<int>(type: "int", nullable: false),
-                    SizeId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime", nullable: true),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductCards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductCards_Users_CreateBy",
-                        column: x => x.CreateBy,
-                        principalSchema: "Membership",
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProductCards_Users_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalSchema: "Membership",
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProductCards_Users_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalSchema: "Membership",
                         principalTable: "Users",
@@ -538,25 +499,55 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Baskets",
+                name: "ProductCards",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false)
+                    ColorId = table.Column<int>(type: "int", nullable: false),
+                    SizeId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    CreateBy = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ModifiedBy = table.Column<int>(type: "int", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DeletedBy = table.Column<int>(type: "int", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Baskets", x => new { x.UserId, x.ProductId });
+                    table.PrimaryKey("PK_ProductCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Baskets_Products_ProductId",
+                        name: "FK_ProductCards_Colors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductCards_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Baskets_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_ProductCards_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductCards_Users_CreateBy",
+                        column: x => x.CreateBy,
+                        principalSchema: "Membership",
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductCards_Users_DeletedBy",
+                        column: x => x.DeletedBy,
+                        principalSchema: "Membership",
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductCards_Users_ModifiedBy",
+                        column: x => x.ModifiedBy,
                         principalSchema: "Membership",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -606,21 +597,46 @@ namespace Persistence.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Baskets",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProductCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Baskets", x => new { x.UserId, x.ProductCardId });
+                    table.ForeignKey(
+                        name: "FK_Baskets_ProductCards_ProductCardId",
+                        column: x => x.ProductCardId,
+                        principalTable: "ProductCards",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Baskets_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "Membership",
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 schema: "Membership",
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "253e36cd-5d91-4d89-8026-95548ddc9c8c", "SuperAdmin", "SUPERADMIN" },
-                    { 2, "d87e8d06-5576-4e2d-a52f-5ceacda57442", "Admin", "ADMIN" }
+                    { 1, "33520081-7bc2-47f7-86d9-ead654c0dcc0", "SuperAdmin", "SUPERADMIN" },
+                    { 2, "567a55a3-3320-4e05-a37e-d5feb3f4a2e6", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Membership",
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "akamran@code.edu.az", true, false, null, "AKAMRAN@CODE.EDU.AZ", "KAMRANAEFF", "AQAAAAIAAYagAAAAENbQ0q2ROfBxjb8wCKhNZqKRQKiYhD9tmP+ibI4docKsSwusixKOyLoJpzC4jUI/TA==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "kamranAeff" });
+                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "akamran@code.edu.az", true, false, null, "AKAMRAN@CODE.EDU.AZ", "KAMRANAEFF", "AQAAAAIAAYagAAAAECpxiem5TR/F3B65TycLMQyRnyHa5Gro8tb/xOsEYdpSMbfEGRE4lQNSD8QOXUPCrg==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "kamranAeff" });
 
             migrationBuilder.InsertData(
                 table: "Brands",
@@ -677,9 +693,9 @@ namespace Persistence.Migrations
                 values: new object[] { 1, 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Baskets_ProductId",
+                name: "IX_Baskets_ProductCardId",
                 table: "Baskets",
-                column: "ProductId");
+                column: "ProductCardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlogPosts_CategoryId",
@@ -747,6 +763,11 @@ namespace Persistence.Migrations
                 column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCards_ColorId",
+                table: "ProductCards",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductCards_CreateBy",
                 table: "ProductCards",
                 column: "CreateBy");
@@ -766,6 +787,11 @@ namespace Persistence.Migrations
                 table: "ProductCards",
                 columns: new[] { "ProductId", "SizeId", "ColorId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCards_SizeId",
+                table: "ProductCards",
+                column: "SizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_CreateBy",
@@ -905,13 +931,7 @@ namespace Persistence.Migrations
                 name: "BlogPosts");
 
             migrationBuilder.DropTable(
-                name: "Colors");
-
-            migrationBuilder.DropTable(
                 name: "ContactPosts");
-
-            migrationBuilder.DropTable(
-                name: "ProductCards");
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
@@ -919,9 +939,6 @@ namespace Persistence.Migrations
             migrationBuilder.DropTable(
                 name: "RoleClaims",
                 schema: "Membership");
-
-            migrationBuilder.DropTable(
-                name: "Sizes");
 
             migrationBuilder.DropTable(
                 name: "Subscribers");
@@ -946,11 +963,20 @@ namespace Persistence.Migrations
                 schema: "Membership");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "ProductCards");
 
             migrationBuilder.DropTable(
                 name: "Roles",
                 schema: "Membership");
+
+            migrationBuilder.DropTable(
+                name: "Colors");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Sizes");
 
             migrationBuilder.DropTable(
                 name: "Brands");

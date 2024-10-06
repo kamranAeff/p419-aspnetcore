@@ -62,7 +62,7 @@ namespace WebApi
             builder.Services.AddControllers(cfg =>
             {
                 //cfg.Filters.Add(new GlobalExceptionFilter());
-                cfg.ModelBinderProviders.Insert(0, new EnumerableModelBinderProvider());
+                //cfg.ModelBinderProviders.Insert(0, new EnumerableModelBinderProvider());
                 cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
 
                 var policy = new AuthorizationPolicyBuilder()

@@ -10,6 +10,7 @@ using Application.Modules.ProductsModule.Queries.ProductsGetAllQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Middlewares;
 using WebApi.Models.Common;
 
 namespace WebApi.Controllers
@@ -55,6 +56,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Transaction]
         public async Task<IActionResult> Add([FromForm] ProductAddRequest request)
         {
             var response = await mediator.Send(request);
@@ -62,6 +64,7 @@ namespace WebApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = response.Id }, dto);
         }
 
+        [Transaction]
         [HttpPut("{id:int:min(1)}")]
         public async Task<IActionResult> Edit(int id, [FromForm] ProductEditRequest request)
         {
@@ -71,6 +74,7 @@ namespace WebApi.Controllers
             return Ok(dto);
         }
 
+        [Transaction]
         [HttpDelete("{id:int:min(1)}")]
         public async Task<IActionResult> Remove([FromRoute] ProductRemoveRequest request)
         {

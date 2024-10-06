@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Membership;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,6 +14,7 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.SizeId).HasColumnType("int").IsRequired();
             builder.Property(m => m.ColorId).HasColumnType("int").IsRequired();
             builder.Property(m => m.Price).HasColumnType("decimal").HasPrecision(18, 2).IsRequired();
+            builder.Property(m => m.IsDefault).HasColumnType("bit").IsRequired();
 
             builder.ConfigureAuditable();
 
@@ -20,6 +22,24 @@ namespace Persistence.Contexts.Configurations
 
             builder.HasKey(m => m.Id);
             builder.ToTable("ProductCards");
+
+            builder.HasOne<Product>()
+               .WithMany()
+               .HasPrincipalKey(m => m.Id)
+               .HasForeignKey(m => m.ProductId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne<Size>()
+               .WithMany()
+               .HasPrincipalKey(m => m.Id)
+               .HasForeignKey(m => m.SizeId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne<Color>()
+               .WithMany()
+               .HasPrincipalKey(m => m.Id)
+               .HasForeignKey(m => m.ColorId)
+               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

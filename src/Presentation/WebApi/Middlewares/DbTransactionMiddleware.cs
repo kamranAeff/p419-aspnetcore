@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Middlewares
 {
-    internal class DbTransactionMiddleware
+    class DbTransactionMiddleware
     {
         private readonly RequestDelegate next;
 

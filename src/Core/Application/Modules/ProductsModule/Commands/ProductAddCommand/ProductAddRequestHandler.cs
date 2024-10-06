@@ -49,6 +49,26 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
                 await productRepository.SaveAsync(cancellationToken);
             }
 
+            if (request.Cards is not null)
+            {
+                foreach (var item in request.Cards)
+                {
+                    var card = new ProductCard
+                    {
+                        Id = Guid.NewGuid(),
+                        ProductId = entity.Id,
+                        SizeId = item.ColorId,
+                        ColorId = item.ColorId,
+                        Price = item.Price,
+                        IsDefault = item.IsDefault
+                    };
+
+                    await productRepository.AddProductCardAsync(entity, card, cancellationToken);
+                }
+
+                await productRepository.SaveAsync(cancellationToken);
+            }
+
             return entity;
         }
     }
