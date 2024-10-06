@@ -10,5 +10,11 @@ namespace Persistence.Repositories
         public SubscriberRepository(DbContext db) : base(db)
         {
         }
+
+        public override Task AddAsync(Subscribe entry, CancellationToken cancellationToken = default)
+        {
+            entry.CreatedAt = DateTime.UtcNow.AddHours(4);
+            return base.AddAsync(entry, cancellationToken);
+        }
     }
 }

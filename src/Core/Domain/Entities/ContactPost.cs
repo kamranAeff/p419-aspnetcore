@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ContactPost : ICreateEntity
+    public class ContactPost
     {
         public int Id { get; set; }
         public required string FullName { get; set; }

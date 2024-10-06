@@ -13,6 +13,8 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.IsMain).HasColumnType("bit").IsRequired();
             builder.Property(m => m.Path).HasColumnType("varchar").HasMaxLength(50).IsRequired();
 
+            builder.ConfigureAuditable();
+
             builder.HasKey(m => m.Id);
             builder.ToTable("ProductImages");
 

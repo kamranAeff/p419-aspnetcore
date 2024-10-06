@@ -31,6 +31,7 @@ namespace Persistence.Repositories
         public async Task<Basket> AddBasketAsync(Product product, Basket basket, CancellationToken cancellation = default)
         {
             basket.ProductId = product.Id;
+            basket.CreatedAt = DateTime.UtcNow.AddHours(4);
             await db.Set<Basket>().AddAsync(basket, cancellation);
             return basket;
         }

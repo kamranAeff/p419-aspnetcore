@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		environment.ps1 = environment.ps1
 		kibana.yml = kibana.yml
 		lessons.txt = lessons.txt
+		load.ps1 = load.ps1
 		local.env = local.env
 		README.md = README.md
 	EndProjectSection

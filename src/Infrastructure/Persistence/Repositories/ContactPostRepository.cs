@@ -10,5 +10,17 @@ namespace Persistence.Repositories
         public ContactPostRepository(DbContext db) : base(db)
         {
         }
+
+        public override Task AddAsync(ContactPost entry, CancellationToken cancellationToken = default)
+        {
+            entry.CreatedAt = DateTime.Now.AddHours(4);
+            return base.AddAsync(entry, cancellationToken);
+        }
+
+        public override void Edit(ContactPost entry)
+        {
+            entry.AnsweredAt = DateTime.Now.AddHours(4);
+            base.Edit(entry);
+        }
     }
 }

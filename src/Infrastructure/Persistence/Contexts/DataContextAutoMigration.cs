@@ -15,7 +15,7 @@ namespace Persistence.Contexts
                 var db = scope.ServiceProvider.GetRequiredService<DbContext>();
                 db.Database.Migrate();  //update-database
 
-                SeedSuperAdminAccount(db);
+                //SeedSuperAdminAccount(db);
             }
             return app;
         }

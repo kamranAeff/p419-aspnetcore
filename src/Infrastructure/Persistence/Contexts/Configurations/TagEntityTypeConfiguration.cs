@@ -11,6 +11,8 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.Id).HasColumnType("int").UseIdentityColumn(1, 1);
             builder.Property(m => m.Text).HasColumnType("varchar").HasMaxLength(50).IsRequired();
 
+            builder.ConfigureAuditable();
+
             builder.HasKey(m => m.Id);
             builder.ToTable("Tags");
         }

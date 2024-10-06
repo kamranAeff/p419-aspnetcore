@@ -1,5 +1,6 @@
 using Application;
 using Application.Behaviors;
+using Application.Services;
 using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -10,10 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Persistence.Contexts;
 using Serilog;
+using Services;
 using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 using System.Text.Json.Serialization;
 using WebApi.Binders.BooleanConcept;
@@ -21,6 +26,7 @@ using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 using WebApi.Middlewares;
+using WebApi.Swagger;
 using WebApi.Swagger.OperationFilters;
 
 namespace WebApi
@@ -29,10 +35,10 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
-            Serilog.Debugging.SelfLog.Enable(msg =>
-            {
-                Console.Error.WriteLine(msg);
-            });
+            //Serilog.Debugging.SelfLog.Enable(msg =>
+            //{
+            //    Console.Error.WriteLine(msg);
+            //});
 
             LoadPolicies();
 
@@ -95,6 +101,7 @@ namespace WebApi
             });
             builder.Services.AddValidatorsFromAssemblyContaining<IApplicationReference>(includeInternalTypes: true);
             builder.Services.AddScoped<IValidatorInterceptor, ValidatorInterceptor>();
+            builder.Services.AddScoped<IIdentityService, IdentityService>();
 
             builder.Services.AddMediatR(cfg =>
             {
@@ -104,13 +111,7 @@ namespace WebApi
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             });
 
-            builder.Services.AddSwaggerGen(cfg =>
-            {
-                cfg.OperationFilter<RefreshTokenHeaderOperationFilter>();
-                cfg.OperationFilter<ResponseStatusOperationFilter>();
-                cfg.OperationFilter<LanguageHeaderOperationFilter>();
-                cfg.EnableAnnotations();
-            });
+            builder.Services.AddSwagger();
 
             builder.Services.AddCors(cfg => cfg.AddPolicy("allowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
@@ -123,7 +124,6 @@ namespace WebApi
                 cfg.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, cfg =>
             {
-
                 cfg.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -159,10 +159,7 @@ namespace WebApi
             app.UseGlobalException();
 
             if (app.Environment.IsDevelopment())
-            {
                 app.UseSwagger();
-                app.UseSwaggerUI();
-            }
 
             app.UseStaticFiles(new StaticFileOptions
             {

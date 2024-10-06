@@ -19,7 +19,9 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.Description).HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(m => m.Information).HasColumnType("nvarchar(max)").IsRequired();
 
-            builder.HasIndex(m => m.Slug).IsUnique();
+            builder.ConfigureAuditable();
+
+            builder.HasIndex(m => m.Slug).IsUnique(); 
 
             builder.HasKey(m => m.Id);
             builder.ToTable("Products");

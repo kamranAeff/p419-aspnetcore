@@ -33,6 +33,7 @@ namespace WebApi
 
                     NotFoundException nfEx => ApiResponse.Fail(StatusCodes.Status404NotFound, nfEx.Message),
                     BadRequestException brEx => ApiResponse.Fail(StatusCodes.Status400BadRequest, brEx.Errors, brEx.Message),
+                    UnauthorizedException => ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message),
                     _ => ApiResponse.Fail(StatusCodes.Status500InternalServerError, "ServerError")
                 };
 

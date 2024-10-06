@@ -7,9 +7,9 @@ using Repositories;
 namespace Application.Modules.ProductsModule.Queries.BasketGetAllQuery
 {
     class BasketGetAllRequestHandler(IProductRepository productRepository, IIdentityService identityService)
-            : IRequestHandler<BasketGetAllRequest, IEnumerable<BasketItem>>
+            : IRequestHandler<BasketGetAllRequest, BasketResponse>
     {
-        public async Task<IEnumerable<BasketItem>> Handle(BasketGetAllRequest request, CancellationToken cancellationToken)
+        public async Task<BasketResponse> Handle(BasketGetAllRequest request, CancellationToken cancellationToken)
         {
             var userId = identityService.UserId;
 
@@ -23,7 +23,17 @@ namespace Application.Modules.ProductsModule.Queries.BasketGetAllQuery
                             Count = b.Count
                         };
 
-            return await query.Sort(request).ToListAsync(cancellationToken);
+
+            var response = new BasketResponse
+            {
+                List = await query.Sort(request).ToListAsync(cancellationToken),
+            };
+
+            response.Total = response.List.Sum(m=>m.Subtotal);
+            response.Coupon = "";
+            response.DiscountedTotal = response.Total;
+
+            return response;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class BlogPost
+    public class BlogPost : AuditableEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }

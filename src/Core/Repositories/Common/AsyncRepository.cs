@@ -14,12 +14,12 @@ namespace Repositories.Common
             this.db = db;
         }
 
-        public async Task AddAsync(T entry, CancellationToken cancellationToken = default)
+        public async virtual Task AddAsync(T entry, CancellationToken cancellationToken = default)
         {
             await db.Set<T>().AddAsync(entry, cancellationToken);
         }
 
-        public void Edit(T entry)
+        public virtual void Edit(T entry)
         {
             db.Entry(entry).State = EntityState.Modified;
         }

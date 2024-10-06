@@ -10,6 +10,8 @@ namespace Persistence.Contexts.Configurations.Membership
         {
             builder.HasKey(m => new { m.UserId, m.RoleId });
             builder.ToTable("UserRoles", "Membership");
+
+            builder.HasData(new OganiUserRole { UserId = 1, RoleId = 1 });
         }
     }
 }

@@ -12,8 +12,8 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241005104355_Baskets")]
-    partial class Baskets
+    [Migration("20241006084902_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,10 +61,28 @@ namespace Persistence.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("datetime");
@@ -86,6 +104,12 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.ToTable("BlogPosts", (string)null);
                 });
 
@@ -97,6 +121,24 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -104,62 +146,90 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.ToTable("Brands", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fresh Meat"
                         },
                         new
                         {
                             Id = 2,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Vegetables"
                         },
                         new
                         {
                             Id = 3,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fruit & Nut Gifts"
                         },
                         new
                         {
                             Id = 4,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fresh Berries"
                         },
                         new
                         {
                             Id = 5,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ocean Foods"
                         },
                         new
                         {
                             Id = 6,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Butter & Eggs"
                         },
                         new
                         {
                             Id = 7,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fastfood"
                         },
                         new
                         {
                             Id = 8,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fresh Onion"
                         },
                         new
                         {
                             Id = 9,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Papayaya & Crisps"
                         },
                         new
                         {
                             Id = 10,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Oatmeal"
                         },
                         new
                         {
                             Id = 11,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Fresh Bananas"
                         });
                 });
@@ -172,6 +242,24 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -179,18 +267,93 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Beauty"
                         },
                         new
                         {
                             Id = 2,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Travel"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Color", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HexCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("Colors", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HexCode = "#ffffff",
+                            Name = "Ag"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HexCode = "#000000",
+                            Name = "Qara"
                         });
                 });
 
@@ -268,14 +431,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "db25c71f-d995-46de-a454-34bc6eb7a1ce",
+                            ConcurrencyStamp = "253e36cd-5d91-4d89-8026-95548ddc9c8c",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "b2ccba7a-2f6c-4ace-b212-cad094b73101",
+                            ConcurrencyStamp = "d87e8d06-5576-4e2d-a52f-5ceacda57442",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -371,6 +534,24 @@ namespace Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", "Membership");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a2679ce7-36e9-4db7-9bce-3b52995e5f2b",
+                            Email = "akamran@code.edu.az",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AKAMRAN@CODE.EDU.AZ",
+                            NormalizedUserName = "KAMRANAEFF",
+                            PasswordHash = "AQAAAAIAAYagAAAAENbQ0q2ROfBxjb8wCKhNZqKRQKiYhD9tmP+ibI4docKsSwusixKOyLoJpzC4jUI/TA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a2679ce7-36e9-4db7-9bce-1152995e5f2b",
+                            TwoFactorEnabled = false,
+                            UserName = "kamranAeff"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Membership.OganiUserClaim", b =>
@@ -431,6 +612,13 @@ namespace Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", "Membership");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Membership.OganiUserToken", b =>
@@ -466,6 +654,18 @@ namespace Persistence.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -473,6 +673,12 @@ namespace Persistence.Migrations
                     b.Property<string>("Information")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Rate")
                         .HasPrecision(18, 2)
@@ -501,10 +707,67 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.HasIndex("Slug")
                         .IsUnique();
 
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductCard", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.HasIndex("ProductId", "SizeId", "ColorId")
+                        .IsUnique();
+
+                    b.ToTable("ProductCards", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductImage", b =>
@@ -515,8 +778,26 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -528,9 +809,104 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Size", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("SmallName")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("Sizes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Extra small",
+                            SmallName = "XS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Small",
+                            SmallName = "S"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Medium",
+                            SmallName = "M"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Large",
+                            SmallName = "L"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreateBy = 1,
+                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Extra large",
+                            SmallName = "XL"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscribe", b =>
@@ -558,12 +934,36 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreateBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
 
                     b.ToTable("Tags", (string)null);
                 });
@@ -590,6 +990,79 @@ namespace Persistence.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Brand", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Color", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Domain.Entities.Membership.OganiRoleClaim", b =>
@@ -656,15 +1129,104 @@ namespace Persistence.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductCard", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductImage", b =>
                 {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Domain.Entities.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Size", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Tag", b =>
+                {
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreateBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Membership.OganiUser", null)
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 #pragma warning restore 612, 618
         }

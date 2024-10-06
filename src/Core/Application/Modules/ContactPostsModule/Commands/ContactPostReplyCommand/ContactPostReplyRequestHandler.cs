@@ -6,7 +6,8 @@ using System.Text;
 namespace Application.Modules.ContactPostsModule.Commands.ContactPostReplyCommand
 {
     class ContactPostReplyRequestHandler(IEmailService emailService,
-        IContactPostRepository contactPostRepository)
+        IContactPostRepository contactPostRepository,
+        IIdentityService identityService)
         : IRequestHandler<ContactPostReplyRequest>
     {
         public async Task Handle(ContactPostReplyRequest request, CancellationToken cancellationToken)
@@ -15,8 +16,8 @@ namespace Application.Modules.ContactPostsModule.Commands.ContactPostReplyComman
             && m.AnsweredAt == null, cancellationToken);
 
             post.AnsweredMessage = request.Message;
-            post.AnsweredAt = DateTime.Now;
-            post.AnsweredBy = 1;
+            post.AnsweredBy = identityService.UserId;
+            contactPostRepository.Edit(post);
             await contactPostRepository.SaveAsync(cancellationToken);
 
             var sb = new StringBuilder();

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ProductImage
+    public class ProductImage : AuditableEntity
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

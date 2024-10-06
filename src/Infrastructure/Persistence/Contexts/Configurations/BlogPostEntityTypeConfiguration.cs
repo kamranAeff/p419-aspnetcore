@@ -17,6 +17,8 @@ namespace Persistence.Contexts.Configurations
             builder.Property(m => m.PublisherId).HasColumnType("int").IsRequired(false);
             builder.Property(m => m.PublishDate).HasColumnType("datetime").IsRequired(false);
 
+            builder.ConfigureAuditable();
+
             builder.HasKey(m => m.Id);
             builder.ToTable("BlogPosts");
 
