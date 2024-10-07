@@ -33,10 +33,10 @@ namespace Application.Modules.ProductsModule.Queries.BasketGetAllQuery
 
             var response = new BasketResponse
             {
-                List = await query.Sort(request).ToListAsync(cancellationToken),
+                Items = await query.Sort(request).ToListAsync(cancellationToken),
             };
 
-            response.Total = response.List.Sum(m=>m.Subtotal);
+            response.Total = response.Items.Sum(m=>m.Subtotal);
             response.Coupon = "";
             response.DiscountedTotal = response.Total;
 

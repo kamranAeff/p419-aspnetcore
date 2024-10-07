@@ -1,6 +1,5 @@
 using Application;
 using Application.Behaviors;
-using Application.Services;
 using Domain.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
