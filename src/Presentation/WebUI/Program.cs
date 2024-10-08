@@ -6,9 +6,11 @@ using WebUI.Services.Account;
 using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;
 using WebUI.Services.Categories;
+using WebUI.Services.Colors;
 using WebUI.Services.Common;
 using WebUI.Services.ContactPosts;
 using WebUI.Services.Products;
+using WebUI.Services.Sizes;
 using WebUI.Services.Tags;
 
 namespace WebUI
@@ -43,6 +45,8 @@ namespace WebUI
             builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSingleton<ICategoryService, CategoryService>();
             builder.Services.AddSingleton<IBrandService, BrandService>();
+            builder.Services.AddSingleton<IColorService, ColorService>();
+            builder.Services.AddSingleton<ISizeService, SizeService>();
             builder.Services.AddSingleton<ITagService, TagService>();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);

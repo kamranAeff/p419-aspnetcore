@@ -59,12 +59,7 @@ namespace WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             await brandService.RemoveAsync(id);
-
-            return Json(new
-            {
-                error = false,
-                message = "ok"
-            });
+            return NoContent();
         }
     }
 }

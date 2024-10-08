@@ -97,6 +97,42 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Markalar.
+        /// </summary>
+        public static string Brands {
+            get {
+                return ResourceManager.GetString("Brands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kampaniyalar.
+        /// </summary>
+        public static string Campaigns {
+            get {
+                return ResourceManager.GetString("Campaigns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kateqoriyalar.
+        /// </summary>
+        public static string Categories {
+            get {
+                return ResourceManager.GetString("Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rənglər.
+        /// </summary>
+        public static string Colors {
+            get {
+                return ResourceManager.GetString("Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müraciət.
         /// </summary>
         public static string Contact {
@@ -169,6 +205,24 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tükənmək üzrə olan məhsullar.
+        /// </summary>
+        public static string LowStockItems {
+            get {
+                return ResourceManager.GetString("LowStockItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Əməliyyat.
+        /// </summary>
+        public static string Operation {
+            get {
+                return ResourceManager.GetString("Operation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xidmətlərimiz.
         /// </summary>
         public static string OurServices {
@@ -183,6 +237,15 @@ namespace WebUI.Localization.CommonResources {
         public static string OurSitemap {
             get {
                 return ResourceManager.GetString("OurSitemap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gözləmədə.
+        /// </summary>
+        public static string PendingPosts {
+            get {
+                return ResourceManager.GetString("PendingPosts", resourceCulture);
             }
         }
         
@@ -205,11 +268,38 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Məhsullar.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Layihələr.
         /// </summary>
         public static string Projects {
             get {
                 return ResourceManager.GetString("Projects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dərc edilmişlər.
+        /// </summary>
+        public static string Published {
+            get {
+                return ResourceManager.GetString("Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İmtina edilib.
+        /// </summary>
+        public static string RejectedPosts {
+            get {
+                return ResourceManager.GetString("RejectedPosts", resourceCulture);
             }
         }
         
@@ -223,11 +313,29 @@ namespace WebUI.Localization.CommonResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tənzimləmələr.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mağaza.
         /// </summary>
         public static string Shop {
             get {
                 return ResourceManager.GetString("Shop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ölçülər.
+        /// </summary>
+        public static string Sizes {
+            get {
+                return ResourceManager.GetString("Sizes", resourceCulture);
             }
         }
         
@@ -246,6 +354,15 @@ namespace WebUI.Localization.CommonResources {
         public static string Support_24_7 {
             get {
                 return ResourceManager.GetString("Support_24_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Təqlər.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
         

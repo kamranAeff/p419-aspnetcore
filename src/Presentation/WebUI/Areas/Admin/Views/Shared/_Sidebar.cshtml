@@ -1,33 +1,33 @@
 ﻿<nav class="pcoded-navbar">
     <div class="pcoded-inner-navbar main-menu">
-        <div class="pcoded-navigatio-lavel">Əməliyyat</div>
+        <div class="pcoded-navigatio-lavel">@Common.Operation</div>
         <ul class="pcoded-item pcoded-left-item">
             <li>
                 <a asp-controller="Dashboard" asp-action="Index">
                     <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                    <span class="pcoded-mtext">Ana səhifə</span>
+                    <span class="pcoded-mtext">@Common.Home</span>
                 </a>
             </li>
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
-                    <span class="pcoded-mtext">Məhsullar</span>
+                    <span class="pcoded-mtext">@Common.Products</span>
                 </a>
                 <ul class="pcoded-submenu">
                     <li>
                         <a asp-controller="Products" asp-action="Index">
-                            <span class="pcoded-mtext">Məhsullar</span>
+                            <span class="pcoded-mtext">@Common.Products</span>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <span class="pcoded-mtext">Kompaniyalar</span>
+                            <span class="pcoded-mtext">@Common.Campaigns</span>
                             <span class="pcoded-badge label label-info">NEW</span>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <span class="pcoded-mtext">Tükənən məhsullar</span>
+                            <span class="pcoded-mtext">@Common.LowStockItems</span>
                             <span class="pcoded-badge label label-danger">5</span>
                         </a>
                     </li>
@@ -35,14 +35,28 @@
                     <li>
                         <a asp-controller="Categories" asp-action="Index">
                             <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                            <span class="pcoded-mtext">Kateqoriyalar</span>
+                            <span class="pcoded-mtext">@Common.Categories</span>
                         </a>
                     </li>
 
                     <li>
                         <a asp-controller="Brands" asp-action="Index">
                             <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                            <span class="pcoded-mtext">Markalar</span>
+                            <span class="pcoded-mtext">@Common.Brands</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Colors" asp-action="Index">
+                            <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                            <span class="pcoded-mtext">@Common.Colors</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Sizes" asp-action="Index">
+                            <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
+                            <span class="pcoded-mtext">@Common.Sizes</span>
                         </a>
                     </li>
                 </ul>
@@ -50,7 +64,7 @@
             <li>
                 <a asp-controller="Tags" asp-action="Index">
                     <span class="pcoded-micon"><i class="feather icon-menu"></i></span>
-                    <span class="pcoded-mtext">Təqlər</span>
+                    <span class="pcoded-mtext">@Common.Tags</span>
                 </a>
             </li>
            
@@ -59,30 +73,30 @@
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-feather"></i></span>
-                    <span class="pcoded-mtext">Paylaşımlar</span>
+                    <span class="pcoded-mtext">@Common.Blog</span>
                 </a>
                 <ul class="pcoded-submenu">
                     <li>
                         <a asp-controller="Blog" asp-action="Index">
-                            <span class="pcoded-mtext">Dərc edilmişlər</span>
+                            <span class="pcoded-mtext">@Common.Published</span>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <span class="pcoded-mtext">Gözləmədə</span>
+                            <span class="pcoded-mtext">@Common.PendingPosts</span>
                             <span class="pcoded-badge label label-info">2</span>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <span class="pcoded-mtext">İmtina edilib</span>
+                            <span class="pcoded-mtext">@Common.RejectedPosts</span>
                             <span class="pcoded-badge label label-danger">5</span>
                         </a>
                     </li>
                 </ul>
             </li>
         </ul>
-        <div class="pcoded-navigatio-lavel">Tənzimləmələr</div>
+        <div class="pcoded-navigatio-lavel">@Common.Settings</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">

@@ -1,0 +1,154 @@
+﻿@model PagedResponse<Color>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>@Common.Colors</h4>
+                    <span>
+                        @Common.Colors in idarə edilməsi
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        @Common.Colors
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>@Common.Colors</h5>
+            <span>meyarlar üzrə detallı <code>axtarış</code> etmək</span>
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>HexCode</th>
+                            <th class="operations">
+                                <a class="btn btn-sm btn-success" asp-action="create">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.HexCode</td>
+                                <td class="operations">
+                                    <a class="btn btn-sm btn-warning" asp-action="edit"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary" asp-action="details"
+                                       asp-route-id="@item.Id">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger"
+                                       asp-action="Remove"
+                                       asp-route-id="@item.Id" onclick="removeEntity(this,'@item.Name');return false;">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                            </tr>
+                        }
+                    </tbody>
+                    @if (Model.Pages > 1)
+                    {
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <pager asp-page="@Model.Page"
+                                           asp-size="@Model.Size"
+                                           asp-pages="@Model.Pages"
+                                           asp-has-next="@Model.HasNext"
+                                           asp-has-previous=@Model.HasPrevious />
+                                </td>
+                            </tr>
+                        </tfoot>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section addcss {
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <style>
+        .table-responsive.operational {
+            padding-right: 137px;
+        }
+
+            .table-responsive.operational .operations {
+                width: 138px;
+                position: absolute;
+                right: 0;
+                top: auto;
+                background-color: #ffffff;
+                border-right: 0px none black;
+                padding: 4px;
+            }
+
+            .table-responsive.operational th.operations {
+                border-bottom: 2px solid #dee2e6;
+            }
+    </style>
+}
+
+@section addjs {
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function removeEntity(element, name) {
+            Swal.fire({
+                title: `${name}, silmək istədiyinizdən əminsiniz?`,
+                text: "Silindikdən sonra bərpası mümkün olmayacaq!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Bəli!",
+                cancelButtonText: "Xeyr"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let href = element.getAttribute('href');
+
+                    fetch(href, {
+                        method: 'post',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    }).then(response => response.json())
+                        .then(response => {
+
+                            console.log(response);
+                            // window.location.reload();
+                        })
+                        .catch(err => console.log(err));
+                }
+            });
+        }
+    </script>
+}

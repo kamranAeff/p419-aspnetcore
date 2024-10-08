@@ -23,10 +23,7 @@ namespace WebUI.Areas.Admin.Controllers
         }
 
         //[Authorize(Policy = "admin.tags.add")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         //[Authorize(Policy = "admin.tags.add")]

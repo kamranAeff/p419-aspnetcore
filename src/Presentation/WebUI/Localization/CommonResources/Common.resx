@@ -192,4 +192,43 @@
   <data name="Support_24_7" xml:space="preserve">
     <value>7/24 dəstək</value>
   </data>
+  <data name="Products" xml:space="preserve">
+    <value>Məhsullar</value>
+  </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Kampaniyalar</value>
+  </data>
+  <data name="LowStockItems" xml:space="preserve">
+    <value>Tükənmək üzrə olan məhsullar</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Kateqoriyalar</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>Markalar</value>
+  </data>
+  <data name="Sizes" xml:space="preserve">
+    <value>Ölçülər</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Təqlər</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Rənglər</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Əməliyyat</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Tənzimləmələr</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Dərc edilmişlər</value>
+  </data>
+  <data name="PendingPosts" xml:space="preserve">
+    <value>Gözləmədə</value>
+  </data>
+  <data name="RejectedPosts" xml:space="preserve">
+    <value>İmtina edilib</value>
+  </data>
 </root>

@@ -1,0 +1,63 @@
+﻿@model Color
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>@Common.Colors</h4>
+                    <span>
+                        @Common.Colors in idarə edilməsi
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="dashboard" asp-action="index">
+                            <i class="feather icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">@Common.Colors</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        Yeni rəng əlavə etmək
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <form class="card" method="post">
+        <div class="card-block">
+            <h4 class="sub-title">Yeni rəng əlavə etmək</h4>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="Name" class="control-label">
+                        Name
+                    </label>
+                    <input asp-for="Name" type="text" class="form-control" />
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="HexCode" class="control-label">
+                        HexCode
+                    </label>
+                    <input asp-for="HexCode" type="color" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 text-right">
+                    <a class="btn btn-warning" asp-action="index">Back</a>
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -138,6 +138,12 @@
   <data name="DeliveryInfomation" xml:space="preserve">
     <value>Delivery Infomation</value>
   </data>
+  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
+    <value>Get E-mail updates about our latest shop and special offers</value>
+  </data>
+  <data name="JoinOurNewsletterNow" xml:space="preserve">
+    <value>Join Our Newsletter Now</value>
+  </data>
   <data name="OurSitemap" xml:space="preserve">
     <value>Our Sitemap</value>
   </data>
@@ -146,12 +152,6 @@
   </data>
   <data name="SecureShopping" xml:space="preserve">
     <value>Secure Shopping</value>
-  </data>
-  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
-    <value>Get E-mail updates about our latest shop and special offers</value>
-  </data>
-  <data name="JoinOurNewsletterNow" xml:space="preserve">
-    <value>Join Our Newsletter Now</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
@@ -172,7 +172,7 @@
     <value>Phone</value>
   </data>
   <data name="Projects" xml:space="preserve">
-    <value>Projects</value>
+    <value>Products</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
@@ -191,5 +191,44 @@
   </data>
   <data name="Support_24_7" xml:space="preserve">
     <value>support 24/7 time</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="LowStockItems" xml:space="preserve">
+    <value>Low Stock Items</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>Brands</value>
+  </data>
+  <data name="Sizes" xml:space="preserve">
+    <value>Sizes</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="PendingPosts" xml:space="preserve">
+    <value>Pending posts</value>
+  </data>
+  <data name="RejectedPosts" xml:space="preserve">
+    <value>Rejected posts</value>
   </data>
 </root>
