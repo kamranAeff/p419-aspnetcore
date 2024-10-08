@@ -29,10 +29,7 @@ namespace WebUI.Areas.Admin.Controllers
         }
 
         //[Authorize(Policy = "admin.categories.add")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         //[Authorize(Policy = "admin.categories.add")]

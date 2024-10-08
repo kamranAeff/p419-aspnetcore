@@ -138,6 +138,12 @@
   <data name="DeliveryInfomation" xml:space="preserve">
     <value>Информация о доставке</value>
   </data>
+  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
+    <value>Получайте по электронной почте обновления о наших последних магазинах и специальных предложениях</value>
+  </data>
+  <data name="JoinOurNewsletterNow" xml:space="preserve">
+    <value>Подпишитесь на нашу рассылку прямо сейчас</value>
+  </data>
   <data name="OurSitemap" xml:space="preserve">
     <value>Наша карта сайта</value>
   </data>
@@ -146,12 +152,6 @@
   </data>
   <data name="SecureShopping" xml:space="preserve">
     <value>Безопасные покупки</value>
-  </data>
-  <data name="GetMailUpdatesAboutOurLatestShopAndSpecialOffers" xml:space="preserve">
-    <value>Получайте по электронной почте обновления о наших последних магазинах и специальных предложениях</value>
-  </data>
-  <data name="JoinOurNewsletterNow" xml:space="preserve">
-    <value>Подпишитесь на нашу рассылку прямо сейчас</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Адрес</value>
@@ -191,5 +191,44 @@
   </data>
   <data name="Support_24_7" xml:space="preserve">
     <value>поддержка 24/7</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Продукция</value>
+  </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Кампании</value>
+  </data>
+  <data name="LowStockItems" xml:space="preserve">
+    <value>Товары с низким запасом</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Категории</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>Бренды</value>
+  </data>
+  <data name="Sizes" xml:space="preserve">
+    <value>Размеры</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Теги</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Цвета</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Операция</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Опубликовано</value>
+  </data>
+  <data name="PendingPosts" xml:space="preserve">
+    <value>Ожидаемые сообщения</value>
+  </data>
+  <data name="RejectedPosts" xml:space="preserve">
+    <value>Отклоненные посты</value>
   </data>
 </root>

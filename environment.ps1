@@ -20,8 +20,7 @@
 docker rm -f ogani-api
 docker rmi ogani-api:v1
 
-docker-compose -f .\docker-compose.yml --env-file local.env up -d
+docker rm -f ogani-ui
+docker rmi ogani-ui:v1
 
-# docker exec -it elasticsearch bin/elasticsearch-certutil ca --out /usr/share/elasticsearch/config/certs/esnode.p12 --pass "elastic"
-# docker exec -it elasticsearch bin/elasticsearch-create-enrollment-token -scope kibana --url "https://localhost:9200" --pass "elastic"
-# docker cp kibana.yml kibana:/usr/share/kibana/config/kibana.yml
+docker-compose -f .\docker-compose.yml --env-file local.env up -d

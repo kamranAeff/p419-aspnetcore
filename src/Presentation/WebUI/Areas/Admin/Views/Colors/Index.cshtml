@@ -1,4 +1,4 @@
-﻿@model PagedResponse<Category>
+﻿@model PagedResponse<Color>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,9 +9,9 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>@Common.Categories</h4>
+                    <h4>@Common.Colors</h4>
                     <span>
-                        Məhsul kateqoriyalarının idarə edilməsi
+                        @Common.Colors in idarə edilməsi
                     </span>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        @Common.Categories
+                        @Common.Colors
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
 <div class="page-body">
     <div class="card">
         <div class="card-header">
-            <h5>Kategoriyalar</h5>
+            <h5>@Common.Colors</h5>
             <span>meyarlar üzrə detallı <code>axtarış</code> etmək</span>
         </div>
         <div class="card-block table-border-style">
@@ -44,6 +44,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>HexCode</th>
                             <th class="operations">
                                 <a class="btn btn-sm btn-success" asp-action="create">
                                     <i class="fa fa-plus"></i>
@@ -56,6 +57,7 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
+                                <td>@item.HexCode</td>
                                 <td class="operations">
                                     <a class="btn btn-sm btn-warning" asp-action="edit"
                                        asp-route-id="@item.Id">
