@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebUI.Localization.CommonResources {
+namespace Localization.Resources.Common {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WebUI.Localization.CommonResources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebUI.Localization.CommonResources.Common", typeof(Common).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Localization.Resources.Common.Common", typeof(Common).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

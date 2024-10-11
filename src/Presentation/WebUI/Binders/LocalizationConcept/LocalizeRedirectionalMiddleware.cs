@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace WebUI.Localization.Implementation
+namespace WebUI.Binders.LocalizationConcept
 {
-    public class LocalizeRedirectionalMiddleware(RequestDelegate next)
+    class LocalizeRedirectionalMiddleware(RequestDelegate next)
     {
         public Task Invoke(HttpContext context)
         {

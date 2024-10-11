@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using WebUI.Binders.ConstraintsConcept;
+using WebUI.Binders.LocalizationConcept;
 using WebUI.Filters;
-using WebUI.Localization.Implementation;
 using WebUI.Services.Account;
 using WebUI.Services.BlogPost;
 using WebUI.Services.Brands;

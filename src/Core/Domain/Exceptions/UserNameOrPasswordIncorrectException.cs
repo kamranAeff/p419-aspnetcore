@@ -1,9 +1,11 @@
-﻿namespace Domain.Exceptions
+﻿using Localization.Resources.Messages;
+
+namespace Domain.Exceptions
 {
-    public class UserNameOrPasswordIncorrectException : NotFoundException
+    public class UserNameOrPasswordIncorrectException : Exception
     {
         public UserNameOrPasswordIncorrectException() 
-            : base("UserName or Password is incorrect")
+            : base(Localization.Resources.Messages.Message.UserNameOrPasswordIncorrectMessage)
         {
         }
     }

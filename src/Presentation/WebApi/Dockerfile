@@ -6,6 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 ARG BUILD_MODE=Release
 WORKDIR /source
 
+COPY ["src/Core/Localization/Localization.csproj","src/Core/Localization/"]
 COPY ["src/Core/Application/Application.csproj","src/Core/Application/"]
 COPY ["src/Core/Domain/Domain.csproj","src/Core/Domain/"]
 COPY ["src/Core/Repositories/Repositories.csproj","src/Core/Repositories/"]

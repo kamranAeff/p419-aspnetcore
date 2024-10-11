@@ -1,15 +1,16 @@
-﻿using System.Globalization;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
-namespace WebUI.Localization.Implementation
+namespace WebApi.Binders.LocalizationConcept
 {
-    public static class LocalizeInjection
+    static class LocalizeInjection
     {
-        internal const string SUPPORTED_CULTURES = "az|en|ru";
+        public const string SUPPORTED_CULTURES = "az|en|ru";
 
         public static IApplicationBuilder UseLocalization(this IApplicationBuilder app)
         {
-            app.UseMiddleware<LocalizeRedirectionalMiddleware>();
-
             app.UseRequestLocalization(cfg =>
             {
                 cfg.RequestCultureProviders.Clear();

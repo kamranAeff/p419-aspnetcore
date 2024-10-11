@@ -44,7 +44,7 @@ namespace Repositories.Common
             var entry = await query.FirstOrDefaultAsync(cancellationToken);
 
             if (entry is null)
-                throw new NotFoundException($"{typeof(T).Name} not found by expression");
+                throw new NotFoundException(typeof(T).Name);
 
             return entry!;
         }

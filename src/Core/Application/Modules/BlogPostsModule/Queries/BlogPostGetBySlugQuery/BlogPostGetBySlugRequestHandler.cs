@@ -28,7 +28,7 @@ namespace Application.Modules.BlogPostsModule.Queries.BlogPostGetBySlugQuery
             var entity = await query.FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null)
-                throw new NotFoundException($"{typeof(BlogPost).Name} not found by expression");
+                throw new NotFoundException(typeof(BlogPost).Name);
 
             return entity;
         }

@@ -9,27 +9,15 @@
   <ItemGroup>
     <Compile Remove="Areas\Admin\Views\Dashboard\**" />
     <Compile Remove="Areas\Admin\Views\Subscribers\**" />
-    <Compile Remove="Localization\ContactResources\**" />
-    <Compile Remove="Localization\HomeResources\**" />
-    <Compile Remove="Localization\Shop\**" />
     <Compile Remove="Resources\**" />
     <Content Remove="Areas\Admin\Views\Dashboard\**" />
     <Content Remove="Areas\Admin\Views\Subscribers\**" />
-    <Content Remove="Localization\ContactResources\**" />
-    <Content Remove="Localization\HomeResources\**" />
-    <Content Remove="Localization\Shop\**" />
     <Content Remove="Resources\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Dashboard\**" />
     <EmbeddedResource Remove="Areas\Admin\Views\Subscribers\**" />
-    <EmbeddedResource Remove="Localization\ContactResources\**" />
-    <EmbeddedResource Remove="Localization\HomeResources\**" />
-    <EmbeddedResource Remove="Localization\Shop\**" />
     <EmbeddedResource Remove="Resources\**" />
     <None Remove="Areas\Admin\Views\Dashboard\**" />
     <None Remove="Areas\Admin\Views\Subscribers\**" />
-    <None Remove="Localization\ContactResources\**" />
-    <None Remove="Localization\HomeResources\**" />
-    <None Remove="Localization\Shop\**" />
     <None Remove="Resources\**" />
   </ItemGroup>
 
@@ -98,18 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Localization\CommonResources\Common.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Common.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Localization\CommonResources\Common.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Common.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\..\Core\Localization\Localization.csproj" />
   </ItemGroup>
 
 </Project>

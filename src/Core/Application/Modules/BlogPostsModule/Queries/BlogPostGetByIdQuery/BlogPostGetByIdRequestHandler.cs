@@ -39,7 +39,7 @@ namespace Application.Modules.BlogPostsModule.Queries.BlogPostGetByIdQuery
 
             logger.LogDebug("check entity is null or not");
             if (entity is null)
-                throw new NotFoundException($"{typeof(BlogPost).Name} not found by expression");
+                throw new NotFoundException(typeof(BlogPost).Name);
 
             logger.LogDebug("finished successfuly");
             return entity;

@@ -47,7 +47,7 @@ namespace Application.Modules.ProductsModule.Queries.ProductGetByIdQuery
             var entity = await query.FirstOrDefaultAsync(cancellationToken);
 
             if (entity is null)
-                throw new NotFoundException($"{typeof(Product).Name} not found by expression");
+                throw new NotFoundException(typeof(Product).Name);
 
             entity.Images = await productRepository.GetImages(m => m.ProductId == entity.Id)
                                              .Select(m => new ImageItem

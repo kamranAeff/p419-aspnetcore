@@ -19,6 +19,7 @@ using System.Text.Json.Serialization;
 using WebApi.Binders.BooleanConcept;
 using WebApi.Binders.ConstraintsConcept;
 using WebApi.Binders.EnumerableConcept;
+using WebApi.Binders.LocalizationConcept;
 using WebApi.MapperConfiguration.BlogPosts;
 using WebApi.Middlewares;
 using WebApi.Swagger;
@@ -47,6 +48,7 @@ namespace WebApi
 
             builder.Services.AddHostedService<EmailReceiveService>();
 
+            //builder.Services.AddCLocalization();
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<BlogPostProfile>();
@@ -140,6 +142,7 @@ namespace WebApi
             });
 
             var app = builder.Build();
+            app.UseLocalization();
 
             app.UseAuthentication();
             app.UseAuthorization();

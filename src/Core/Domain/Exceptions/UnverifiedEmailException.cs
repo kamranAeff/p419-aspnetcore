@@ -3,7 +3,7 @@
     public class UnverifiedEmailException : Exception
     {
         public UnverifiedEmailException() 
-            : base("Your email appears to be unverified")
+            : base(Localization.Resources.Messages.Message.UnverifiedEmailMessage)
         {
         }
     }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Localization;
 
-namespace WebUI.Localization.Implementation
+namespace WebApi.Binders.LocalizationConcept
 {
-    public class LocalizeCultureProvider : RequestCultureProvider
+    class LocalizeCultureProvider : RequestCultureProvider
     {
         public override Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext context)
         {
-            var lang = context.GetRouteValue("lang")?.ToString() ?? "az";
+            string lang = context.Request.Headers.AcceptLanguage.FirstOrDefault() ?? "az";
             return Task.FromResult(new ProviderCultureResult(lang, lang));
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Domain.Exceptions;
+using Localization.Resources.Messages;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WebApi.Models.Common;
@@ -34,7 +35,7 @@ namespace WebApi
                     NotFoundException nfEx => ApiResponse.Fail(StatusCodes.Status404NotFound, nfEx.Message),
                     BadRequestException brEx => ApiResponse.Fail(StatusCodes.Status400BadRequest, brEx.Errors, brEx.Message),
                     UnauthorizedException => ApiResponse.Fail(StatusCodes.Status401Unauthorized, ex.Message),
-                    _ => ApiResponse.Fail(StatusCodes.Status500InternalServerError, "ServerError")
+                    _ => ApiResponse.Fail(StatusCodes.Status500InternalServerError, Message.ServerError)
                 };
 
                 context.Response.StatusCode = response.Code;

@@ -3,7 +3,7 @@
     public class UnverifiedPhoneException : Exception
     {
         public UnverifiedPhoneException() 
-            : base("Your phone appears to be unverified")
+            : base(Localization.Resources.Messages.Message.UnverifiedPhoneMessage)
         {
         }
     }

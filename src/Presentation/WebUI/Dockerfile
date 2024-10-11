@@ -6,6 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 ARG BUILD_MODE=Release
 WORKDIR /source
 
+COPY ["src/Core/Localization/Localization.csproj","src/Core/Localization/"]
 COPY ["src/Presentation/WebUI/WebUI.csproj","src/Presentation/WebUI/"]
 
 RUN dotnet restore "src/Presentation/WebUI/WebUI.csproj"

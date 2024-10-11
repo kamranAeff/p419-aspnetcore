@@ -2,8 +2,8 @@
 {
     public class NotFoundException : Exception
     {
-        public NotFoundException(string message)
-            : base(message)
+        public NotFoundException(string entityName)
+            : base(string.Format(Localization.Resources.Messages.Message.NotFoundMessage, entityName))
         {
 
         }

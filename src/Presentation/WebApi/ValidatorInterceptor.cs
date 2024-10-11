@@ -16,7 +16,7 @@ namespace WebApi
                     .ToDictionary(m => m.Key, m => m.Select(f => f.ErrorMessage));
 
 
-                throw new BadRequestException("BadRequestException", errors);
+                throw new BadRequestException(Localization.Resources.Messages.Message.BadRequestMessage, errors);
             }
 
             return result;

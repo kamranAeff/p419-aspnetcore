@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using WebUI.Localization.Implementation;
+using WebUI.Binders.LocalizationConcept;
 
 namespace WebUI.Binders.ConstraintsConcept
 {
