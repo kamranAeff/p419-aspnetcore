@@ -1,4 +1,4 @@
-﻿namespace Application.Modules.ProductsModule.Queries.BasketGetAllQuery
+﻿namespace Application.Modules.ProductsModule
 {
     public class BasketResponse
     {

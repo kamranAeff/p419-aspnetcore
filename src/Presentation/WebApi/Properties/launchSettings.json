@@ -11,7 +11,7 @@
         "JWT__KEY": "88b0ba2aaff3daa419917a9a1c85732570c4771b",
         "JWT__ISSUER": "api.ogani.az",
         "JWT__AUDIENCE": "api.ogani.az",
-        "JWT__EXPIRATIONDURATIONMINUTES": "1",
+        "JWT__EXPIRATIONDURATIONMINUTES": "10",
         "RABBIT_URL": "amqp://admin:password@localhost:5672",
         "Serilog__WriteTo[1]__Args__databaseUrl": "mongodb://admin:password@localhost/ogani?authSource=admin&authMechanism=SCRAM-SHA-1",
         "ELASTIC_URL": "https://localhost:9200",

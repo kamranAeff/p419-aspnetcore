@@ -113,5 +113,10 @@ namespace WebUI.Services.Products
         }
 
         public Task RemoveAsync(int id, CancellationToken cancellation = default) => base.DeleteAsync($"/api/products/{id}", cancellation);
-    }
+
+        public Task<ApiResponse<BasketResponse>> BasketInteractAsync(BasketInteractDto model, CancellationToken cancellation = default)
+            => base.PostAsync<BasketInteractDto, ApiResponse<BasketResponse>>("/api/products/basket-interact", model, cancellation);
+    
+        public Task<ApiResponse<BasketResponse>> BasketGetAllAsync(CancellationToken cancellation = default)
+            => base.GetAsync<ApiResponse<BasketResponse>>("/api/products/basket", cancellation);}
 }

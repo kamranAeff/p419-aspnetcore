@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Shared\_Categories.cshtml" />
+    <Content Remove="Views\Shared\_Categories111.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +43,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>

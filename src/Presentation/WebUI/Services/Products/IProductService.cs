@@ -11,5 +11,7 @@ namespace WebUI.Services.Products
         Task AddAsync(ProductAddDto model, CancellationToken cancellation = default);
         Task EditAsync(ProductEditDto model, CancellationToken cancellation = default);
         Task RemoveAsync(int id, CancellationToken cancellation = default);
+        Task<ApiResponse<BasketResponse>> BasketInteractAsync(BasketInteractDto model, CancellationToken cancellation = default);
+        Task<ApiResponse<BasketResponse>> BasketGetAllAsync(CancellationToken cancellation = default);
     }
 }

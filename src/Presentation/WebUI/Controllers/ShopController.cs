@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebUI.Models.DTOs.Products;
 using WebUI.Services.Products;
 
 namespace WebUI.Controllers
@@ -20,9 +21,23 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public IActionResult Basket()
+        public async Task<IActionResult> Basket()
         {
-            return View();
+            var response = await productService.BasketGetAllAsync();
+            return View(response.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BasketInteract([FromBody]BasketInteractDto model)
+        {
+            var response = await productService.BasketInteractAsync(model);
+
+            if ("true".Equals(Request.Headers["no-response"]))
+            {
+                return NoContent();
+            }
+
+            return PartialView("_Basket",response.Data);
         }
 
         public IActionResult Checkout()

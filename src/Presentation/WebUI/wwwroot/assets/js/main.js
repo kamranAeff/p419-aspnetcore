@@ -91,6 +91,11 @@
             $(".product__details__pic__item--large").attr({ src: imgurl });
         }
     });
+    createRegulator();
+})(jQuery);
+
+
+function createRegulator() {
     var proQty = $(".pro-qty");
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
@@ -106,6 +111,6 @@
                 newVal = 0;
             }
         }
-        $button.parent().find("input").val(newVal);
+        $button.parent().find("input").val(newVal).trigger('change');
     });
-})(jQuery);
+}

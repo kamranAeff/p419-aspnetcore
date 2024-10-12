@@ -41,7 +41,7 @@ namespace WebApi
             var builder = WebApplication.CreateBuilder(args);
 
 
-            ConfigureLogger(builder.Environment);
+            //ConfigureLogger(builder.Environment);
 
             builder.Host.UseServiceProviderFactory(new IoCFactory());
             builder.Host.UseSerilog();
