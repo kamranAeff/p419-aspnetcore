@@ -6,7 +6,7 @@ namespace WebUI.Binders.LocalizationConcept
     {
         public Task Invoke(HttpContext context)
         {
-            bool hasLangCookie = context.Request.Cookies.TryGetValue("lang", out string lang);
+            context.Request.Cookies.TryGetValue("lang", out string lang);
             var match = Regex.Match(context.Request.Path, @$"\/(?<lang>{LocalizeInjection.SUPPORTED_CULTURES})\/?.*");
 
             if (!match.Success)
@@ -17,7 +17,7 @@ namespace WebUI.Binders.LocalizationConcept
                 context.Response.Redirect($"/{lang}{context.Request.Path}{context.Request.QueryString}");
                 return Task.CompletedTask;
             }
-            else if (!hasLangCookie)
+            else
             {
                 context.Response.Cookies.Append("lang", match.Groups["lang"].Value,
                     new CookieOptions
