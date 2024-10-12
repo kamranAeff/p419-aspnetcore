@@ -12,10 +12,14 @@ namespace WebUI.Services.Common
             if (ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("accessToken", out string accessToken))
                 request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {accessToken}");
 
+            var language = ctx.ActionContext.HttpContext.GetRouteValue("lang")?.ToString();
+            if (!string.IsNullOrWhiteSpace(language))
+                request.Headers.TryAddWithoutValidation("Accept-Language", language);
+
             var response = await base.SendAsync(request, cancellationToken);
 
-            if (!string.IsNullOrWhiteSpace(accessToken) 
-                && response.StatusCode == HttpStatusCode.Unauthorized 
+            if (!string.IsNullOrWhiteSpace(accessToken)
+                && response.StatusCode == HttpStatusCode.Unauthorized
                 && ctx.ActionContext.HttpContext.Request.Cookies.TryGetValue("refreshToken", out string refreshToken)
                 && !string.IsNullOrWhiteSpace(refreshToken))
             {
@@ -43,7 +47,7 @@ namespace WebUI.Services.Common
                         ctx.ActionContext.HttpContext.Response.Cookies.Append("accessToken", refreshTokenResponse.Data.AccessToken, options);
                         ctx.ActionContext.HttpContext.Response.Cookies.Append("refreshToken", refreshTokenResponse.Data.RefreshToken, options);
 
-                        request.Headers.TryAddWithoutValidation("raise401","on");
+                        request.Headers.TryAddWithoutValidation("raise401", "on");
                         request.Headers.Remove("Authorization");
                         request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {refreshTokenResponse.Data.AccessToken}");
                         response = await base.SendAsync(request, cancellationToken);

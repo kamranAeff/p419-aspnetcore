@@ -14,7 +14,7 @@ namespace WebApi.Swagger.OperationFilters
 
             var languageParameter = new OpenApiParameter
             {
-                Name = "lang",
+                Name = "Accept-Language",
                 Description = "Language of Interface",
                 AllowEmptyValue = false,
                 Required = true,
@@ -25,7 +25,7 @@ namespace WebApi.Swagger.OperationFilters
                     Title = "Language",
                     Extensions = new Dictionary<string, IOpenApiExtension>
                     {
-                        ["x-ms-enum"] = new OpenApiString("language"),
+                        ["x-ms-enum"] = new OpenApiString("Accept-Language"),
                         ["enum"] = new OpenApiArray
                                 {
                                     new OpenApiString("az"),
