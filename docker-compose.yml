@@ -30,6 +30,23 @@ services:
     - ACCEPT_EULA=Y
     - MSSQL_SA_PASSWORD=!Dquery20@4
     - MSSQL_PID=Developer
+   command: >
+     /bin/bash -c " 
+     /opt/mssql/bin/sqlservr & 
+     sleep 30 && 
+     /opt/mssql-tools/bin/sqlcmd -S . -U sa -P !Dquery20@4 -Q \"
+       USE [master];
+       
+       IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = '${ACCOUNT_USER}')
+       BEGIN
+         CREATE LOGIN ${ACCOUNT_USER} WITH PASSWORD = '${ACCOUNT_PASSWORD}';
+
+        IF NOT EXISTS (SELECT * FROM sys.server_role_members WHERE member_principal_id = (SELECT principal_id FROM sys.server_principals WHERE name = '${ACCOUNT_USER}') AND role_principal_id = (SELECT principal_id FROM sys.server_principals WHERE name = 'db_creator'))
+        BEGIN
+          ALTER SERVER ROLE db_creator ADD MEMBER ${ACCOUNT_USER};
+        END;
+       END;
+     \""
     
   rabbitmq-ogani:
    image: rabbitmq:3-management
@@ -44,11 +61,11 @@ services:
      - "5672:5672" 
      - "15672:15672" 
    environment:
-     - RABBITMQ_DEFAULT_USER=admin 
-     - RABBITMQ_DEFAULT_PASS=password
+     - RABBITMQ_DEFAULT_USER=${ACCOUNT_USER} 
+     - RABBITMQ_DEFAULT_PASS=${ACCOUNT_PASSWORD}
 
   mongo-ogani:
-   image: mongo:5.0.15-focal
+   image: mongo:${MONGO_STACK_VERSION}
    container_name: mongo-ogani
    restart: always
    networks:
@@ -59,20 +76,20 @@ services:
    ports:
     - "27017:27017"
    environment:
-    - MONGO_INITDB_ROOT_USERNAME=admin
-    - MONGO_INITDB_ROOT_PASSWORD=password
+    - MONGO_INITDB_ROOT_USERNAME=${ACCOUNT_USER}
+    - MONGO_INITDB_ROOT_PASSWORD=${ACCOUNT_PASSWORD}
   
   elasticsearch-ogani:
    container_name: elasticsearch-ogani
-   image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+   image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_SEARCH_STACK_VERSION}
    ports:
     - 9200:9200
    volumes:
     - elasticsearch:/usr/share/elasticsearch/data
    environment:
-    - cluster.name=elastic
-    - ELASTIC_PASSWORD=elastic
-    - xpack.license.self_generated.type=basic
+    - cluster.name=${ACCOUNT_USER}
+    - ELASTIC_PASSWORD=${ACCOUNT_PASSWORD}
+    - xpack.license.self_generated.type=${ELASTIC_LICENSE}
     - node.name=es01
     - discovery.type=single-node
     - bootstrap.memory_lock=true
@@ -84,14 +101,14 @@ services:
 
   kibana-ogani:
     container_name: kibana-ogani
-    image: docker.elastic.co/kibana/kibana:8.14.3
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_SEARCH_STACK_VERSION}
     ports:
       - 5601:5601
     depends_on:
       - elasticsearch-ogani
     environment:
-      - ELASTICSEARCH_USERNAME=kibana
-      - ELASTICSEARCH_PASSWORD=elastic
+      - ELASTICSEARCH_USERNAME=${ELASTIC_SEARCH_USER}
+      - ELASTICSEARCH_PASSWORD=${ACCOUNT_PASSWORD}
     networks:
       ogani:
         ipv4_address: 172.18.0.6
@@ -105,6 +122,8 @@ services:
     dockerfile: ./src/Presentation/WebApi/Dockerfile
    container_name: ogani-api
    restart: always
+   depends_on:
+    - mssql-ogani
    networks:
     ogani:
      ipv4_address: 172.18.0.10
@@ -113,21 +132,21 @@ services:
    ports:
     - 5080:80
    environment:
-    - ASPNETCORE_ENVIRONMENT=Development
-    - SUPERADMIN_USER=kamranAeff
-    - SUPERADMIN_EMAIL=akamran@code.edu.az
-    - SUPERADMIN_PASSWORD=!Dquery20@4
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - SUPERADMIN_USER=${SUPERADMIN_USER}
+    - SUPERADMIN_EMAIL=${SUPERADMIN_EMAIL}
+    - SUPERADMIN_PASSWORD=${ACCOUNT_PASSWORD}
     - SOURCE_URL=http://localhost:5080
-    - JWT__KEY=88b0ba2aaff3daa419917a9a1c85732570c4771b
-    - JWT__ISSUER=api.ogani.az
-    - JWT__AUDIENCE=api.ogani.az
-    - JWT__EXPIRATIONDURATIONMINUTES=10
-    - RABBIT_URL=amqp://admin:password@rabbit.ogani.az:5672
-    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=sa;Password=!Dquery20@4;MultipleActiveResultSets=False;Encrypt=false;App=OganiWebApp"
-    - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://admin:password@mongo.ogani.az/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
+    - JWT__KEY=${JWT_KEY}
+    - JWT__ISSUER=${JWT_ISSUER}
+    - JWT__AUDIENCE=${JWT_AUDIENCE}
+    - JWT__EXPIRATIONDURATIONMINUTES=${JWT_EXPIRATIONDURATIONMINUTES}
+    - RABBIT_URL=amqp://${ACCOUNT_USER}:${ACCOUNT_PASSWORD}@rabbit.ogani.az:5672
+    - "ConnectionStrings__cString=Data Source=sql.ogani.az;Initial Catalog=OganiDb;User Id=${ACCOUNT_USER};Password=${ACCOUNT_PASSWORD};MultipleActiveResultSets=False;Encrypt=false;App=OganiWebApp"
+    - "Serilog__WriteTo[1]__Args__databaseUrl=mongodb://${ACCOUNT_USER}:${ACCOUNT_PASSWORD}@mongo.ogani.az/ogani?authSource=admin&authMechanism=SCRAM-SHA-1"
     - "ELASTIC_URL=https://elastic.ogani.az:9200"
-    - "ELASTIC_USER=elastic"
-    - "ELASTIC_PASSWORD=elastic"
+    - "ELASTIC_USER=${ELASTIC_SEARCH_USER}"
+    - "ELASTIC_PASSWORD=${ACCOUNT_PASSWORD}"
    extra_hosts:
     - sql.ogani.az:172.18.0.2
     - rabbit.ogani.az:172.18.0.3
@@ -147,7 +166,7 @@ services:
    ports:
     - "5081:80"
    environment: 
-    - ASPNETCORE_ENVIRONMENT=Production
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
     - API_URL=http://api.ogani.az
    extra_hosts:
     - api.ogani.az:172.18.0.10
