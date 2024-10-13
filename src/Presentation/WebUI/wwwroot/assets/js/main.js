@@ -11,6 +11,8 @@
             var containerEl = document.querySelector(".featured__filter");
             var mixer = mixitup(containerEl);
         }
+
+        createNumUpDown();
     });
     $(".set-bg").each(function () {
         var bg = $(this).data("setbg");
@@ -91,11 +93,10 @@
             $(".product__details__pic__item--large").attr({ src: imgurl });
         }
     });
-    createRegulator();
 })(jQuery);
 
 
-function createRegulator() {
+function createNumUpDown() {
     var proQty = $(".pro-qty");
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');

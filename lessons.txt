@@ -4,4 +4,5 @@ Multilanguage +
 SignUp / Approve
 Swagger Jwt Implementation +
 Docker Compose EnvironmentValues -
-Basket & Orders -
+Basket & Orders/OrderDetails -
+Shopping to basket

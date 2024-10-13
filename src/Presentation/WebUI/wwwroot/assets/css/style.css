@@ -3368,3 +3368,26 @@ ol {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+
+
+th.image-cell, td.image-cell {
+    padding: 0.2px;
+    max-width: 100px;
+    min-width: 100px;
+    text-align: center;
+}
+
+    th.image-cell img,
+    td.image-cell img {
+        max-width: 100px;
+        min-width: 100px
+    }
+
+
+td.shoping__cart__item a:hover {
+    text-decoration: none;
+    outline: none;
+    color: #0056b3;
+    text-decoration: underline;
+}

@@ -72,15 +72,15 @@
 
                 fetch('@Url.Action("BasketInteract", "Shop")', {
                     method: 'POST',
+                    body: JSON.stringify(requestData),
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
+                    }
                 }).then(response => response.text())
                   .then(response => {
                       document.querySelector('#basket').innerHTML = response;
 
-                      createRegulator();
+                        createNumUpDown();
                   });
             }, 500);
         }

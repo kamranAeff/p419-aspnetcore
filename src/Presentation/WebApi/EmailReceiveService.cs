@@ -40,7 +40,6 @@ namespace WebApi
 
                 channel.BasicAck(deliveryTag: e.DeliveryTag, multiple: false);
             };
-
             channel.BasicConsume(queue.QueueName, false, consumer);
 
             return Task.CompletedTask;

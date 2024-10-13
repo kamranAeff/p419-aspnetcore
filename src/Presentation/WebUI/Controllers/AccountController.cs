@@ -14,7 +14,7 @@ namespace WebUI.Controllers
         [Route("/{lang:language}/approve-account")]
         public async Task<IActionResult> RegisterComfirm(string token)
         {
-            return RedirectToAction("Index", "Home");
+            return Content(token);
         }
 
         [Route("/{lang:language}/signin.html")]

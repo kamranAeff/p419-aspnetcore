@@ -2,6 +2,7 @@
 using Application.Services;
 using Domain.Entities.Membership;
 using Domain.Exceptions;
+using Domain.StableModels;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
 {
     class SignInRequestHandler(UserManager<OganiUser> userManager,
         SignInManager<OganiUser> signInManager,
+        DbContext db,
         ICryptoService cryptoService) : IRequestHandler<SignInRequest, AuthenticateResponse>
     {
         public async Task<AuthenticateResponse> Handle(SignInRequest request, CancellationToken cancellationToken)
@@ -53,11 +55,12 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var accessTokenExpireDate = DateTime.UtcNow.AddMinutes(minutes);
             var token = new JwtSecurityToken(issuer, audience,
             claims: [
                 new(JwtRegisteredClaimNames.NameId, $"{user.Id}")
                 ],
-            expires: DateTime.UtcNow.AddMinutes(minutes),
+            expires: accessTokenExpireDate,
             signingCredentials: credentials);
 
             var response = new AuthenticateResponse
@@ -66,6 +69,13 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
             };
 
             response.RefreshToken = cryptoService.Sha1Hash($"DEMO_{response.AccessToken}_@APP");
+
+            await db.Set<OganiUserToken>().AddRangeAsync([
+                new OganiUserToken{ UserId =user.Id, LoginProvider="APPLICATION",Name="ACCESS_TOKEN",Value =cryptoService.Sha1Hash(response.AccessToken),Type=TokenType.AccessToken,ExpireDate=accessTokenExpireDate,IsDisable=false  },
+                new OganiUserToken{ UserId =user.Id, LoginProvider="APPLICATION",Name="REFRESH_TOKEN",Value =cryptoService.Sha1Hash(response.RefreshToken),Type=TokenType.RefreshToken,ExpireDate=accessTokenExpireDate.AddHours(2),IsDisable=false  },
+                ], cancellationToken);
+
+            await db.SaveChangesAsync(cancellationToken);
 
             return response;
         }

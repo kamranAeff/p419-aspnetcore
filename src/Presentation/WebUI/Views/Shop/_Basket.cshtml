@@ -6,6 +6,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th class="shoping__product"></th>
                             <th class="shoping__product">Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -17,8 +18,10 @@
                         @foreach (var item in Model.Items)
                         {
                             <tr>
-                                <td class="shoping__cart__item">
+                                <td class="shoping__cart__item image-cell">
                                     <img src="@item.Path" alt="">
+                                </td>
+                                <td class="shoping__cart__item">
                                     <h5><a asp-action="details" asp-route-slug="@item.Slug">@item.Title</a></h5>
                                 </td>
                                 <td class="shoping__cart__price">
@@ -27,7 +30,7 @@
                                 <td class="shoping__cart__quantity">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="text" data-id="@item.Id" value="@item.Count" onchange="regulator(this)">
+                                            <input updown type="text" data-id="@item.Id" value="@item.Count" onchange="regulator(this)">
                                         </div>
                                     </div>
                                 </td>

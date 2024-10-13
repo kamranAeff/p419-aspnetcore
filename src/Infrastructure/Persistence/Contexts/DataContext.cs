@@ -25,8 +25,14 @@ namespace Persistence.Contexts
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var userId = identityService.UserId;
-            foreach (var entry in this.ChangeTracker.Entries<IAuditableEntity>())
+            int userId = default;
+
+            var changes = this.ChangeTracker.Entries<IAuditableEntity>();
+
+            if (changes.Any())
+                userId = identityService.UserId;
+
+            foreach (var entry in changes)
             {
                 switch (entry.State)
                 {
