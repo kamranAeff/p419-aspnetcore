@@ -8,7 +8,6 @@ namespace WebUI.Controllers
     [AllowAnonymous]
     public class HomeController(IContactPostsService contactPostsService) : Controller
     {
-       
         public async Task<IActionResult> Index()
         {
             return View();

@@ -15,7 +15,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class ColorsController(IMediator mediator) : ControllerBase
     {
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] ColorsGetAllRequest request)

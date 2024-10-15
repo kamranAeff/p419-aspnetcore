@@ -17,7 +17,6 @@ namespace WebUI.Services.Common
             this.client.BaseAddress = new Uri(configuration["API_URL"]!);
         }
 
-
         public async Task<T> GetAsync<T>(string endpoint, CancellationToken cancellation = default)
             where T : ApiResponse
         {

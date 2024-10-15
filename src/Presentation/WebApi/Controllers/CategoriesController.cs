@@ -15,7 +15,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class CategoriesController(IMediator mediator) : ControllerBase
     {
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] CategoriesGetAllRequest request)

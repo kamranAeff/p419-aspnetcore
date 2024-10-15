@@ -7,7 +7,6 @@ namespace WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class TagsController(ITagService tagService) : Controller
     {
-
         //[Authorize(Policy = "admin.tags.get")]
         public async Task<IActionResult> Index(int page = 1, int size = 15)
         {

@@ -15,7 +15,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class BrandsController(IMediator mediator) : ControllerBase
     {
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] BrandsGetAllRequest request)

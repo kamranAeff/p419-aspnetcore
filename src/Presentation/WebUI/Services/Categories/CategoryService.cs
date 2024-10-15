@@ -20,13 +20,11 @@ namespace WebUI.Services.Categories
         public Task<ApiResponse<Category>> GetByIdAsync(int id, CancellationToken cancellation = default)
             => base.GetAsync<ApiResponse<Category>>($"/api/categories/{id}", cancellation);
 
-
         public Task<ApiResponse> AddAsync(Category request, CancellationToken cancellation = default)
             => base.PostAsync<Category, ApiResponse>("/api/categories", request, cancellation);
 
         public Task<ApiResponse> EditAsync(Category request, CancellationToken cancellation = default)
             => base.PutAsync<Category, ApiResponse>($"/api/categories/{request.Id}", request, cancellation);
-
 
         public Task RemoveAsync(int id, CancellationToken cancellation = default)
             => base.DeleteAsync($"/api/categories/{id}", cancellation);

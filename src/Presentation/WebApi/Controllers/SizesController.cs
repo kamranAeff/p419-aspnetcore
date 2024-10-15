@@ -15,7 +15,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class SizesController(IMediator mediator) : ControllerBase
     {
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] SizesGetAllRequest request)
