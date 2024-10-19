@@ -1,5 +1,5 @@
-$env:SUPERADMIN_USER="kamranAeff"
-$env:SUPERADMIN_EMAIL="akamran@code.edu.az"
-$env:SUPERADMIN_PASSWORD="!Dquery20@4"
+$env:SUPERADMIN_USER="AliHasanov"
+$env:SUPERADMIN_EMAIL="aliah@code.edu.az"
+$env:SUPERADMIN_PASSWORD="R@nger27121998"
 
 Write "LoadAdminEnvironments"

@@ -629,15 +629,15 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "cec2c85f-893f-438b-b528-a6cb1be7a777", "SuperAdmin", "SUPERADMIN" },
-                    { 2, "227a1a27-2270-42ab-b1da-03fbe24822c3", "Admin", "ADMIN" }
+                    { 1, "5c85c9bb-8d50-4ba8-bfdf-aee7258b3168", "SuperAdmin", "SUPERADMIN" },
+                    { 2, "49ff9325-d184-4fe7-82f8-91ca1afebd36", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Membership",
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "akamran@code.edu.az", true, false, null, "AKAMRAN@CODE.EDU.AZ", "KAMRANAEFF", "AQAAAAIAAYagAAAAEL1FK766fwOzNi4ofvfHGlNOPRrGwAk1sC75ez1q2VOyG5v89JB60+ktojX4cAelXQ==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "kamranAeff" });
+                values: new object[] { 1, 0, "a2679ce7-36e9-4db7-9bce-3b52995e5f2b", "aliah@code.edu.az", true, false, null, "ALİAH@CODE.EDU.AZ", "ALİHASANOV", "AQAAAAIAAYagAAAAEP4c72uVC5RZUK1Uo0lPQ0RZqbs5yMzpKFpIOancldCkh/B2QngUnVAo0sGqQKMjuA==", null, false, "a2679ce7-36e9-4db7-9bce-1152995e5f2b", false, "AliHasanov" });
 
             migrationBuilder.InsertData(
                 table: "Brands",

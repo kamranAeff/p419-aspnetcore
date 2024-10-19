@@ -13,6 +13,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Contexts;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -41,7 +42,7 @@ namespace WebApi
             var builder = WebApplication.CreateBuilder(args);
 
 
-            ConfigureLogger(builder.Environment);
+            //ConfigureLogger(builder.Environment);
 
             builder.Host.UseServiceProviderFactory(new IoCFactory());
             builder.Host.UseSerilog();
@@ -179,14 +180,14 @@ namespace WebApi
                                  .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
                                  .Build();
             Log.Logger = new LoggerConfiguration()
-                            //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
-                            //{
-                            //    ModifyConnectionSettings = x => 
-                            //    x.BasicAuthentication(elasticUser, elasticPassword)
-                            //     .ServerCertificateValidationCallback((sender, certificate, chain, sslPolicyErrors) => true),
-                            //    AutoRegisterTemplate = true,
-                            //    IndexFormat = $"oganiapi-{env.EnvironmentName}-logs-{DateTime.UtcNow.AddHours(4):yyyyMM}"
-                            //})
+                            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
+                            {
+                                ModifyConnectionSettings = x =>
+                                x.BasicAuthentication(elasticUser, elasticPassword)
+                                 .ServerCertificateValidationCallback((sender, certificate, chain, sslPolicyErrors) => true),
+                                AutoRegisterTemplate = true,
+                                IndexFormat = $"oganiapi-{env.EnvironmentName}-logs-{DateTime.UtcNow.AddHours(4):yyyyMM}"
+                            })
                             .ReadFrom.Configuration(configuration)
                             .CreateLogger();
         }

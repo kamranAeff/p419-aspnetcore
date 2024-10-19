@@ -5,9 +5,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SUPERADMIN_USER": "kamranAeff",
-        "SUPERADMIN_EMAIL": "akamran@code.edu.az",
-        "SUPERADMIN_PASSWORD": "!Dquery20@4",
+        "SUPERADMIN_USER": "AliHasanov",
+        "SUPERADMIN_EMAIL": "aliah@code.edu.az",
+        "SUPERADMIN_PASSWORD": "R@nger27121998",
         "JWT__KEY": "88b0ba2aaff3daa419917a9a1c85732570c4771b",
         "JWT__ISSUER": "api.ogani.az",
         "JWT__AUDIENCE": "api.ogani.az",

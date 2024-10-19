@@ -428,14 +428,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "cec2c85f-893f-438b-b528-a6cb1be7a777",
+                            ConcurrencyStamp = "5c85c9bb-8d50-4ba8-bfdf-aee7258b3168",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "227a1a27-2270-42ab-b1da-03fbe24822c3",
+                            ConcurrencyStamp = "49ff9325-d184-4fe7-82f8-91ca1afebd36",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -538,16 +538,16 @@ namespace Persistence.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "a2679ce7-36e9-4db7-9bce-3b52995e5f2b",
-                            Email = "akamran@code.edu.az",
+                            Email = "aliah@code.edu.az",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "AKAMRAN@CODE.EDU.AZ",
-                            NormalizedUserName = "KAMRANAEFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL1FK766fwOzNi4ofvfHGlNOPRrGwAk1sC75ez1q2VOyG5v89JB60+ktojX4cAelXQ==",
+                            NormalizedEmail = "ALİAH@CODE.EDU.AZ",
+                            NormalizedUserName = "ALİHASANOV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP4c72uVC5RZUK1Uo0lPQ0RZqbs5yMzpKFpIOancldCkh/B2QngUnVAo0sGqQKMjuA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "a2679ce7-36e9-4db7-9bce-1152995e5f2b",
                             TwoFactorEnabled = false,
-                            UserName = "kamranAeff"
+                            UserName = "AliHasanov"
                         });
                 });
 
