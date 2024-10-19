@@ -1,15 +1,161 @@
 ﻿@{
-    ViewData["Title"] = "Register";
-    Layout = null;
+    ViewData["Title"] = @Account.Register;
 }
 
-<h1>Register</h1>
+<section class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 offset-lg-2">
+                <div class="login-reg-form-wrap  pr-lg-50">
+                    <h2>@Account.Register</h2>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="single-input-item">
+                                    <input type="text" placeholder="@Account.NamePlaceholder" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="single-input-item">
+                                    <input type="text" placeholder="@Account.SurnamePlaceholder" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                        </div>
+                        <div class="single-input-item">
+                            <input type="email" placeholder="@Account.EmailPlaceholder" required />
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="single-input-item">
+                                    <input type="password" placeholder="@Account.PasswordPlaceholder" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="single-input-item">
+                                    <input type="password" placeholder="@Account.ConfirmPasswordPlaceholder" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <div class="login-reg-form-meta">
+                                <div class="remember-meta">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="subnewsletter" />
+                                        <label class="custom-control-label" for="subnewsletter">@Common.JoinOurNewsletterNow</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <button class="sqr-btn">@Account.Register</button>
+                            <a href="signin.html" class="forget-pwd">@Common.Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<form method="post">
-    <div asp-validation-summary="All"></div>
-    <label>Email:</label>
-    <input name="email" type="text" placeholder="e-poct adressiniz" value="akamran@code.edu.az" /> <br />
-    <label>Password:</label>
-    <input name="password" type="text" placeholder="sifreniz" value="!t3st_c0de@cAdemy" /> <br />
-    <button>Qeydiyyatdan kec</button>
-</form>
+
+@section addcss {
+    <style>
+        section.login {
+            padding: 68px 0 !important;
+        }
+
+        .single-input-item {
+            margin-top: 20px;
+        }
+
+            .single-input-item input:not([type=checkbox]), .single-input-item textarea {
+                width: 100%;
+                font-size: 16px;
+                padding-left: 20px;
+                color: #1c1c1c;
+                height: 46px;
+                border: 1px solid #ededed;
+            }
+
+            .single-input-item label {
+                color: #292825;
+                text-transform: capitalize;
+                font-size: 14px;
+            }
+
+        .login-reg-form-wrap .login-reg-form-meta a {
+            color: #7fad39;
+        }
+
+        .sqr-btn {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #7fad39;
+            padding: 0 20px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        /*------ Start Login & Register Page ------*/
+        .login-reg-form-wrap {
+            background-color: #ffffff;
+            -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            padding: 23px 30px 30px;
+        }
+
+        @@media only screen and (max-width: 575px) {
+            .login-reg-form-wrap {
+                padding: 23px 15px 30px;
+            }
+        }
+
+        .login-reg-form-wrap.signup-form {
+            margin-top: 30px;
+        }
+
+        @@media only screen and (min-width: 1200px), only screen and (min-width: 992px) and (max-width: 1199px) {
+            .login-reg-form-wrap.signup-form {
+                margin-top: 0;
+            }
+        }
+
+        .login-reg-form-wrap h2 {
+            font-weight: 500;
+            font-size: 26px;
+            line-height: 26px;
+            text-transform: capitalize;
+            color: #292825;
+            border-bottom: #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 32px;
+        }
+
+        .login-reg-form-wrap h3 {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+            text-transform: capitalize;
+            color: #292825;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .login-reg-form-wrap form .create-account {
+            margin-top: 25px;
+        }
+
+        .login-reg-form-wrap .login-reg-form-meta a {
+            color: #95a83f;
+        }
+
+        /*------ end Login & Register Page ------*/
+    </style>
+}

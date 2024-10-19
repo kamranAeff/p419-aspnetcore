@@ -7,6 +7,9 @@ namespace WebUI.TagHelpers
     [HtmlTargetElement("pager")]
     public class PagerTagHelper(IUrlHelperFactory factory, IActionContextAccessor ctx) : TagHelper
     {
+        [HtmlAttributeName("class")]
+        public string Class { get; set; }
+
         [HtmlAttributeName("asp-page")]
         public int Page { get; set; }
 
@@ -34,7 +37,7 @@ namespace WebUI.TagHelpers
             output.TagName = "ul";
             output.TagMode = TagMode.StartTagAndEndTag;
 
-            output.Attributes.Add("class", "pagination");
+            output.Attributes.Add("class", $"pagination{(string.IsNullOrWhiteSpace(this.Class) ? string.Empty : $" {this.Class}")}");
 
             var prevLink = urlHelper.Action(new UrlActionContext
             {
@@ -60,9 +63,7 @@ namespace WebUI.TagHelpers
             for (int i = start; i <= end; i++)
             {
                 if (i == this.Page)
-                {
                     output.Content.AppendHtml($"<li class='page-item disabled'><a class='page-link'>{@i}</a></li>");
-                }
                 else
                 {
                     var navLink = urlHelper.Action(new UrlActionContext
@@ -78,7 +79,6 @@ namespace WebUI.TagHelpers
                 }
             }
             output.Content.AppendHtml($"<li class='page-item {(this.HasNext ? "" : " disabled")}'><a class='page-link' href='{nextLink}'><i class='fa fa-long-arrow-right'></i></a></li>");
-
         }
     }
 }

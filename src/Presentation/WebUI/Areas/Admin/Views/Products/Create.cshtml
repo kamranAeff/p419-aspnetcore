@@ -52,7 +52,7 @@
                             <label asp-for="CategoryId" class="control-label">
                                 Category
                             </label>
-                            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control select2">
                                 <option value="" selected disabled>--- Seçin ---</option>
                             </select>
                             <span asp-validation-for="CategoryId" class="text text-danger"></span>
@@ -61,7 +61,7 @@
                             <label asp-for="BrandId" class="control-label">
                                 Brand
                             </label>
-                            <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-control">
+                            <select asp-for="BrandId" asp-items="@ViewBag.Brands" class="form-control select2">
                                 <option value="" selected disabled>--- Seçin ---</option>
                             </select>
                             <span asp-validation-for="CategoryId" class="text text-danger"></span>
@@ -70,7 +70,7 @@
                             <label asp-for="UnitOfWeight" class="control-label">
                                 Unit
                             </label>
-                            <select asp-for="UnitOfWeight" asp-items="@Html.GetEnumSelectList<Units>()" class="form-control">
+                            <select asp-for="UnitOfWeight" asp-items="@ViewBag.Units" class="form-control select2">
                                 <option value="" selected disabled>--- Seçin ---</option>
                             </select>
                             <span asp-validation-for="UnitOfWeight" class="text text-danger"></span>
@@ -83,18 +83,43 @@
                             <span asp-validation-for="Weight" class="text text-danger"></span>
                         </div>
                         <div class="form-group col-12">
-                            <label asp-for="Information" class="control-label">
-                                Information
-                            </label>
-                            <textarea asp-for="Information" class="form-control"></textarea>
-                            <span asp-validation-for="Information" class="text text-danger"></span>
-                        </div>
-                        <div class="form-group col-12">
-                            <label asp-for="Description" class="control-label">
-                                Description
-                            </label>
-                            <textarea asp-for="Description" class="form-control"></textarea>
-                            <span asp-validation-for="Description" class="text text-danger"></span>
+                            <div class="tab-control w-100" role="tabcontrol">
+                                <div class="tab-page" id="information" aria-title="Information" selected>
+                                    <textarea asp-for="Information" class="form-control"></textarea>
+                                    <span asp-validation-for="Information" class="text text-danger"></span>
+                                </div>
+                                <div class="tab-page" id="description" aria-title="Description">
+                                    <textarea asp-for="Description" class="form-control"></textarea>
+                                    <span asp-validation-for="Description" class="text text-danger"></span>
+                                </div>
+                                <div class="tab-page" id="cards" aria-title="Cards">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Size</th>
+                                                <th>Color</th>
+                                                <th>Price</th>
+                                                <th>IsDefault</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(int i = 0; i < 3; i++)
+                                            {
+                                                <tr>
+                                                    <td></td>
+                                                    <td><select name="cards[@i].sizeId" asp-items="@ViewBag.Sizes" class="form-control select2"></select></td>
+                                                    <td><select name="cards[@i].colorId" asp-items="@ViewBag.Colors" class="form-control select2"></select></td>
+                                                    <td><input type="text" class="form-control" name="cards[@i].price" /></td>
+                                                    <td><input type="checkbox" class="form-control" name="cards[@i].price" /></td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,11 +139,21 @@
 
 @section addcss {
     <link href="~/lib/multiple-imager-js/css/imager.css" rel="stylesheet" />
+    <link href="~/lib/tab-control/tab-control.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/admin/css/select2.override.css" rel="stylesheet" />
+    <style>
+        .tab-control .tab-pages{
+            padding:0;
+        }
+    </style>
 }
 
 @section addjs {
+    <script src="~/lib/tab-control/tab-control.js"></script>
     <script src="~/lib/ckeditor5/ckeditor.min.js"></script>
     <script src="~/lib/multiple-imager-js/js/imager.js"></script>
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
     <script>
         window.addEventListener('load', function () {
 
@@ -140,17 +175,19 @@
                 plusBtnClass: undefined
             });
 
+            $('.select2').select2();
+
             $('#products').submit(function (e) {
                 e.preventDefault();
 
                 const fd = new FormData(e.currentTarget);
 
                 // window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
-                window.fetch('https://localhost:7082/api/products', {
+                window.fetch('http://localhost:5189/api/products', {
                     method: 'POST',
                     body: fd
                 })
-                 .then(response => console.log('Success:'))
+                    .then(response => response.json()).then(response => console.log('Success:', response))
                  .catch(error => console.error('Error:', error));
             });
         });

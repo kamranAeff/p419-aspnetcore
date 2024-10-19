@@ -63,7 +63,7 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
                             {
                                 Id = Guid.NewGuid(),
                                 ProductId = entity.Id,
-                                SizeId = card.ColorId,
+                                SizeId = card.SizeId,
                                 ColorId = card.ColorId,
                                 Title = $"{entity.Title}, {color.Name}, {size.Name}",
                                 Price = card.Price,

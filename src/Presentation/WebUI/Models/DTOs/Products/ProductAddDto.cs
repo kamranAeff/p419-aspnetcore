@@ -13,5 +13,6 @@ namespace WebUI.Models.DTOs.Products
         public string Description { get; set; }
         public string Information { get; set; }
         public ImageItem[] Images { get; set; }
+        public ProductCardItem[] Cards { get; set; }
     }
 }

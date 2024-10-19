@@ -19,6 +19,8 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
     {
         public async Task<AuthenticateResponse> Handle(SignInRequest request, CancellationToken cancellationToken)
         {
+            request.RememberMe = true;
+
             string key = Environment.GetEnvironmentVariable("JWT__KEY")!;
             string issuer = Environment.GetEnvironmentVariable("JWT__ISSUER")!;
             string audience = Environment.GetEnvironmentVariable("JWT__AUDIENCE")!;
@@ -68,7 +70,7 @@ namespace Application.Modules.AccountModule.Commands.SignInCommand
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token)
             };
 
-            response.RefreshToken = cryptoService.Sha1Hash($"DEMO_{response.AccessToken}_@APP");
+            response.RefreshToken = request.RememberMe ? cryptoService.Sha1Hash($"DEMO_{response.AccessToken}_@APP") : null;
 
             await db.Set<OganiUserToken>().AddRangeAsync([
                 new OganiUserToken{ UserId =user.Id, LoginProvider="APPLICATION",Name="ACCESS_TOKEN",Value =cryptoService.Sha1Hash(response.AccessToken),Type=TokenType.AccessToken,ExpireDate=accessTokenExpireDate,IsDisable=false  },

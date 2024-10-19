@@ -150,85 +150,6 @@ namespace Persistence.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.ToTable("Brands", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fresh Meat"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Vegetables"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fruit & Nut Gifts"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fresh Berries"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Ocean Foods"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Butter & Eggs"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fastfood"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fresh Onion"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Papayaya & Crisps"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Oatmeal"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fresh Bananas"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
@@ -271,22 +192,6 @@ namespace Persistence.Migrations
                     b.HasIndex("ModifiedBy");
 
                     b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Beauty"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreateBy = 1,
-                            CreatedAt = new DateTime(2024, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Travel"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Color", b =>
@@ -428,14 +333,14 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "5f59a77d-d608-4492-bfbc-5af878f60852",
+                            ConcurrencyStamp = "88d177e4-b90b-44d6-9201-fbd680018472",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "72ef31a6-5d60-46c7-a164-038ba563e6f3",
+                            ConcurrencyStamp = "7f235796-d2e0-4599-9ec1-43225bb1fb5f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -478,13 +383,19 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSubscriber")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -493,32 +404,50 @@ namespace Persistence.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar");
+
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("NormalizedUserName")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
@@ -527,8 +456,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("Users", "Membership");
 
@@ -540,12 +468,15 @@ namespace Persistence.Migrations
                             ConcurrencyStamp = "a2679ce7-36e9-4db7-9bce-3b52995e5f2b",
                             Email = "akamran@code.edu.az",
                             EmailConfirmed = true,
+                            IsSubscriber = false,
                             LockoutEnabled = false,
+                            Name = "Admin",
                             NormalizedEmail = "AKAMRAN@CODE.EDU.AZ",
                             NormalizedUserName = "KAMRANAEFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKzm9Qwka3s9LF4jpgiO81Fb1gbqaFNmSwH8fZFYf1nYQhX8CbIA2qRq+rsetOO/fA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKtYR9SsqJ9pySayp6NOnb9damxflgQ1GuaG1EHKpU6EjLwPE1OAH7mCEPI4nqZyBg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "a2679ce7-36e9-4db7-9bce-1152995e5f2b",
+                            Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "kamranAeff"
                         });

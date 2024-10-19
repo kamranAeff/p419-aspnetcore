@@ -6,6 +6,7 @@ namespace WebUI.Controllers
 {
     public class AccountController(IAccountService accountService) : Controller
     {
+        [Route("/{lang:language}/register.html")]
         public IActionResult Register()
         {
             return View();

@@ -1,15 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebUI.Extensions;
 using WebUI.Models.DTOs.Products;
+using WebUI.Models.StableModels;
 using WebUI.Services.Brands;
 using WebUI.Services.Categories;
+using WebUI.Services.Colors;
 using WebUI.Services.Products;
+using WebUI.Services.Sizes;
 
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductsController(IProductService productService, ICategoryService categoryService,IBrandService brandService, IMapper mapper) : Controller
+    public class ProductsController(IProductService productService,
+        ICategoryService categoryService,
+        IBrandService brandService,
+        IColorService colorService,
+        ISizeService sizeService,
+        IMapper mapper) : Controller
     {
         public async Task<IActionResult> Index(int page = 1, int size = 15)
         {
@@ -30,15 +39,29 @@ namespace WebUI.Areas.Admin.Controllers
 
             var brands = await brandService.GetAllAsync();
             ViewBag.Brands = brands.Data.ToSelectList("Id", "Name");
+
+            var sizes = await sizeService.GetAllAsync();
+            ViewBag.Sizes = sizes.Data.ToSelectList("Id", "Name");
+
+            var colors = await colorService.GetAllAsync();
+            ViewBag.Colors = colors.Data.ToSelectList("Id", "Name");
+
+            var units = Enum.GetValues<Units>().Select(m => new
+            {
+                Id = (byte)m,
+                Name = Localization.Resources.Units.Unit.ResourceManager.GetString($"{nameof(Units)}_{m.ToString()}")
+            });
+            ViewBag.Units = new SelectList(units, "Id", "Name");
+
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create([FromForm] ProductAddDto model)
-        //{
-        //    await productService.AddAsync(model);
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] ProductAddDto model)
+        {
+            await productService.AddAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<IActionResult> Edit(int id)
         {

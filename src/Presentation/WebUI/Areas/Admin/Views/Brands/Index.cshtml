@@ -78,11 +78,12 @@
                         <tfoot>
                             <tr>
                                 <td colspan="2">
-                                    <pager asp-page="@Model.Page"
+                                    <pager class="justify-content-center"
+                                           asp-page="@Model.Page"
                                            asp-size="@Model.Size"
                                            asp-pages="@Model.Pages"
                                            asp-has-next="@Model.HasNext"
-                                           asp-has-previous=@Model.HasPrevious />
+                                           asp-has-previous="@Model.HasPrevious" />
                                 </td>
                             </tr>
                         </tfoot>

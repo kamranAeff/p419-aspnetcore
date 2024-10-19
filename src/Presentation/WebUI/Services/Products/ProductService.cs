@@ -33,16 +33,25 @@ namespace WebUI.Services.Products
                 .AddString(model.Information, nameof(model.Information));
 
             if (model.Images is not null)
-            {
-                int index = 0;
-                foreach (var item in model.Images)
+                for (int i = 0; i < model.Images.Length; i++)
                 {
-                    content.AddInt(item.Id, $"Images[{index}].Id")
-                        .AddFile(item.File, $"Images[{index}].File")
-                        .AddBoolean(item.IsMain, $"Images[{index++}].IsMain")
-                        .AddString(item.TempPath, $"Images[{index}].TempPath");
+                    content.AddInt(model.Images[i].Id, $"Images[{i}].Id")
+                            .AddFile(model.Images[i].File, $"Images[{i}].File")
+                            .AddBoolean(model.Images[i].IsMain, $"Images[{i}].IsMain")
+                            .AddString(model.Images[i].TempPath, $"Images[{i}].TempPath");
                 }
-            }
+
+            if (model.Cards is not null)
+                for (int i = 0; i < model.Cards.Length; i++)
+                {
+                    content.AddInt(model.Cards[i].SizeId, $"cards[{i}].SizeId")
+                        .AddInt(model.Cards[i].ColorId, $"cards[{i}].ColorId")
+                        .AddDecimal(model.Cards[i].Price, $"cards[{i}].Price")
+                        .AddBoolean(model.Cards[i].IsDefault, $"cards[{i}].IsDefault");
+
+                    if (model.Cards[i].Id is not null)
+                        content.AddString(model.Cards[i].Id.ToString()!, $"Cards[{i}].Id");
+                }
 
             var response = await client.PostAsync("/api/products", content, cancellation);
 
@@ -116,7 +125,8 @@ namespace WebUI.Services.Products
 
         public Task<ApiResponse<BasketResponse>> BasketInteractAsync(BasketInteractDto model, CancellationToken cancellation = default)
             => base.PostAsync<BasketInteractDto, ApiResponse<BasketResponse>>("/api/products/basket-interact", model, cancellation);
-    
+
         public Task<ApiResponse<BasketResponse>> BasketGetAllAsync(CancellationToken cancellation = default)
-            => base.GetAsync<ApiResponse<BasketResponse>>("/api/products/basket", cancellation);}
+            => base.GetAsync<ApiResponse<BasketResponse>>("/api/products/basket", cancellation);
+    }
 }
