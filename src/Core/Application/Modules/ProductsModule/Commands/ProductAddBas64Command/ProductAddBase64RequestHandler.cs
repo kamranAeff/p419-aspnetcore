@@ -2,20 +2,21 @@
 using Application.Services;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 
-namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
+namespace Application.Modules.ProductsModule.Commands.ProductAddBase64Command
 {
-    class ProductAddRequestHandler(IProductRepository productRepository,
+    class ProductAddBase64RequestHandler(IProductRepository productRepository,
         IBrandRepository brandRepository,
         ICategoryRepository categoryRepository,
         ISizeRepository sizeRepository,
         IColorRepository colorRepository,
         IFileService fileService)
-        : IRequestHandler<ProductAddRequest, Product>
+        : IRequestHandler<ProductAddBase64Request, Product>
     {
-        public async Task<Product> Handle(ProductAddRequest request, CancellationToken cancellationToken)
+        public async Task<Product> Handle(ProductAddBase64Request request, CancellationToken cancellationToken)
         {
             var brand = await brandRepository.GetAsync(m => m.Id == request.BrandId, cancellationToken);
             var category = await categoryRepository.GetAsync(m => m.Id == request.CategoryId, cancellationToken);
@@ -44,7 +45,12 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
                         IsMain = item.IsMain
                     };
 
-                    image.Path = await fileService.UploadAsync(item.File);
+                    byte[] buffer = Convert.FromBase64String(item.File.Split(',')[1]);
+                    var ms = new MemoryStream(buffer);
+
+                    var file = new FormFile(ms, 0, ms.Length, item.FileName, item.FileName);
+
+                    image.Path = await fileService.UploadAsync(file);
                     await productRepository.AddImageAsync(entity, image, cancellationToken);
                 }
 

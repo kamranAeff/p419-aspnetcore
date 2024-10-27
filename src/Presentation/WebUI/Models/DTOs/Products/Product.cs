@@ -13,6 +13,7 @@ namespace WebUI.Models.DTOs.Products
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public decimal Rate { get; set; }
+        public decimal Price { get; set; }
         public decimal? Weight { get; set; }
         public Units UnitOfWeight { get; set; }
         public string Description { get; set; }

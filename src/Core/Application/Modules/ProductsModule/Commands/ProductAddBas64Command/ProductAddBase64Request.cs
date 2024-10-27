@@ -1,12 +1,11 @@
 ﻿using Application.Common;
 using Domain.Entities;
 using Domain.StableModels;
-using FluentValidation;
 using MediatR;
 
-namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
+namespace Application.Modules.ProductsModule.Commands.ProductAddBase64Command
 {
-    public class ProductAddRequest : IRequest<Product>
+    public class ProductAddBase64Request : IRequest<Product>
     {
         public string Title { get; set; }
         public int BrandId { get; set; }
@@ -15,7 +14,7 @@ namespace Application.Modules.ProductsModule.Commands.ProductAddCommand
         public Units UnitOfWeight { get; set; }
         public string Description { get; set; }
         public string Information { get; set; }
-        public IEnumerable<ImageItem> Files { get; set; }
+        public IEnumerable<ImageItemBase64> Files { get; set; }
         public IEnumerable<ProductCardItem> Cards { get; set; }
     }
 }

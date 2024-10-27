@@ -35,10 +35,11 @@ namespace WebUI.Services.Products
             if (model.Images is not null)
                 for (int i = 0; i < model.Images.Length; i++)
                 {
-                    content.AddInt(model.Images[i].Id, $"Images[{i}].Id")
-                            .AddFile(model.Images[i].File, $"Images[{i}].File")
-                            .AddBoolean(model.Images[i].IsMain, $"Images[{i}].IsMain")
-                            .AddString(model.Images[i].TempPath, $"Images[{i}].TempPath");
+                    content.AddInt(model.Images[i].Id, $"Files[{i}].Id")
+                            .AddString(model.Images[i].File.FileName, $"Files[{i}].FileName")
+                            .AddFileAsBase64(model.Images[i].File, $"Files[{i}].File")
+                            .AddBoolean(model.Images[i].IsMain, $"Files[{i}].IsMain")
+                            .AddString(model.Images[i].TempPath, $"Files[{i}].TempPath");
                 }
 
             if (model.Cards is not null)
@@ -53,10 +54,18 @@ namespace WebUI.Services.Products
                         content.AddString(model.Cards[i].Id.ToString()!, $"Cards[{i}].Id");
                 }
 
-            var response = await client.PostAsync("/api/products", content, cancellation);
+            try
+            {
+                var response = await client.PostAsync("/api/products/add-base-64", content, cancellation);
 
-            if (!response.IsSuccessStatusCode)
-                throw new BadHttpRequestException("HTTP_CLIENT");
+                if (!response.IsSuccessStatusCode)
+                    throw new BadHttpRequestException("HTTP_CLIENT");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task EditAsync(ProductEditDto model, CancellationToken cancellation = default)

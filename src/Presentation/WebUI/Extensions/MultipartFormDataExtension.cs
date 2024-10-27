@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.IO;
+using System.Net.Http.Headers;
 
 namespace WebUI.Extensions
 {
@@ -41,15 +42,32 @@ namespace WebUI.Extensions
 
         static public MultipartFormDataContent AddFile(this MultipartFormDataContent content, IFormFile value, string fieldName)
         {
-            if (value is not null)
+            using (var ms = new MemoryStream())
             {
-                using var ms = new MemoryStream();
                 value.CopyTo(ms);
-                var fileContent = new ByteArrayContent(ms.ToArray());
+                ms.Seek(0, SeekOrigin.Begin);
 
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue(value.ContentType);
+                var fileContent = new ByteArrayContent(ms.ToArray());
+                if (!string.IsNullOrEmpty(value.ContentType))
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(value.ContentType);
 
                 content.Add(fileContent, fieldName, value.FileName);
+            }
+
+            return content;
+        }
+        static public MultipartFormDataContent AddFileAsBase64(this MultipartFormDataContent content, IFormFile value, string fieldName)
+        {
+            using (var ms = new MemoryStream())
+            {
+                value.CopyTo(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                byte[] fileBytes = ms.ToArray();
+
+                string base64String = Convert.ToBase64String(fileBytes);
+
+                content.AddString($"data:{value.ContentType};base64,{base64String}", fieldName);
             }
 
             return content;

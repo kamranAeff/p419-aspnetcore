@@ -32,6 +32,7 @@ namespace Application.Modules.ProductsModule.Queries.ProductPagesQuery
                             CategoryId = p.CategoryId,
                             CategoryName = c.Name,
                             Rate = p.Rate,
+                            Price = pc.Price,
                             Weight = p.Weight,
                             UnitOfWeight = p.UnitOfWeight,
                             Description = p.Description,

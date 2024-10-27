@@ -1,0 +1,15 @@
+﻿@model IEnumerable<WebUI.Models.DTOs.Colors.Color>
+
+<div class="border-default universal-padding mb-40">
+    <div class="group-title">
+        <h2>color</h2>
+    </div>
+    <ul class="color-option">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a class="filled" style="background-color:@item.HexCode" data-id="@item.Id" data-entity-type="colors"></a>
+            </li>
+        }
+    </ul>
+</div>

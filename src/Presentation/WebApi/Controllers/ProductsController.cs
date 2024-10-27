@@ -1,4 +1,5 @@
 ﻿using Application.Modules.ProductsModule.Commands.BasketInteractCommand;
+using Application.Modules.ProductsModule.Commands.ProductAddBase64Command;
 using Application.Modules.ProductsModule.Commands.ProductAddCommand;
 using Application.Modules.ProductsModule.Commands.ProductEditCommand;
 using Application.Modules.ProductsModule.Commands.ProductRemoveCommand;
@@ -58,6 +59,15 @@ namespace WebApi.Controllers
         [HttpPost]
         [Transaction]
         public async Task<IActionResult> Add([FromForm] ProductAddRequest request)
+        {
+            var response = await mediator.Send(request);
+            var dto = ApiResponse.Success(response);
+            return CreatedAtAction(nameof(GetById), new { id = response.Id }, dto);
+        }
+
+        [HttpPost("add-base-64")]
+        [Transaction]
+        public async Task<IActionResult> AddBase64([FromForm] ProductAddBase64Request request)
         {
             var response = await mediator.Send(request);
             var dto = ApiResponse.Success(response);

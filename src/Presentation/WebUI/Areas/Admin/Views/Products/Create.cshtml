@@ -112,7 +112,7 @@
                                                     <td><select name="cards[@i].sizeId" asp-items="@ViewBag.Sizes" class="form-control select2"></select></td>
                                                     <td><select name="cards[@i].colorId" asp-items="@ViewBag.Colors" class="form-control select2"></select></td>
                                                     <td><input type="text" class="form-control" name="cards[@i].price" /></td>
-                                                    <td><input type="checkbox" class="form-control" name="cards[@i].price" /></td>
+                                                    <td><input type="checkbox" class="form-control" name="cards[@i].isDefault" /></td>
                                                     <td></td>
                                                 </tr>
                                             }
@@ -182,12 +182,12 @@
 
                 const fd = new FormData(e.currentTarget);
 
-                // window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
-                window.fetch('http://localhost:5189/api/products', {
+                window.fetch('@Url.Action("Create", "Products", values: new { area = "Admin" })', {
+                // window.fetch('http://localhost:5189/api/products', {
                     method: 'POST',
                     body: fd
                 })
-                    .then(response => response.json()).then(response => console.log('Success:', response))
+                 .then(response => console.log('Success:', response))
                  .catch(error => console.error('Error:', error));
             });
         });

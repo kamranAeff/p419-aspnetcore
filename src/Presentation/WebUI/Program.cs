@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebUI.Binders.BooleanConcept;
 using WebUI.Binders.ConstraintsConcept;
 using WebUI.Binders.LocalizationConcept;
 using WebUI.Filters;
@@ -24,7 +25,8 @@ namespace WebUI
             builder.Services.AddControllersWithViews(cfg =>
             {
 
-                cfg.Filters.Add<GlobalExceptionFilter>();
+                cfg.Filters.Add<GlobalExceptionFilter>(); 
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
 
             });
 

@@ -17,6 +17,7 @@ namespace Application.Modules.ContactPostsModule.Commands.ContactPostReplyComman
 
             post.AnsweredMessage = request.Message;
             post.AnsweredBy = identityService.UserId;
+            post.AnsweredAt = DateTime.Now;
             contactPostRepository.Edit(post);
             await contactPostRepository.SaveAsync(cancellationToken);
 

@@ -61,8 +61,14 @@
                 <div class="sidebar">
                     @await Component.InvokeAsync("AllCategories", new { view = "OnlyList" })
                     <div class="sidebar__item">
-                        <h4>Price</h4>
-                        <div class="price-range-wrap">
+                        @* <h4>Price</h4> *@
+                        <div class="border-default universal-padding mtb-40">
+                            <div class="group-title">
+                                <h2>price</h2>
+                            </div>
+                            <div id="price-range" data-min="20" data-max="100"></div>
+                        </div>
+@*                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="540">
                                 <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -74,10 +80,12 @@
                                     <input type="text" id="maxamount">
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                     </div>
                     <div class="sidebar__item sidebar__item__color--option">
-                        <h4>Colors</h4>
+                        @await Component.InvokeAsync("FilterColors")
+                      @*   <h4>Colors</h4>
+
                         <div class="sidebar__item__color sidebar__item__color--white">
                             <label for="white">
                                 White
@@ -113,7 +121,7 @@
                                 Green
                                 <input type="radio" id="green">
                             </label>
-                        </div>
+                        </div> *@
                     </div>
                     <div class="sidebar__item">
                         <h4>Popular Size</h4>
@@ -249,7 +257,7 @@
                                 </div>
                                 <div class="product__item__text">
                                     <h6><a asp-action="details" asp-route-slug="@product.Slug">@product.Title</a></h6>
-                                    <h5>$30.00</h5>
+                                    <h5>@product.Price.ToString("0.00")</h5>
                                 </div>
                             </div>
                         </div>
@@ -271,4 +279,151 @@
 
 @section addcss {
     <link rel="stylesheet" href="~/assets/css/pagination.css" type="text/css">
+    <link href="~/lib/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <style>
+        [data-entity-type] {
+            position: relative;
+            padding-left: 30px;
+            display: block;
+            cursor: pointer;
+        }
+
+            [data-entity-type]:not(.filled)::before {
+                content: "";
+                font-size: 0.7em;
+                font-weight: 900;
+                font-family: "Font Awesome 5 Free";
+                position: absolute;
+                border: 1px solid #cccccc85;
+                width: 18px;
+                height: 18px;
+                border-radius: 2px;
+                top: 50%;
+                left: 0px;
+                transform: translateY(-50%);
+                text-align: center;
+                text-indent: 1px;
+                line-height: 1.7em;
+            }
+
+            [data-entity-type].active:not(.filled)::before {
+                content: "\f00c";
+                color: #ffffff;
+                background-color: #cccccc85;
+                border-color: #cccccc85;
+            }
+
+            [data-entity-type].filled {
+                width: 30px;
+                height: 25px;
+                border-radius: 2px;
+                border: 1px solid #cccccc85;
+            }
+
+                [data-entity-type].filled::before {
+                    content: "";
+                    display: inline-block;
+                    padding-left: 1px;
+                    line-height: 7pt;
+                    font-size: 5pt;
+                    font-weight: 900;
+                    font-family: "Font Awesome 5 Free";
+                    position: absolute;
+                    top: 1px;
+                    right: 1px;
+                }
+
+                [data-entity-type].filled.active::before {
+                    content: "\f00c";
+                    color: #000000c4;
+                    background-color: #ffffff;
+                    border: 1px solid #000000c4;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 100%;
+                }
+
+        #price-range[range]::before {
+            content: attr(range);
+            display: flex;
+            justify-content: center;
+            padding-top: 5px;
+        }
+</style>
+}
+
+
+@section addjs{
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script>
+        const filterObject = {
+            page: 1,
+            size: 9,
+            colors: [],
+            categories: [],
+            price: {
+                min: 0,
+                max: 0
+            }
+        };
+
+        $(document).ready(function () {
+
+            let data = $("#price-range").data();
+
+            data = {
+                min: parseInt(data.min),
+                max: parseInt(data.max)
+            };
+
+            $("#price-range")
+                .attr('range', `${data.min}₼ - ${data.max}₼`)
+                .slider({
+                    range: true,
+                    min: data.min,
+                    max: data.max,
+                    values: [data.min, data.max],
+                    slide: function (e, ui) {
+                        $(e.target).attr('range', `${ui.values[0]}₼ - ${ui.values[1]}₼`);
+                        filterObject.price.min = parseInt(ui.values[0]);
+                        filterObject.price.max = parseInt(ui.values[1]);
+
+                        filterObject.page = 1;
+                        search(filterObject);
+                    }
+                });
+
+            $('a[data-entity-type]').click(function (e) {
+                e.preventDefault();
+
+                $(e.currentTarget).toggleClass('active');
+
+                let dataObj = $(e.currentTarget).data();
+
+                if ($(e.currentTarget).hasClass('active')) {
+                    filterObject[dataObj.entityType].push(dataObj.id);
+                }
+                else {
+                    filterObject[dataObj.entityType] = filterObject[dataObj.entityType]
+                        .filter(item => item != dataObj.id)
+                }
+
+                filterObject.page = 1;
+                search(filterObject);
+            });
+
+        });
+        
+                let pid;
+        function search(searchObject){
+
+                if(pid) 
+                clearTimeout(pid);
+
+                pid = setTimeout(function(){
+                     console.log(filterObject);
+                },500);
+        }
+
+    </script>
 }

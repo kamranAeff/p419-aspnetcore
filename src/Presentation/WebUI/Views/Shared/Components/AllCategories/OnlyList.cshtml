@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Category>
 <div class="sidebar__item">
     <h4>Categories</h4>
-    <ul>
+    <ul style="max-height:300px;overflow-y:auto">
         @foreach (var item in Model)
         {
-            <li><a href="#">@item.Name</a></li>
+            <li><a data-id="@item.Id" data-entity-type="categories">@item.Name</a></li>
         }
     </ul>
 </div>
